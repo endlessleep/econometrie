@@ -4,352 +4,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Econometrics Revision - Simple Regression Model</title>
-
+    <title>Econometrics - Simple Regression Model</title>
     <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- MathJax for formulas -->
+    <!-- MathJax for LaTeX -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="app-container">
-
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar" id="sidebar">
+        <!-- Sidebar -->
+        <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>econometrics</h2>
                 <button id="toggle-sidebar" class="toggle-btn"><i class="fas fa-bars"></i></button>
             </div>
-
             <nav class="sidebar-nav">
-                <!-- Chapter 1 -->
                 <div class="accordion-item active">
                     <button class="accordion-header">
-                        <span>Chapter 1: OLS Regression</span>
+                        <span><i class="fas fa-book" style="margin-right:8px;"></i> Chapter 1</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="accordion-content">
-                        <a href="#simple-regression-model" class="nav-link active">1.1 Simple Regression Model</a>
-                        <!-- Future sections... -->
+                        <a href="#" class="nav-link active">1.1 Simple Regression Model</a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
             <header class="top-nav">
                 <button id="mobile-toggle" class="mobile-toggle-btn"><i class="fas fa-bars"></i></button>
-                <!-- Removed top margin header -->
             </header>
 
             <div class="content-wrapper">
+                <h1 class="page-title">Simple Regression Model</h1>
 
-                <section id="simple-regression-model" class="section-block">
-                    <h2 class="section-title">1.1 Simple Regression Model</h2>
+                <!-- Definition -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-info-circle"></i> Defining the Model</h3>
+                    <p>For variables \( x \) and \( y \), the simple linear regression model is defined as:</p>
+                    <div class="math-formula">
+                        $$ y = \beta_0 + \beta_1 x + u $$
+                    </div>
+                    <p>Variables \( x \) and \( y \) are randomly sampled and stored in a dataset.</p>
+                    <ul>
+                        <li>\( y \) : <strong>Dependent variable</strong></li>
+                        <li>\( x \) : <strong>Independent variable</strong></li>
+                        <li>\( \beta_0 \) : <strong>Intercept parameter</strong> - measures how \( y \) varies when \( x
+                            = 0 \).</li>
+                        <li>\( \beta_1 \) : <strong>Slope parameter</strong> - measures how \( y \) varies with changes
+                            in \( x \).</li>
+                        <li>\( u \) : <strong>Error term</strong> or disturbance - represents unobserved effects that
+                            are not included in the regression equation.</li>
+                    </ul>
+                </div>
 
-                    <!-- Concept: Simple Linear Regression -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-book-open"></i> Simple linear regression</h3>
-                        <p>The simple linear regression model describes the relationship between a dependent variable \(
-                            y \) and an independent variable \( x \).</p>
-                        <p>Variables \( x \) and \( y \) are randomly sampled and stored in a dataset.</p>
-                        <div class="alert-box assumption">
-                            <div class="alert-icon"><i class="fas fa-key"></i></div>
-                            <div class="alert-content">
-                                <h4>Important Assumption: Parameters \(\beta_0\) and \(\beta_1\)</h4>
-                                <p>Parameters \( \beta_0 \) and \( \beta_1 \) represent and describe the relationship
-                                    between \( x \) and \( y \).
-                                    <strong>They are unknown</strong> and need to be estimated from the data.
-                                </p>
+                <!-- Logarithmic Forms -->
+                <div class="grid-card">
+                    <h3><i class="fas fa-table"></i> Logarithmic Functional Forms</h3>
+                    <p>Some relationships are not linear by their nature. Logarithmic transformations allow for
+                        elasticity and semi-elasticity interpretations:</p>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Dependent (y)</th>
+                                    <th>Independent (x)</th>
+                                    <th>Interpretation of \( \beta_1 \)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Level-level</strong></td>
+                                    <td>\( y \)</td>
+                                    <td>\( x \)</td>
+                                    <td>\( \Delta y = \beta_1 \Delta x \)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Level-log</strong></td>
+                                    <td>\( y \)</td>
+                                    <td>\( \log(x) \)</td>
+                                    <td>\( \Delta y = (\beta_1 / 100) \% \Delta x \)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Log-level</strong></td>
+                                    <td>\( \log(y) \)</td>
+                                    <td>\( x \)</td>
+                                    <td>\( \% \Delta y = (100 \cdot \beta_1) \Delta x \)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Log-log</strong></td>
+                                    <td>\( \log(y) \)</td>
+                                    <td>\( \log(x) \)</td>
+                                    <td>\( \% \Delta y = \beta_1 \% \Delta x \)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Expected Value & Independence -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-bullseye"></i> Expected Value & Mean Independence</h3>
+                    <p>As long as there is the intercept \( \beta_0 \) in the model, we can assume that: <strong>\( E(u)
+                            = 0 \)</strong>.</p>
+                    <div class="alert-box assumption">
+                        <i class="fas fa-balance-scale alert-icon"></i>
+                        <div class="alert-content">
+                            <h4>Zero Conditional Mean Assumption</h4>
+                            <p>We assume that \( E(u|x) = E(u) \), meaning \( u \) is mean independent of \( x \).
+                                Combining this with \( E(u) = 0 \), we obtain:</p>
+                            <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                                $$ E(u|x) = 0 $$
                             </div>
                         </div>
                     </div>
+                    <p>This leads to the <strong>Population Regression Function (PRF)</strong>:</p>
+                    <div class="math-formula">
+                        $$ E(y|x) = \beta_0 + \beta_1 x $$
+                    </div>
+                </div>
 
-                    <!-- Formula: Simple Linear Regression -->
-                    <div class="formula-card">
-                        <div class="formula-display">
-                            $$ y = \beta_0 + \beta_1 x + u $$
+                <!-- Method of Moments -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-calculator"></i> Method of Moments Estimation</h3>
+                    <p>This leads to two practically important implied equations used for the estimation of parameters
+                        \( \beta_0 \) and \( \beta_1 \):</p>
+                    <ul>
+                        <li>Theoretical: \( E(u) = E(y - \beta_0 - \beta_1 x) = 0 \)</li>
+                        <li>Theoretical: \( Cov(x,u) = E[x(y - \beta_0 - \beta_1 x)] = 0 \)</li>
+                    </ul>
+
+                    <button class="action-btn" id="derive-btn"><i class="fas fa-eye"></i> Show/Hide Derivation of MM
+                        Estimators</button>
+                    <div id="derivation-panel" class="hidden-panel">
+                        <h4 style="margin-bottom:10px">Derivation of \( \hat{\beta}_0 \)</h4>
+                        <div class="math-formula">
+                            $$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$
                         </div>
-                        <div class="formula-explanation">
-                            <ul>
-                                <li>\( y \) : <strong>Dependent variable</strong></li>
-                                <li>\( x \) : <strong>Independent variable</strong></li>
-                                <li>\( \beta_0 \) : <strong>Intercept parameter</strong> - measures how \( y \) varies
-                                    when \( x = 0 \).</li>
-                                <li>\( \beta_1 \) : <strong>Slope parameter</strong> - measures 'how \( y \) varies with
-                                    changes in \( x \)'.</li>
-                                <li>\( u \) : <strong>Error term</strong> (or disturbance)</li>
-                            </ul>
+                        <h4 style="margin-top:20px; margin-bottom:10px">Derivation of \( \hat{\beta}_1 \)</h4>
+                        <div class="math-formula">
+                            $$ \hat{\beta}_1 = \frac{\sum x_i(y_i - \bar{y})}{\sum x_i(x_i - \bar{x})} $$
                         </div>
-                        <div class="formula-interpretation">
-                            <strong>Interpretation of the slope :</strong> <br>
-                            \( \Delta y = \beta_1 \Delta x \)
+                    </div>
+                </div>
+
+                <!-- OLS -->
+                <div class="concept-card highlight">
+                    <h3><i class="fas fa-star"></i> OLS Estimator \( \hat{\beta}^{OLS} \)</h3>
+                    <div class="math-formula highlight-formula">
+                        $$ \hat{\beta}_1^{OLS} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}
+                        (x_i - \bar{x})^2} $$
+                    </div>
+                    <p style="margin-top:20px"><strong>Alternative Notations:</strong></p>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; text-align:center;">
+                        <div class="math-formula">
+                            $$ \hat{\beta}_1 = \frac{\sum x_i (y_i - \bar{y})}{\sum x_i (x_i - \bar{x})} $$
+                        </div>
+                        <div class="math-formula">
+                            $$ \hat{\beta}_1 = \frac{\sum y_i (x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
                         </div>
                     </div>
 
-                    <!-- Concept: Error Term -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-ghost"></i> Error term (\(u\))</h3>
-                        <p>The error term or disturbance \( u \) represents unobserved effects that influence \( y \)
-                            but are not included in the regression equation.</p>
-                        <p><strong>It captures, for example:</strong></p>
-                        <ul class="styled-list">
-                            <li>Omitted variables</li>
-                            <li>Random shocks</li>
-                            <li>Measurement errors</li>
-                            <li>Unobservable factors</li>
-                        </ul>
-                    </div>
-
-                    <h3 class="subsection-title">Logarithmic functional forms</h3>
-                    <p>Some relationships are not linear by their nature. For interpretational purposes, it is sometimes
-                        more appropriate or desirable to comment on the percentage effects. Logarithmic transformations
-                        are popular from the perspective of economics as they allow for <strong>elasticity and
-                            semi-elasticity</strong> interpretations.</p>
-
-                    <!-- Grid Card: Logarithmic forms -->
-                    <div class="grid-card">
-                        <h3><i class="fas fa-table"></i> Types of logarithmic models</h3>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Model</th>
-                                        <th>Dependent variable</th>
-                                        <th>Independent variable</th>
-                                        <th>Interpretation of \( \beta_1 \)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Level-level</strong></td>
-                                        <td>\( y \)</td>
-                                        <td>\( x \)</td>
-                                        <td>\( \Delta y = \beta_1 \Delta x \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Level-log</strong></td>
-                                        <td>\( y \)</td>
-                                        <td>\( \log(x) \)</td>
-                                        <td>\( \Delta y = (\beta_1/100)\%\Delta x \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Log-level</strong></td>
-                                        <td>\( \log(y) \)</td>
-                                        <td>\( x \)</td>
-                                        <td>\( \%\Delta y = (100\beta_1)\Delta x \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Log-log</strong></td>
-                                        <td>\( \log(y) \)</td>
-                                        <td>\( \log(x) \)</td>
-                                        <td>\( \%\Delta y = \beta_1 \%\Delta x \)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="alert-box">
+                        <i class="fas fa-lightbulb alert-icon"></i>
+                        <div class="alert-content">
+                            <h4>Exam Tip: Equivalent Methods</h4>
+                            <p>Minimizing the Sum of Squared Residuals (SSR) yields equations that are exactly the same
+                                as those obtained with the method of moments. Thus, <strong>MM and OLS give the same
+                                    estimators in this model.</strong></p>
                         </div>
                     </div>
+                </div>
 
-                    <h3 class="subsection-title">Expected value & Mean Independence</h3>
-
-                    <!-- Concept: Expected value of the error term -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-bullseye"></i> Expected value of the error term</h3>
-                        <p>As long as there is the intercept \( \beta_0 \) in the model, we can assume that:</p>
-                        <div class="formula-display">
-                            $$ E(u) = 0 $$
-                        </div>
-                        <p>This is rather a statement than an assumption, as we can always make it hold.</p>
-                    </div>
-
-                    <!-- Concept: Mean independence -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-balance-scale"></i> Mean independence & Zero Conditional Mean Assumption
-                        </h3>
-                        <p>Even though correlation might be appealing, it does not control for a large enough set of
-                            possible relationships (e.g., \( x \) vs. \( x^2 \) vs. \( |x| \)). It is much more
-                            appropriate to use conditional expectations.</p>
-                        <p>Specifically, we assume that \( E(u|x) = E(u) \), i.e., \( u \) is mean independent of \( x
-                            \).</p>
-                        <p>Combining this with \( E(u) = 0 \), we obtain the <strong>Zero conditional mean
-                                assumption</strong>:</p>
-                        <div class="formula-display">
-                            $$ E(u|x) = 0 $$
-                        </div>
-                    </div>
-
-                    <!-- Formula: PRF -->
-                    <div class="formula-card">
-                        <div class="formula-display">
-                            $$ E(y|x) = \beta_0 + \beta_1 x $$
-                        </div>
-                        <div class="formula-explanation">
-                            <p>This equation is called the <strong>Population Regression Function (PRF)</strong>.</p>
-                            <ul>
-                                <li>Mind the difference between \( E(y|x) \) and \( y \) here.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <h3 class="subsection-title">Estimation Methods</h3>
-
-                    <!-- Moment Conditions -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-project-diagram"></i> Implied equations for parameter estimation</h3>
-                        <p>This leads to two practically important (implied) equations and motivations that we can use
-                            for the estimation of parameters \( \beta_0 \) and \( \beta_1 \):</p>
-                        <ul>
-                            <li>\( E(u) = 0 \)</li>
-                            <li>\( Cov(x,u) = E(xu) - E(x)E(u) = E(xu) = 0 \)</li>
-                        </ul>
-                    </div>
-
-                    <!-- Method of Moments -->
-                    <div class="grid-card">
-                        <h3><i class="fas fa-columns"></i> Method of Moments estimation</h3>
-                        <p style="margin-bottom: 15px;">Method of moments (MM) estimation stems in specifying moments'
-                            restrictions and substituting them with their sample counterparts based on \( n \)
-                            observations in the dataset.</p>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Theoretical expectations</th>
-                                        <th>Sample moment conditions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>\( E(u) = E(y - \beta_0 - \beta_1 x) = 0 \)</td>
-                                        <td>\( \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>\( Cov(x,u) = E[x(y - \beta_0 - \beta_1 x)] = 0 \)</td>
-                                        <td>\( \frac{1}{n}\sum_{i=1}^{n} x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) =
-                                            0 \)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="derivation-container">
-                            <button class="btn-toggle-derivation" onclick="toggleDerivation('mm-derivation')">
-                                <i class="fas fa-calculator"></i> Show/Hide Derivation of MM Estimators
-                            </button>
-
-                            <div id="mm-derivation" class="derivation-content" style="display: none;">
-                                <h4>Derivation of \( \hat{\beta}_0 \)</h4>
-                                <p>From the first equation, we get:</p>
-                                <div class="math-block">
-                                    $$ \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \iff $$
-                                    $$ \frac{1}{n} \sum y_i - \hat{\beta}_0 \frac{1}{n} \sum 1 - \hat{\beta}_1
-                                    \frac{1}{n} \sum x_i = 0 \iff $$
-                                    $$ \bar{y} - \hat{\beta}_0 - \hat{\beta}_1 \bar{x} = 0 \iff $$
-                                    $$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$
-                                </div>
-
-                                <h4>Derivation of \( \hat{\beta}_1 \)</h4>
-                                <p>From the second equation, we get (substitute for \( \hat{\beta}_0 \) and solve for \(
-                                    \hat{\beta}_1 \)):</p>
-                                <div class="math-block">
-                                    $$ \sum_{i=1}^{n} x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \iff $$
-                                    $$ \sum x_i (y_i - (\bar{y} - \hat{\beta}_1 \bar{x}) - \hat{\beta}_1 x_i) = 0 \iff
-                                    $$
-                                    $$ \sum x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum x_i (x_i - \bar{x}) = 0 \iff $$
-                                    $$ \hat{\beta}_1 = \frac{\sum x_i(y_i - \bar{y})}{\sum x_i(x_i - \bar{x})} $$
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Estimators formulas -->
-                    <div class="formula-card highlight-card">
-                        <div class="formula-display highlight-display">
-                            $$ \hat{\beta}_1^{OLS} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}
-                            (x_i - \bar{x})^2} $$
-                        </div>
-                        <div class="formula-explanation">
-                            <p><strong>Primary formulation of the OLS Slope Estimator</strong></p>
-                            <p>As a byproduct, we also obtain the intercept estimator: <strong>\( \hat{\beta}_0^{OLS} =
-                                    \bar{y} - \hat{\beta}_1^{OLS} \bar{x} \)</strong></p>
-                        </div>
-
-                        <div class="formula-interpretation alternative-forms">
-                            <h4 style="margin-bottom: 10px; color: var(--primary-red);">Alternative Notations of \(
-                                \hat{\beta}_1^{OLS} \):</h4>
-                            <div class="alt-math-grid">
-                                <div>
-                                    $$ \hat{\beta}_1 = \frac{\sum x_i (y_i - \bar{y})}{\sum x_i (x_i - \bar{x})} $$
-                                </div>
-                                <div>
-                                    $$ \hat{\beta}_1 = \frac{\sum y_i (x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- OLS Minimization -->
-                    <h3 class="subsection-title">Least Squares Estimation</h3>
-
-                    <div class="concept-card">
-                        <h3><i class="fas fa-chart-line"></i> Estimated model computationally</h3>
-                        <p>Finally, for a given sample of data, we can express the estimated model numerically:</p>
-                        <ul class="styled-list">
-                            <li><strong>Sample Regression Function (SRF)</strong> or <strong>OLS regression
-                                    line</strong>:<br> \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \)</li>
-                            <li style="margin-top: 10px;"><strong>Fitted value (for \( y \) when \( x = x_i
-                                    \))</strong>:<br> \( \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i \)</li>
-                            <li style="margin-top: 10px;"><strong>Residual</strong>:<br> \( \hat{u}_i = y_i - \hat{y}_i
-                                = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i \)</li>
-                        </ul>
-                    </div>
-
-                    <div class="formula-card">
-                        <div class="formula-display">
-                            $$ SSR \equiv \sum_{i=1}^{n} \hat{u}_i^2 = \sum_{i=1}^{n} (y_i - \hat{\beta}_0 -
-                            \hat{\beta}_1 x_i)^2 $$
-                        </div>
-                        <div class="formula-explanation">
-                            <p><strong>Sum of Squared Residuals (SSR)</strong>.<br>Specifying the SSR as a penalty
-                                function of interest, and looking for its minimum (First Order Conditions):</p>
-                        </div>
-                        <div class="formula-interpretation">
-                            <strong>Partial derivatives (FOCs):</strong><br><br>
-                            \( \frac{\partial SSR}{\partial \hat{\beta}_0} = 0 \implies -2 \sum (y_i - \hat{\beta}_0 -
-                            \hat{\beta}_1 x_i) = 0 \)<br><br>
-                            \( \frac{\partial SSR}{\partial \hat{\beta}_1} = 0 \implies -2 \sum x_i (y_i - \hat{\beta}_0
-                            - \hat{\beta}_1 x_i) = 0 \)<br><br>
-                            These are exactly comparable to the Method of Moments derivation, i.e., they lead to the
-                            same solution. Hence the name OLS: <strong>'Ordinary Least Squares' estimator</strong>.
-                        </div>
-                    </div>
-                </section>
-
+                <!-- Least Squares Estimation -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-chart-line"></i> Least Squares Estimation Numerically</h3>
+                    <p>For a given sample of data, we can express the estimated model numerically:</p>
+                    <ul style="list-style-type: none; margin-left:0;">
+                        <li
+                            style="padding:15px; background:#F8F9FA; border-left:4px solid var(--primary-red); margin-bottom:10px; border-radius:4px;">
+                            <strong>Sample Regression Function (SRF)</strong> or OLS regression line:<br>
+                            \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \)
+                        </li>
+                        <li
+                            style="padding:15px; background:#F8F9FA; border-left:4px solid var(--primary-red); margin-bottom:10px; border-radius:4px;">
+                            <strong>Fitted value</strong> (for \( y \) when \( x = x_i \)):<br>
+                            \( \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i \)
+                        </li>
+                        <li
+                            style="padding:15px; background:#F8F9FA; border-left:4px solid var(--primary-red); margin-bottom:10px; border-radius:4px;">
+                            <strong>Residual</strong>:<br>
+                            \( \hat{u}_i = y_i - \hat{y}_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i \)
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        function toggleDerivation(id) {
-            const el = document.getElementById(id);
-            if (el.style.display === "none") {
-                el.style.display = "block";
-            } else {
-                el.style.display = "none";
-            }
-        }
-    </script>
 </body>
 
 </html>
