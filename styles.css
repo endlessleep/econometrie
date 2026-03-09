@@ -1,21 +1,24 @@
-/* RED PREMIUM THEME */
+/* FLUORESCENT RED PREMIUM THEME */
 :root {
-    --bg-color: #F8F9FA;
-    /* Gris très clair / presqu'blanc */
+    --bg-color: #FFEBF0;
+    /* Fond rouge très clair demandé */
     --sidebar-bg: #4A0E17;
     /* Rouge nuit / Bordeaux profond */
     --sidebar-text: #FFFFFF;
-    --primary-red: #D90429;
-    /* Rouge vif / Cramoisi */
-    --accent-red: #EF233C;
+    --primary-red: #FF0066;
+    /* Rouge fluo / Cramoisi très vif */
+    --accent-red: #FF004D;
+    /* Variante fluo pour hover */
     --text-main: #2B2D42;
     --text-muted: #8D99AE;
     --card-bg: #FFFFFF;
-    --border-color: #EDF2F4;
+    --border-color: #FFCCD8;
+    /* Bordures très rouges */
 
-    --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.04);
-    --shadow-hover: 0 12px 28px rgba(217, 4, 41, 0.12);
-    /* Ombre cramoisie */
+    --shadow-soft: 0 8px 20px rgba(255, 0, 102, 0.08);
+    /* Ombre rouge douce */
+    --shadow-hover: 0 12px 28px rgba(255, 0, 77, 0.2);
+    /* Ombre rouge vive au survol */
     --radius: 12px;
 }
 
@@ -227,6 +230,7 @@ body {
 
 .concept-card.highlight {
     border: 2px solid var(--primary-red);
+    background: #FFF5F7;
 }
 
 .concept-card.highlight::before {
@@ -270,7 +274,8 @@ li::marker {
 .table-container {
     overflow-x: auto;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-red);
+    /* Bordure table vif */
 }
 
 table {
@@ -287,15 +292,19 @@ td {
 }
 
 th {
-    background: #F8F9FA;
+    background: var(--sidebar-bg);
     font-size: 0.95rem;
     text-transform: uppercase;
     font-weight: 700;
-    color: var(--sidebar-bg);
+    color: white;
+}
+
+tr:nth-child(even) td {
+    background-color: #FFF0F4;
 }
 
 tr:hover td {
-    background-color: rgba(217, 4, 41, 0.03);
+    background-color: #FFE0E9;
 }
 
 tr:last-child td {
@@ -304,21 +313,23 @@ tr:last-child td {
 
 /* Math Displays */
 .math-formula {
-    background: #FAFAFA;
+    background: #FFFFFF;
     padding: 20px;
     border-radius: 8px;
     margin: 20px 0;
     text-align: center;
-    border: 1px dashed #D2D6DC;
+    border: 2px dashed var(--primary-red);
     font-size: 1.2rem;
     overflow-x: auto;
     color: var(--sidebar-bg);
+    box-shadow: 0 4px 10px rgba(255, 0, 102, 0.05);
 }
 
 .highlight-formula {
-    background: #FFF5F6;
-    border: 1px solid var(--border-color);
-    border-left: 4px solid var(--primary-red);
+    background: #FFFFFF;
+    border: 2px solid var(--primary-red);
+    border-left: 8px solid var(--primary-red);
+    box-shadow: 0 6px 15px rgba(255, 0, 102, 0.1);
 }
 
 /* Alert Boxes / Post-it */
@@ -326,15 +337,18 @@ tr:last-child td {
     display: flex;
     padding: 24px;
     border-radius: var(--radius);
-    background: #FFF5F6;
-    border-left: 4px solid var(--primary-red);
+    background: #FFFFFF;
+    border: 2px solid var(--primary-red);
+    border-left: 6px solid var(--primary-red);
     margin: 25px 0;
     gap: 20px;
+    box-shadow: 0 4px 12px rgba(255, 0, 102, 0.1);
 }
 
 .alert-box.assumption {
-    background: #F4F6F8;
-    border-left: 4px solid var(--sidebar-bg);
+    background: #FFEDF1;
+    border-color: var(--sidebar-bg);
+    border-left: 6px solid var(--sidebar-bg);
 }
 
 .alert-icon {
@@ -349,7 +363,12 @@ tr:last-child td {
 .alert-content h4 {
     font-size: 1.15rem;
     margin-bottom: 8px;
-    color: #1a1a1a;
+    color: var(--primary-red);
+    font-weight: 800;
+}
+
+.alert-box.assumption h4 {
+    color: var(--sidebar-bg);
 }
 
 .alert-content p {
@@ -358,39 +377,43 @@ tr:last-child td {
 
 /* Interactive Buttons */
 .action-btn {
-    background: var(--primary-red);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-red) 100%);
     color: white;
     border: none;
     padding: 12px 24px;
     font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
+    font-weight: 700;
+    border-radius: 50px;
     cursor: pointer;
     transition: 0.3s;
     display: inline-flex;
     align-items: center;
     gap: 10px;
     margin: 15px 0;
+    box-shadow: 0 4px 15px rgba(255, 0, 102, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .action-btn:hover {
-    background: var(--sidebar-bg);
+    background: linear-gradient(135deg, var(--sidebar-bg) 0%, var(--primary-red) 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 102, 0.6);
 }
 
 .hidden-panel {
     display: none;
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 25px;
-    background: #FAFAFA;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    border-left: 4px solid var(--sidebar-bg);
+    background: #FFFFFF;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    border-left: 6px solid var(--sidebar-bg);
+    animation: fadeIn 0.4s ease;
 }
 
 .hidden-panel.active {
     display: block;
-    animation: fadeIn 0.4s ease;
 }
 
 @keyframes fadeIn {

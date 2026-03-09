@@ -135,7 +135,7 @@
                 </div>
 
                 <!-- Method of Moments -->
-                <div class="concept-card">
+                <div class="concept-card highlight">
                     <h3><i class="fas fa-calculator"></i> Method of Moments Estimation</h3>
                     <p>This leads to two practically important implied equations used for the estimation of parameters
                         \( \beta_0 \) and \( \beta_1 \):</p>
@@ -144,70 +144,109 @@
                         <li>Theoretical: \( Cov(x,u) = E[x(y - \beta_0 - \beta_1 x)] = 0 \)</li>
                     </ul>
 
-                    <button class="action-btn" id="derive-btn"><i class="fas fa-eye"></i> Show/Hide Derivation of MM
-                        Estimators</button>
-                    <div id="derivation-panel" class="hidden-panel">
-                        <h4 style="margin-bottom:10px">Derivation of \( \hat{\beta}_0 \)</h4>
+                    <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                    <!-- B0 with Derivation Button -->
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.2rem; margin-bottom:15px;">Estimator for \(
+                        \hat{\beta}_0 \)</h4>
+                    <div class="math-formula highlight-formula">
+                        $$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$
+                    </div>
+                    <button class="action-btn" onclick="toggleDerivation('derive-b0')"><i class="fas fa-eye"></i>
+                        Show/Hide Derivation of \( \hat{\beta}_0 \)</button>
+                    <div id="derive-b0" class="hidden-panel">
+                        <p>From the first equation, we substitute sample moments for theoretical moments and solve for
+                            \( \hat{\beta}_0 \):</p>
                         <div class="math-formula">
+                            $$ \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \iff $$
+                            $$ \frac{1}{n} \sum y_i - \hat{\beta}_0 \frac{1}{n} \sum 1 - \hat{\beta}_1 \frac{1}{n} \sum
+                            x_i = 0 \iff $$
+                            $$ \bar{y} - \hat{\beta}_0 - \hat{\beta}_1 \bar{x} = 0 \iff $$
                             $$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$
                         </div>
-                        <h4 style="margin-top:20px; margin-bottom:10px">Derivation of \( \hat{\beta}_1 \)</h4>
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                    <!-- B1 with Derivation Button -->
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.2rem; margin-bottom:15px;">Estimator for \(
+                        \hat{\beta}_1 \)</h4>
+                    <div class="math-formula highlight-formula">
+                        $$ \hat{\beta}_1 = \frac{\sum x_i(y_i - \bar{y})}{\sum x_i(x_i - \bar{x})} $$
+                    </div>
+                    <button class="action-btn" onclick="toggleDerivation('derive-b1')"><i class="fas fa-eye"></i>
+                        Show/Hide Derivation of \( \hat{\beta}_1 \)</button>
+                    <div id="derive-b1" class="hidden-panel">
+                        <p>From the second equation, we get (substitute for \( \hat{\beta}_0 \) and solve for
+                            \(\hat{\beta}_1 \)):</p>
                         <div class="math-formula">
+                            $$ \sum_{i=1}^{n} x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \iff $$
+                            $$ \sum x_i (y_i - (\bar{y} - \hat{\beta}_1 \bar{x}) - \hat{\beta}_1 x_i) = 0 \iff $$
+                            $$ \sum x_i (y_i - \bar{y}) - \hat{\beta}_1 \sum x_i (x_i - \bar{x}) = 0 \iff $$
                             $$ \hat{\beta}_1 = \frac{\sum x_i(y_i - \bar{y})}{\sum x_i(x_i - \bar{x})} $$
                         </div>
                     </div>
                 </div>
 
-                <!-- OLS -->
+                <!-- OLS Alternatives -->
                 <div class="concept-card highlight">
-                    <h3><i class="fas fa-star"></i> OLS Estimator \( \hat{\beta}^{OLS} \)</h3>
-                    <div class="math-formula highlight-formula">
-                        $$ \hat{\beta}_1^{OLS} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}
-                        (x_i - \bar{x})^2} $$
-                    </div>
-                    <p style="margin-top:20px"><strong>Alternative Notations:</strong></p>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; text-align:center;">
-                        <div class="math-formula">
-                            $$ \hat{\beta}_1 = \frac{\sum x_i (y_i - \bar{y})}{\sum x_i (x_i - \bar{x})} $$
-                        </div>
-                        <div class="math-formula">
-                            $$ \hat{\beta}_1 = \frac{\sum y_i (x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
-                        </div>
-                    </div>
+                    <h3><i class="fas fa-star"></i> Alternative Notations of the OLS Slope Estimator \(
+                        \hat{\beta}_1^{OLS} \)</h3>
+                    <p style="margin-bottom:20px;">The OLS estimator is perfectly equivalent to the MM estimator above.
+                        Here are alternative ways \( \hat{\beta}_1^{OLS} \) can be written:</p>
 
-                    <div class="alert-box">
-                        <i class="fas fa-lightbulb alert-icon"></i>
-                        <div class="alert-content">
-                            <h4>Exam Tip: Equivalent Methods</h4>
-                            <p>Minimizing the Sum of Squared Residuals (SSR) yields equations that are exactly the same
-                                as those obtained with the method of moments. Thus, <strong>MM and OLS give the same
-                                    estimators in this model.</strong></p>
+                    <div style="display:grid; grid-template-columns: 1fr; gap:30px; text-align:center;">
+                        <!-- Alt 1 -->
+                        <div
+                            style="background:var(--bg-color); padding: 25px; border-radius:12px; border:2px solid var(--primary-red);">
+                            <div class="math-formula" style="background:white;">
+                                $$ \hat{\beta}_1 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}
+                                (x_i - \bar{x})^2} $$
+                            </div>
+                            <button class="action-btn" onclick="toggleDerivation('derive-alt1')"><i
+                                    class="fas fa-eye"></i> Show/Hide Derivation</button>
+                            <div id="derive-alt1" class="hidden-panel">
+                                <p>Knowing that \( \sum(x_i - \bar{x})\bar{y} = \bar{y} \sum(x_i - \bar{x}) = \bar{y}
+                                    \cdot 0 = 0 \), we can factorize the numerator \( \sum x_i(y_i - \bar{y}) \):</p>
+                                <div class="math-formula">
+                                    $$ \sum x_i (y_i - \bar{y}) = \sum (x_i - \bar{x} + \bar{x}) (y_i - \bar{y}) $$
+                                    $$ = \sum (x_i - \bar{x})(y_i - \bar{y}) + \sum \bar{x}(y_i - \bar{y}) $$
+                                    $$ = \sum (x_i - \bar{x})(y_i - \bar{y}) + \bar{x}\sum(y_i - \bar{y}) $$
+                                    $$ = \sum (x_i - \bar{x})(y_i - \bar{y}) + 0 $$
+                                    $$ = \sum (x_i - \bar{x})(y_i - \bar{y}) $$
+                                </div>
+                                <p>And knowing that \( \sum x_i \bar{x} = \bar{x} \sum x_i = n\bar{x}^2 = \sum \bar{x}^2
+                                    \), we can rewrite the denominator \( \sum x_i(x_i - \bar{x}) \):</p>
+                                <div class="math-formula">
+                                    $$ \sum x_i (x_i - \bar{x}) = \sum x_i^2 - \sum x_i \bar{x} $$
+                                    $$ = \sum x_i^2 - n\bar{x}^2 = \sum x_i^2 - 2n\bar{x}^2 + n\bar{x}^2 $$
+                                    $$ = \sum x_i^2 - 2\bar{x}\sum x_i + \sum \bar{x}^2 $$
+                                    $$ = \sum(x_i - \bar{x})^2 $$
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alt 2 -->
+                        <div
+                            style="background:var(--bg-color); padding: 25px; border-radius:12px; border:2px solid var(--primary-red);">
+                            <div class="math-formula" style="background:white;">
+                                $$ \hat{\beta}_1 = \frac{\sum y_i (x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
+                            </div>
+                            <button class="action-btn" onclick="toggleDerivation('derive-alt2')"><i
+                                    class="fas fa-eye"></i> Show/Hide Derivation</button>
+                            <div id="derive-alt2" class="hidden-panel">
+                                <p>To go from \( \sum x_i(y_i - \bar{y}) \) to \( \sum y_i(x_i - \bar{x}) \), we simply
+                                    expand and refactor:</p>
+                                <div class="math-formula">
+                                    $$ \sum x_i (y_i - \bar{y}) = \sum x_i y_i - \sum x_i \bar{y} $$
+                                    <p>Since \( \sum x_i \bar{y} = n\bar{x}\bar{y} = \sum \bar{x} y_i \):</p>
+                                    $$ \sum x_i y_i - \sum \bar{x} y_i = \sum y_i (x_i - \bar{x}) $$
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Least Squares Estimation -->
-                <div class="concept-card">
-                    <h3><i class="fas fa-chart-line"></i> Least Squares Estimation Numerically</h3>
-                    <p>For a given sample of data, we can express the estimated model numerically:</p>
-                    <ul style="list-style-type: none; margin-left:0;">
-                        <li
-                            style="padding:15px; background:#F8F9FA; border-left:4px solid var(--primary-red); margin-bottom:10px; border-radius:4px;">
-                            <strong>Sample Regression Function (SRF)</strong> or OLS regression line:<br>
-                            \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \)
-                        </li>
-                        <li
-                            style="padding:15px; background:#F8F9FA; border-left:4px solid var(--primary-red); margin-bottom:10px; border-radius:4px;">
-                            <strong>Fitted value</strong> (for \( y \) when \( x = x_i \)):<br>
-                            \( \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i \)
-                        </li>
-                        <li
-                            style="padding:15px; background:#F8F9FA; border-left:4px solid var(--primary-red); margin-bottom:10px; border-radius:4px;">
-                            <strong>Residual</strong>:<br>
-                            \( \hat{u}_i = y_i - \hat{y}_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i \)
-                        </li>
-                    </ul>
-                </div>
             </div>
         </main>
     </div>

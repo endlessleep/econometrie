@@ -24,20 +24,28 @@ document.addEventListener("DOMContentLoaded", () => {
             item.classList.toggle("active");
         });
     });
-
-    // Derivation toggle
-    const deriveBtn = document.getElementById("derive-btn");
-    const derivePanel = document.getElementById("derivation-panel");
-    if (deriveBtn && derivePanel) {
-        deriveBtn.addEventListener("click", () => {
-            derivePanel.classList.toggle("active");
-
-            // Toggle text and icon
-            if (derivePanel.classList.contains("active")) {
-                deriveBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Derivation of MM Estimators';
-            } else {
-                deriveBtn.innerHTML = '<i class="fas fa-eye"></i> Show Derivation of MM Estimators';
-            }
-        });
-    }
 });
+
+// Derivation toggle function for specific IDs
+function toggleDerivation(id) {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+
+    panel.classList.toggle("active");
+
+    // Find the button right before the panel to toggle its text/icon
+    const btn = panel.previousElementSibling;
+    if (btn && btn.classList.contains('action-btn')) {
+        const isShowing = panel.classList.contains("active");
+
+        // Extract the target text part after "Show/Hide Derivation of"
+        const textParts = btn.innerHTML.split("Derivation");
+        const suffix = textParts.length > 1 ? textParts[1] : "";
+
+        if (isShowing) {
+            btn.innerHTML = `<i class="fas fa-eye-slash"></i> Hide Derivation${suffix}`;
+        } else {
+            btn.innerHTML = `<i class="fas fa-eye"></i> Show/Hide Derivation${suffix}`;
+        }
+    }
+}
