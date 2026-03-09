@@ -1,0 +1,517 @@
+/* Red Econ Theme Variables */
+:root {
+    --bg-color: #F8F9FA;
+    /* off-white / light grey */
+    --sidebar-bg: #4A154B;
+    /* Actually, they wanted red-bordeaux. Let's use #6E1A24 */
+    --sidebar-text: #F1E5E7;
+    --primary-red: #D32F2F;
+    /* vibrant red */
+    --light-red: #FFEBEE;
+    /* highlight red */
+    --text-main: #2C3E50;
+    --text-muted: #546E7A;
+    --card-bg: #FFFFFF;
+    --border-color: #E0E0E0;
+    --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+    --transition: all 0.25s ease;
+}
+
+:root {
+    --sidebar-bg: #5D121B;
+    /* Deep Bordeaux */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 600;
+    color: #401B1B;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    border-bottom: 3px solid var(--primary-red);
+    padding-bottom: 12px;
+    margin-bottom: 35px;
+    color: var(--sidebar-bg);
+}
+
+.subsection-title {
+    font-size: 1.4rem;
+    margin: 45px 0 25px;
+    color: var(--primary-red);
+    font-weight: 600;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-header h2 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-header h2 span {
+    color: #FF5252;
+}
+
+.sidebar.collapsed .sidebar-header h2 {
+    display: none;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: var(--transition);
+}
+
+.toggle-btn:hover {
+    opacity: 1;
+}
+
+.sidebar-nav {
+    padding: 15px 0;
+    overflow-y: auto;
+}
+
+/* Accordion */
+.accordion-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    text-align: left;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.accordion-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-out;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 800px;
+}
+
+.accordion-item.active .accordion-header i {
+    transform: rotate(180deg);
+}
+
+.nav-link {
+    display: block;
+    padding: 12px 20px 12px 40px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    border-left: 3px solid transparent;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-left: 3px solid var(--primary-red);
+}
+
+.sidebar.collapsed .accordion-header span,
+.sidebar.collapsed .accordion-header i,
+.sidebar.collapsed .accordion-content {
+    display: none;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.collapsed~.main-content {
+    margin-left: 70px;
+}
+
+.top-nav {
+    background-color: var(--card-bg);
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    height: 70px;
+}
+
+.mobile-toggle-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--sidebar-bg);
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.content-wrapper {
+    padding: 40px;
+    max-width: 950px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.section-block {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Typography elements */
+p {
+    margin-bottom: 15px;
+    color: var(--text-main);
+    font-size: 1.05rem;
+}
+
+strong {
+    font-weight: 600;
+    color: var(--sidebar-bg);
+}
+
+ul.styled-list,
+.concept-card ul {
+    margin-left: 22px;
+    margin-bottom: 15px;
+    color: var(--text-main);
+    font-size: 1.05rem;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+
+/* Cards System */
+.concept-card,
+.formula-card,
+.grid-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 26px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-soft);
+    border-left: 5px solid transparent;
+    transition: var(--transition);
+}
+
+.concept-card:hover,
+.formula-card:hover,
+.grid-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+/* Concept Card */
+.concept-card {
+    border-left-color: var(--sidebar-bg);
+}
+
+.concept-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+    color: var(--sidebar-bg);
+}
+
+.concept-card h3 i {
+    color: var(--primary-red);
+    font-size: 1.1rem;
+}
+
+/* Formula Card */
+.formula-card {
+    border: 1px solid var(--border-color);
+    border-top: 5px solid var(--primary-red);
+    background: linear-gradient(to bottom, #FFFFFF, #FCFAFA);
+}
+
+.formula-display {
+    font-size: 1.35rem;
+    /* slightly larger for MathJax */
+    text-align: center;
+    padding: 25px 0;
+    margin-bottom: 22px;
+    background: #FFF9FA;
+    /* super light red tint */
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px dashed #FFCDD2;
+}
+
+.formula-explanation {
+    margin-bottom: 15px;
+}
+
+.formula-explanation ul {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.formula-explanation li {
+    padding: 10px 0;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 1rem;
+}
+
+.formula-explanation li:last-child {
+    border-bottom: none;
+}
+
+.formula-interpretation {
+    background: var(--light-red);
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: var(--sidebar-bg);
+    margin-top: 20px;
+    font-size: 1.05rem;
+    border-left: 4px solid var(--primary-red);
+}
+
+/* Grid Cards (Tables) */
+.grid-card {
+    border-left-color: #546E7A;
+}
+
+.grid-card h3 {
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--sidebar-bg);
+}
+
+.grid-card p {
+    margin-bottom: 20px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background-color: #F8F9FA;
+    font-weight: 600;
+    color: var(--sidebar-bg);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.data-table tr:hover td {
+    background-color: #FFF9FA;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Alert Boxes */
+.alert-box {
+    display: flex;
+    padding: 22px;
+    border-radius: var(--border-radius);
+    margin-bottom: 28px;
+    gap: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.alert-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.alert-content h4 {
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.alert-box.trap {
+    background-color: #FFF3E0;
+    border: 1px solid #FFE0B2;
+}
+
+.alert-box.trap .alert-icon,
+.alert-box.trap h4 {
+    color: #E65100;
+}
+
+.alert-box.tip {
+    background-color: #E8F5E9;
+    border: 1px solid #C8E6C9;
+}
+
+.alert-box.tip .alert-icon,
+.alert-box.tip h4 {
+    color: #2E7D32;
+}
+
+.alert-box.assumption {
+    background-color: #EAF2F8;
+    border: 1px solid #D4E6F1;
+}
+
+.alert-box.assumption .alert-icon,
+.alert-box.assumption h4 {
+    color: #2980B9;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .main-content,
+    .sidebar.collapsed~.main-content {
+        margin-left: 0;
+    }
+
+    .mobile-toggle-btn {
+        display: block;
+    }
+
+    .content-wrapper {
+        padding: 25px 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .alert-box {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .alert-icon {
+        font-size: 1.5rem;
+    }
+}
