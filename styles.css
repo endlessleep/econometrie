@@ -1,20 +1,17 @@
 /* Red Econ Theme Variables */
 :root {
-    --bg-color: #FDFBFC;
-    /* much lighter, almost white but slightly warm */
-    --sidebar-bg: #8B1A1A;
-    /* deeper classic academic red */
+    --bg-color: #F8F0F2; /* Soft light red/pinkish background instead of white */
+    --sidebar-bg: #6A0DAD; /* Purple-ish? Wait, they want RED. Let's use deep red */
+    --sidebar-bg: #8B1A1A; /* deep academic red */
     --sidebar-text: #FFFFFF;
-    --primary-red: #D32F2F;
-    /* vibrant red used for borders/highlights */
-    --light-red: #FFEBEE;
-    /* highlight red */
+    --primary-red: #D32F2F; /* vibrant red used for borders/highlights */
+    --light-red: #FFEBEE; /* highlight red */
     --text-main: #212529;
     --text-muted: #495057;
-    --card-bg: #FFFFFF;
-    --border-color: #E9ECEF;
-    --shadow-soft: 0 4px 6px rgba(139, 26, 26, 0.04);
-    --shadow-hover: 0 8px 20px rgba(139, 26, 26, 0.12);
+    --card-bg: #FFFFFF; /* Keep cards white for readability, but give them a red border */
+    --border-color: #FFCDD2;
+    --shadow-soft: 0 4px 6px rgba(139, 26, 26, 0.08); /* Redder shadows */
+    --shadow-hover: 0 8px 20px rgba(139, 26, 26, 0.18);
     --border-radius: 12px;
     --transition: all 0.25s ease;
 }
@@ -27,7 +24,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
+    background-color: var(--bg-color); /* This will make the whole page background soft red */
     color: var(--text-main);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -39,23 +36,18 @@ body {
 }
 
 /* Typography */
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
     font-weight: 600;
-    color: var(--sidebar-bg);
-    /* Use the academic red for contrast */
+    color: var(--sidebar-bg); /* Use the academic red for contrast */
 }
 
-h1 {
-    font-size: 1.8rem;
+h1 { 
+    font-size: 1.8rem; 
     font-weight: 700;
 }
 
-.section-title {
-    font-size: 2.2rem;
+.section-title { 
+    font-size: 2.2rem; 
     border-bottom: 3px solid var(--primary-red);
     padding-bottom: 12px;
     margin-bottom: 35px;
@@ -80,7 +72,7 @@ h1 {
     position: fixed;
     height: 100vh;
     z-index: 100;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
 }
 
 .sidebar.collapsed {
@@ -92,7 +84,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 24px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .sidebar-header h2 {
@@ -106,8 +98,7 @@ h1 {
 }
 
 .sidebar-header h2 span {
-    color: #FFCDD2;
-    /* Soft pink-red for contrast in the logo */
+    color: #FFCDD2; /* Soft pink-red for contrast in the logo */
 }
 
 .sidebar.collapsed .sidebar-header h2 {
@@ -135,7 +126,7 @@ h1 {
 
 /* Accordion */
 .accordion-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .accordion-header {
@@ -156,14 +147,14 @@ h1 {
 }
 
 .accordion-header:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0,0,0,0.1);
 }
 
 .accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease-out;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0,0,0,0.2);
 }
 
 .accordion-item.active .accordion-content {
@@ -177,16 +168,15 @@ h1 {
 .nav-link {
     display: block;
     padding: 12px 20px 12px 40px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255,255,255,0.8);
     text-decoration: none;
     font-size: 0.85rem;
     transition: var(--transition);
     border-left: 3px solid transparent;
 }
 
-.nav-link:hover,
-.nav-link.active {
-    background-color: rgba(255, 255, 255, 0.1);
+.nav-link:hover, .nav-link.active {
+    background-color: rgba(255,255,255,0.1);
     color: #fff;
     border-left: 3px solid #FFCDD2;
 }
@@ -206,20 +196,19 @@ h1 {
     flex-direction: column;
 }
 
-.sidebar.collapsed~.main-content {
+.sidebar.collapsed ~ .main-content {
     margin-left: 70px;
 }
 
 .top-nav {
-    background-color: var(--card-bg);
-    padding: 20px 40px;
-    border-bottom: 1px solid var(--border-color);
+    background-color: transparent; /* No top bar color, blend with background */
+    padding: 20px 40px 0;
     display: flex;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 90;
-    height: 70px;
+    height: 60px;
 }
 
 .mobile-toggle-btn {
@@ -233,7 +222,7 @@ h1 {
 }
 
 .content-wrapper {
-    padding: 40px;
+    padding: 20px 40px 40px;
     max-width: 950px;
     margin: 0 auto;
     width: 100%;
@@ -244,15 +233,8 @@ h1 {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Typography elements */
@@ -264,12 +246,10 @@ p {
 
 strong {
     font-weight: 600;
-    color: var(--sidebar-bg);
-    /* Highlight text with red */
+    color: var(--sidebar-bg); /* Highlight text with red */
 }
 
-ul.styled-list,
-.concept-card ul {
+ul.styled-list, .concept-card ul {
     margin-left: 22px;
     margin-bottom: 15px;
     color: var(--text-main);
@@ -281,31 +261,27 @@ ul li {
 }
 
 /* Cards System */
-.concept-card,
-.formula-card,
-.grid-card {
+.concept-card, .formula-card, .grid-card {
     background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 26px;
     margin-bottom: 28px;
     box-shadow: var(--shadow-soft);
-    border-left: 5px solid transparent;
+    border: 1px solid var(--border-color); /* Give them all a slight red border */
+    border-left: 6px solid var(--primary-red); /* Thick red left border */
     transition: var(--transition);
 }
 
-.concept-card:hover,
-.formula-card:hover,
-.grid-card:hover {
+.concept-card:hover, .formula-card:hover, .grid-card:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    border-color: var(--primary-red);
 }
 
 /* Concept Card */
 .concept-card {
     border-left-color: var(--sidebar-bg);
-    border-right: 1px solid var(--border-color);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(145deg, #ffffff, #fffafa);
 }
 
 .concept-card h3 {
@@ -315,48 +291,49 @@ ul li {
     margin-bottom: 16px;
     font-size: 1.25rem;
     color: var(--sidebar-bg);
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 10px;
 }
 
 .concept-card h3 i {
     color: var(--primary-red);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    background: #FFF0F2;
+    padding: 8px;
+    border-radius: 50%;
 }
 
 /* Formula Card */
 .formula-card {
-    border: 1px solid var(--primary-red);
-    border-top: 5px solid var(--primary-red);
-    background: linear-gradient(to bottom, #FFFFFF, #FFF9FA);
-    /* very light red gradient */
+    border-left-color: var(--primary-red);
+    background: linear-gradient(to bottom right, #FFFFFF, #FFF0F2); /* Light red gradient */
 }
 
 .formula-display {
-    font-size: 1.35rem;
-    /* slightly larger for MathJax */
+    font-size: 1.4rem; /* larger for MathJax */
     text-align: center;
-    padding: 25px 0;
-    margin-bottom: 22px;
-    background: #FFF0F2;
-    /* clear red tint */
+    padding: 30px 0;
+    margin-bottom: 25px;
+    background: #FFFFFF;
     border-radius: 8px;
     overflow-x: auto;
-    border: 1px dashed var(--primary-red);
+    border: 2px solid var(--primary-red);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
 
 /* Special Highlight Card Strategy */
 .highlight-card {
-    border: 2px solid var(--sidebar-bg);
+    border-left-color: var(--sidebar-bg);
     background: #FFF;
+    border: 2px solid var(--sidebar-bg);
     box-shadow: 0 8px 16px rgba(139, 26, 26, 0.15);
 }
 
 .highlight-display {
     background: var(--sidebar-bg);
     border: none;
-    color: #FFF;
-    /* In MathJax, color is inherited unless overriden, we'll try to let it render */
+    color: #FFF; /* Might not affect MathJax entirely, but provides contrast */
 }
-
 
 .formula-explanation {
     margin-bottom: 15px;
@@ -368,9 +345,9 @@ ul li {
 }
 
 .formula-explanation li {
-    padding: 10px 0;
-    border-bottom: 1px solid #F0F0F0;
-    font-size: 1rem;
+    padding: 12px 0;
+    border-bottom: 1px solid #FFCDD2;
+    font-size: 1.05rem;
 }
 
 .formula-explanation li:last-child {
@@ -378,19 +355,22 @@ ul li {
 }
 
 .formula-interpretation {
-    background: var(--light-red);
-    padding: 16px 20px;
+    background: var(--sidebar-bg);
+    padding: 18px 22px;
     border-radius: 8px;
-    color: var(--sidebar-bg);
-    margin-top: 20px;
+    color: #FFFFFF;
+    margin-top: 25px;
     font-size: 1.05rem;
-    border-left: 4px solid var(--primary-red);
+    border-left: 4px solid #FFCDD2;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.formula-interpretation strong {
+    color: #FFCDD2;
 }
 
 /* Grid Cards (Tables) */
 .grid-card {
     border-left-color: var(--sidebar-bg);
-    border: 1px solid var(--border-color);
 }
 
 .grid-card h3 {
@@ -399,27 +379,34 @@ ul li {
     align-items: center;
     gap: 12px;
     color: var(--sidebar-bg);
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 10px;
 }
 
-.grid-card p {
-    margin-bottom: 20px;
+.grid-card h3 i {
+    color: var(--primary-red);
+    font-size: 1.2rem;
+    background: #FFF0F2;
+    padding: 8px;
+    border-radius: 50%;
 }
 
 .table-responsive {
     overflow-x: auto;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-red);
+    box-shadow: 0 4px 6px rgba(139, 26, 26, 0.05);
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1rem;
+    background: #FFFFFF;
 }
 
-.data-table th,
-.data-table td {
-    padding: 14px 18px;
+.data-table th, .data-table td {
+    padding: 16px 20px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
 }
@@ -428,16 +415,17 @@ ul li {
     background-color: var(--sidebar-bg);
     font-weight: 600;
     color: #FFFFFF;
-    border-bottom: 2px solid var(--sidebar-bg);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
 }
 
 .data-table tr:nth-child(even) {
-    background-color: #FDFBFC;
+    background-color: #FFF9FA; /* extremely light red */
 }
 
 .data-table tr:hover td {
-    background-color: #FFF0F2;
-    /* Reddish hover */
+    background-color: #FFEBEE; /* Reddish hover */
 }
 
 .data-table tr:last-child td {
@@ -451,7 +439,7 @@ ul li {
     border-radius: var(--border-radius);
     margin-bottom: 28px;
     gap: 18px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
 .alert-icon {
@@ -466,42 +454,93 @@ ul li {
     font-weight: 700;
 }
 
-/* Removing Trap/Tip rules but keeping Assumption */
+/* Keeping Assumption Alert but making it redder */
 .alert-box.assumption {
     background-color: #FFF0F2;
-    border: 1px solid #FFCDD2;
+    border: 2px dashed #FF8A80;
 }
 
-.alert-box.assumption .alert-icon,
-.alert-box.assumption h4 {
+.alert-box.assumption .alert-icon, .alert-box.assumption h4 {
     color: var(--sidebar-bg);
 }
 
-/* Toggle Buttons (Derivation) */
+/* Premium Derivation Button */
 .btn-toggle-derivation {
-    background-color: var(--sidebar-bg);
+    background: linear-gradient(135deg, var(--sidebar-bg) 0%, var(--primary-red) 100%);
     color: white;
     border: none;
-    padding: 12px 24px;
-    font-size: 1rem;
+    padding: 14px 28px;
+    font-size: 1.05rem;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 50px; /* Pill shape for modern look */
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    transition: background-color 0.2s;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-family: inherit;
-    box-shadow: 0 2px 4px rgba(139, 26, 26, 0.2);
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    max-width: 450px;
+    margin: 20px auto;
+}
+
+.btn-toggle-derivation i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
 }
 
 .btn-toggle-derivation:hover {
-    background-color: var(--primary-red);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.5);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--sidebar-bg) 100%);
+}
+
+.btn-toggle-derivation:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(211, 47, 47, 0.4);
+}
+
+.derivation-container {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.derivation-content {
+    text-align: left;
+    padding: 25px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    margin-top: 20px;
+    border: 2px solid var(--primary-red);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02), 0 4px 15px rgba(139, 26, 26, 0.08);
+}
+
+.derivation-content h4 {
+    color: var(--sidebar-bg);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.derivation-content h4::before {
+    content: "��";
+    font-size: 1.2rem;
 }
 
 .math-block {
     text-align: center;
-    padding: 10px 0;
+    padding: 15px 0;
+    background: #FFF9FA;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 1px dashed var(--border-color);
 }
 
 /* Responsive */
@@ -510,42 +549,41 @@ ul li {
         transform: translateX(-100%);
         box-shadow: none;
     }
-
+    
     .sidebar.mobile-open {
         transform: translateX(0);
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
     }
-
-    .main-content,
-    .sidebar.collapsed~.main-content {
+    
+    .main-content, .sidebar.collapsed ~ .main-content {
         margin-left: 0;
     }
-
+    
     .mobile-toggle-btn {
         display: block;
     }
-
+    
     .content-wrapper {
-        padding: 25px 20px;
+        padding: 10px 20px 25px;
     }
-
+    
     h1 {
         font-size: 1.5rem;
     }
-
+    
     .section-title {
         font-size: 1.8rem;
     }
-
+    
     .alert-box {
         flex-direction: column;
         gap: 10px;
     }
-
+    
     .alert-icon {
         font-size: 1.5rem;
     }
-
+    
     .alt-math-grid {
         grid-template-columns: 1fr !important;
     }
