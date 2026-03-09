@@ -33,6 +33,7 @@
                     </button>
                     <div class="accordion-content">
                         <a href="#" class="nav-link active">1.1 Simple Regression Model</a>
+                        <a href="#" class="nav-link">1.2 OLS Properties</a>
                     </div>
                 </div>
             </nav>
@@ -243,6 +244,316 @@
                                     $$ \sum x_i y_i - \sum \bar{x} y_i = \sum y_i (x_i - \bar{x}) $$
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW SECTION: 1.2 OLS PROPERTIES -->
+                <h1 class="page-title" style="margin-top: 60px;">1.2 OLS Properties</h1>
+
+                <!-- Algebraic Properties of OLS -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-subscript"></i> Algebraic Properties of OLS</h3>
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">1. Sum of residuals equals
+                        zero</h4>
+                    <div class="math-formula highlight-formula">
+                        $$ \sum_{i=1}^{n} \hat{u}_i = 0 $$
+                    </div>
+                    <p>The sum (or sample mean) of the OLS residuals is zero.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-prop1')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-prop1" class="hidden-panel">
+                        <p>This follows from the first first-order condition (FOC) of the OLS minimization problem.</p>
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">2. Residuals are orthogonal to the
+                        explanatory variable</h4>
+                    <div class="math-formula highlight-formula">
+                        $$ \sum_{i=1}^{n} x_i \hat{u}_i = 0 $$
+                    </div>
+                    <p>The sample covariance between the explanatory variable \( x \) and the residuals is zero.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-prop2')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-prop2" class="hidden-panel">
+                        <p>This follows from the second first-order condition (FOC) of the OLS minimization problem.</p>
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">3. Observed values can be decomposed</h4>
+                    <p>Each observed value of \( y \) can be decomposed into a fitted value and a residual:</p>
+                    <div class="math-formula">
+                        $$ y_i = \hat{y}_i + \hat{u}_i $$
+                    </div>
+                    <p>The fitted values and residuals are orthogonal:</p>
+                    <div class="math-formula highlight-formula">
+                        $$ \sum_{i=1}^{n} \hat{y}_i \hat{u}_i = 0 $$
+                    </div>
+                    <button class="action-btn" onclick="toggleDerivation('derive-prop3')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-prop3" class="hidden-panel">
+                        <p>Since \( \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i \), it is a linear combination of
+                            constants and \( x \), both of which are orthogonal to the residuals.</p>
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">4. Means of observed and fitted values are
+                        equal</h4>
+                    <div class="math-formula highlight-formula">
+                        $$ \bar{y} = \overline{\hat{y}} $$
+                    </div>
+                    <p>Equivalently: \( \sum_{i=1}^{n} y_i = \sum_{i=1}^{n} \hat{y}_i \)</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-prop4')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-prop4" class="hidden-panel">
+                        <p>Since \( y_i = \hat{y}_i + \hat{u}_i \), summing both sides gives \( \sum y_i = \sum
+                            \hat{y}_i + \sum \hat{u}_i \). Because \( \sum \hat{u}_i = 0 \), we get \( \sum y_i = \sum
+                            \hat{y}_i \).</p>
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">5. The point (\( \bar{x},\bar{y} \)) lies
+                        on the OLS regression line</h4>
+                    <p>Regression line: \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \)</p>
+                    <p>If \( x = \bar{x} \):</p>
+                    <div class="math-formula highlight-formula">
+                        $$ \hat{\beta}_0 + \hat{\beta}_1 \bar{x} = \bar{y} $$
+                    </div>
+                    <p>Therefore the point \( (\bar{x},\bar{y}) \) always lies on the regression line.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-prop5')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-prop5" class="hidden-panel">
+                        <p>We know that \( \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} \). Rearranging this formula
+                            directly yields \( \bar{y} = \hat{\beta}_0 + \hat{\beta}_1 \bar{x} \).</p>
+                    </div>
+                </div>
+
+                <!-- Sums of Squares -->
+                <div class="grid-card">
+                    <h3><i class="fas fa-chart-pie"></i> Sums of Squares</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Name</th>
+                                    <th>Formula</th>
+                                    <th>Measures...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>SST</strong></td>
+                                    <td>Total Sum of Squares</td>
+                                    <td>\( \sum (y_i - \bar{y})^2 \)</td>
+                                    <td>Total variation of \( y \) around its mean.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SSE</strong></td>
+                                    <td>Explained Sum of Squares</td>
+                                    <td>\( \sum (\hat{y}_i - \bar{y})^2 \)</td>
+                                    <td>Variation explained by the regression model.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SSR</strong></td>
+                                    <td>Residual Sum of Squares</td>
+                                    <td>\( \sum \hat{u}_i^2 \)</td>
+                                    <td>Unexplained variation.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:30px;">Decomposition of variance
+                    </h4>
+                    <div class="math-formula highlight-formula">
+                        $$ SST = SSE + SSR $$
+                    </div>
+                    <p>Total variation = explained variation + unexplained variation.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-sst')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-sst" class="hidden-panel">
+                        <p>Write \( y_i - \bar{y} = (\hat{y}_i - \bar{y}) + \hat{u}_i \). Square both sides and sum to
+                            get SST. The cross product term \( 2\sum (\hat{y}_i - \bar{y})\hat{u}_i \) equals zero by
+                            the algebraic properties of OLS residuals discussed above.</p>
+                    </div>
+                </div>
+
+                <!-- Goodness of fit -->
+                <div class="concept-card highlight">
+                    <h3><i class="fas fa-percentage"></i> Goodness of Fit</h3>
+                    <p><strong>Coefficient of determination (\( R^2 \))</strong></p>
+                    <div class="math-formula highlight-formula">
+                        $$ R^2 = \frac{SSE}{SST} = 1 - \frac{SSR}{SST} $$
+                    </div>
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">Interpretation</h4>
+                    <p>\( R^2 \) measures the fraction of the sample variation in \( y \) explained by \( x \).</p>
+                    <ul>
+                        <li><strong>Range:</strong> \( 0 \leq R^2 \leq 1 \)</li>
+                        <li>It is sometimes reported in percentages.</li>
+                        <li><strong>Important property:</strong> \( R^2 \) cannot decrease when adding an explanatory
+                            variable.</li>
+                        <li>Threshold values depend on: <em>the discipline</em>, <em>the field of economics</em>, and
+                            <em>the type of data</em>.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Unbiasedness -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-balance-scale-left"></i> Unbiasedness of OLS</h3>
+                    <p>The unbiasedness of the OLS estimator relies on the SLR (Simple Linear Regression) assumptions.
+                    </p>
+
+                    <div class="table-container" style="margin-bottom:25px;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><strong>SLR.1</strong></td>
+                                    <td>
+                                        <strong>Linear in parameters</strong><br>
+                                        \( y = \beta_0 + \beta_1 x + u \) <br>
+                                        \( \beta_0 \) is the population intercept, \( \beta_1 \) is the population
+                                        slope. The presence of the intercept implies \( E(u) = 0 \).
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SLR.2</strong></td>
+                                    <td>
+                                        <strong>Random sampling</strong><br>
+                                        We observe a random sample of size \( n \) drawn from the population.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SLR.3</strong></td>
+                                    <td>
+                                        <strong>Variation in the explanatory variable</strong><br>
+                                        The sample values of \( x \) are not all identical: \( \sum (x_i - \bar{x})^2
+                                        \neq 0 \).
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SLR.4</strong></td>
+                                    <td>
+                                        <strong>Zero conditional mean</strong><br>
+                                        \( E(u|x) = 0 \) <br>
+                                        This implies \( Cov(x,u) = 0 \) and \( E(u) = 0 \).
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 style="color:var(--primary-red); font-size: 1.15rem; margin-top:25px;">Unbiasedness result</h4>
+                    <p>Under assumptions SLR.1–SLR.4,</p>
+                    <div class="math-formula highlight-formula">
+                        $$ E(\hat{\beta}_0) = \beta_0 \quad \text{and} \quad E(\hat{\beta}_1) = \beta_1 $$
+                    </div>
+                    <p>Therefore, \( \hat{\beta}_0 \) and \( \hat{\beta}_1 \) are unbiased estimators.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-unbiased')"><i class="fas fa-eye"></i>
+                        Show/Hide Proof</button>
+                    <div id="derive-unbiased" class="hidden-panel">
+                        <p>To prove this, represent \( \hat{\beta}_1 \) uniquely in terms of population parameters and
+                            the error terms \( u_i \). Then calculate its expectation conditionally on the sample values
+                            of \( x \), applying assumption SLR.4 \( E(u|x) = 0 \).</p>
+                    </div>
+                </div>
+
+                <!-- OLS Variances & Homoskedasticity -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-chart-area"></i> Variance of the OLS Estimators</h3>
+
+                    <div class="alert-box assumption">
+                        <i class="fas fa-cube alert-icon"></i>
+                        <div class="alert-content">
+                            <h4>Homoskedasticity assumption</h4>
+                            <p><strong>SLR.5 Homoskedasticity</strong>: The variance of the error term is constant:</p>
+                            <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                                $$ Var(u|x) = \sigma^2 $$
+                            </div>
+                            <p>This means the variance of the errors does not depend on \( x \). Under this assumption:
+                                \( Var(y|x) = \sigma^2 \).</p>
+                            <p><em>Opposite case: Heteroskedasticity.</em></p>
+                        </div>
+                    </div>
+
+                    <p>Under SLR.1–SLR.5:</p>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; text-align:center;">
+                        <div>
+                            <p><strong>Variance of \( \hat{\beta}_1 \)</strong></p>
+                            <div class="math-formula highlight-formula">
+                                $$ Var(\hat{\beta}_1) = \frac{\sigma^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} $$
+                            </div>
+                        </div>
+                        <div>
+                            <p><strong>Variance of \( \hat{\beta}_0 \)</strong></p>
+                            <div class="math-formula highlight-formula">
+                                $$ Var(\hat{\beta}_0) = \frac{\sigma^2 \sum x_i^2}{n \sum (x_i - \bar{x})^2} $$
+                            </div>
+                        </div>
+                    </div>
+                    <button class="action-btn" onclick="toggleDerivation('derive-variances')"><i class="fas fa-eye"></i>
+                        Show/Hide Derivation</button>
+                    <div id="derive-variances" class="hidden-panel">
+                        <p>Derivation builds upon the linear expression of the estimators defined in the unbiasedness
+                            proof. We then calculate the variance rather than the expectation, using properties of
+                            independent elements and SLR.5.</p>
+                    </div>
+                </div>
+
+                <!-- Estimating Variance -->
+                <div class="concept-card highlight">
+                    <h3><i class="fas fa-square-root-alt"></i> Estimating the Error Variance</h3>
+                    <p>The variance of the error term \( \sigma^2 \) is not observed and must be estimated. The unbiased
+                        estimator is:</p>
+                    <div class="math-formula highlight-formula">
+                        $$ \hat{\sigma}^2 = \frac{1}{n-2}\sum_{i=1}^{n} \hat{u}_i^2 $$
+                    </div>
+                    <p>We divide by \( n-2 \) because we lose two degrees of freedom. Two restrictions exist on
+                        residuals: \( \sum \hat{u}_i = 0 \) and \( \sum x_i \hat{u}_i = 0 \).</p>
+
+                    <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+
+                    <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">Standard errors</h4>
+                    <ul>
+                        <li><strong>Standard error of the regression</strong>: \( \hat{\sigma} \).</li>
+                        <li><strong>Standard error of \( \hat{\beta}_1 \)</strong>:
+                            <div class="math-formula" style="background:#fff;">
+                                $$ se(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2}} $$
+                            </div>
+                            This is used to construct test statistics and confidence intervals.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Regression through the origin -->
+                <div class="concept-card">
+                    <h3><i class="fas fa-compress-arrows-alt"></i> Regression through the Origin</h3>
+                    <p>In rare cases we impose: \( \beta_0 = 0 \). The model becomes:</p>
+                    <div class="math-formula">
+                        $$ y = \beta_1 x + u $$
+                    </div>
+
+                    <p><strong>OLS estimator:</strong></p>
+                    <div class="math-formula highlight-formula">
+                        $$ \tilde{\beta}_1 = \frac{\sum_{i=1}^{n} x_i y_i}{\sum_{i=1}^{n} x_i^2} $$
+                    </div>
+
+                    <div class="alert-box">
+                        <i class="fas fa-radiation-alt alert-icon"></i>
+                        <div class="alert-content">
+                            <h4>Important Warning</h4>
+                            <p>If in reality \( \beta_0 \neq 0 \), then \( \tilde{\beta}_1 \) is
+                                <strong>biased</strong>. Therefore regression through the origin is rarely used in
+                                practice.
+                            </p>
+                            <p style="margin-top:10px;"><em>Important note: The definition of \( R^2 \) changes for
+                                    regressions through the origin.</em></p>
                         </div>
                     </div>
                 </div>
