@@ -1,27 +1,22 @@
 /* Red Econ Theme Variables */
 :root {
-    --bg-color: #F8F9FA;
-    /* off-white / light grey */
-    --sidebar-bg: #4A154B;
-    /* Actually, they wanted red-bordeaux. Let's use #6E1A24 */
-    --sidebar-text: #F1E5E7;
+    --bg-color: #FDFBFC;
+    /* much lighter, almost white but slightly warm */
+    --sidebar-bg: #8B1A1A;
+    /* deeper classic academic red */
+    --sidebar-text: #FFFFFF;
     --primary-red: #D32F2F;
-    /* vibrant red */
+    /* vibrant red used for borders/highlights */
     --light-red: #FFEBEE;
     /* highlight red */
-    --text-main: #2C3E50;
-    --text-muted: #546E7A;
+    --text-main: #212529;
+    --text-muted: #495057;
     --card-bg: #FFFFFF;
-    --border-color: #E0E0E0;
-    --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.04);
-    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.08);
+    --border-color: #E9ECEF;
+    --shadow-soft: 0 4px 6px rgba(139, 26, 26, 0.04);
+    --shadow-hover: 0 8px 20px rgba(139, 26, 26, 0.12);
     --border-radius: 12px;
     --transition: all 0.25s ease;
-}
-
-:root {
-    --sidebar-bg: #5D121B;
-    /* Deep Bordeaux */
 }
 
 * {
@@ -50,7 +45,8 @@ h3,
 h4,
 h5 {
     font-weight: 600;
-    color: #401B1B;
+    color: var(--sidebar-bg);
+    /* Use the academic red for contrast */
 }
 
 h1 {
@@ -96,7 +92,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 24px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-header h2 {
@@ -110,7 +106,8 @@ h1 {
 }
 
 .sidebar-header h2 span {
-    color: #FF5252;
+    color: #FFCDD2;
+    /* Soft pink-red for contrast in the logo */
 }
 
 .sidebar.collapsed .sidebar-header h2 {
@@ -138,7 +135,7 @@ h1 {
 
 /* Accordion */
 .accordion-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .accordion-header {
@@ -159,14 +156,14 @@ h1 {
 }
 
 .accordion-header:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease-out;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .accordion-item.active .accordion-content {
@@ -180,7 +177,7 @@ h1 {
 .nav-link {
     display: block;
     padding: 12px 20px 12px 40px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-size: 0.85rem;
     transition: var(--transition);
@@ -189,9 +186,9 @@ h1 {
 
 .nav-link:hover,
 .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
-    border-left: 3px solid var(--primary-red);
+    border-left: 3px solid #FFCDD2;
 }
 
 .sidebar.collapsed .accordion-header span,
@@ -268,6 +265,7 @@ p {
 strong {
     font-weight: 600;
     color: var(--sidebar-bg);
+    /* Highlight text with red */
 }
 
 ul.styled-list,
@@ -305,6 +303,9 @@ ul li {
 /* Concept Card */
 .concept-card {
     border-left-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .concept-card h3 {
@@ -323,9 +324,10 @@ ul li {
 
 /* Formula Card */
 .formula-card {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-red);
     border-top: 5px solid var(--primary-red);
-    background: linear-gradient(to bottom, #FFFFFF, #FCFAFA);
+    background: linear-gradient(to bottom, #FFFFFF, #FFF9FA);
+    /* very light red gradient */
 }
 
 .formula-display {
@@ -334,12 +336,27 @@ ul li {
     text-align: center;
     padding: 25px 0;
     margin-bottom: 22px;
-    background: #FFF9FA;
-    /* super light red tint */
+    background: #FFF0F2;
+    /* clear red tint */
     border-radius: 8px;
     overflow-x: auto;
-    border: 1px dashed #FFCDD2;
+    border: 1px dashed var(--primary-red);
 }
+
+/* Special Highlight Card Strategy */
+.highlight-card {
+    border: 2px solid var(--sidebar-bg);
+    background: #FFF;
+    box-shadow: 0 8px 16px rgba(139, 26, 26, 0.15);
+}
+
+.highlight-display {
+    background: var(--sidebar-bg);
+    border: none;
+    color: #FFF;
+    /* In MathJax, color is inherited unless overriden, we'll try to let it render */
+}
+
 
 .formula-explanation {
     margin-bottom: 15px;
@@ -372,7 +389,8 @@ ul li {
 
 /* Grid Cards (Tables) */
 .grid-card {
-    border-left-color: #546E7A;
+    border-left-color: var(--sidebar-bg);
+    border: 1px solid var(--border-color);
 }
 
 .grid-card h3 {
@@ -407,14 +425,19 @@ ul li {
 }
 
 .data-table th {
-    background-color: #F8F9FA;
+    background-color: var(--sidebar-bg);
     font-weight: 600;
-    color: var(--sidebar-bg);
-    border-bottom: 2px solid var(--border-color);
+    color: #FFFFFF;
+    border-bottom: 2px solid var(--sidebar-bg);
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #FDFBFC;
 }
 
 .data-table tr:hover td {
-    background-color: #FFF9FA;
+    background-color: #FFF0F2;
+    /* Reddish hover */
 }
 
 .data-table tr:last-child td {
@@ -443,34 +466,42 @@ ul li {
     font-weight: 700;
 }
 
-.alert-box.trap {
-    background-color: #FFF3E0;
-    border: 1px solid #FFE0B2;
-}
-
-.alert-box.trap .alert-icon,
-.alert-box.trap h4 {
-    color: #E65100;
-}
-
-.alert-box.tip {
-    background-color: #E8F5E9;
-    border: 1px solid #C8E6C9;
-}
-
-.alert-box.tip .alert-icon,
-.alert-box.tip h4 {
-    color: #2E7D32;
-}
-
+/* Removing Trap/Tip rules but keeping Assumption */
 .alert-box.assumption {
-    background-color: #EAF2F8;
-    border: 1px solid #D4E6F1;
+    background-color: #FFF0F2;
+    border: 1px solid #FFCDD2;
 }
 
 .alert-box.assumption .alert-icon,
 .alert-box.assumption h4 {
-    color: #2980B9;
+    color: var(--sidebar-bg);
+}
+
+/* Toggle Buttons (Derivation) */
+.btn-toggle-derivation {
+    background-color: var(--sidebar-bg);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+    font-family: inherit;
+    box-shadow: 0 2px 4px rgba(139, 26, 26, 0.2);
+}
+
+.btn-toggle-derivation:hover {
+    background-color: var(--primary-red);
+}
+
+.math-block {
+    text-align: center;
+    padding: 10px 0;
 }
 
 /* Responsive */
@@ -513,5 +544,9 @@ ul li {
 
     .alert-icon {
         font-size: 1.5rem;
+    }
+
+    .alt-math-grid {
+        grid-template-columns: 1fr !important;
     }
 }
