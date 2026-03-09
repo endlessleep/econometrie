@@ -242,16 +242,15 @@
                             </table>
                         </div>
 
-                        <div class="derivation-container" style="margin-top: 25px;">
+                        <div class="derivation-container">
                             <button class="btn-toggle-derivation" onclick="toggleDerivation('mm-derivation')">
                                 <i class="fas fa-calculator"></i> Show/Hide Derivation of MM Estimators
                             </button>
 
-                            <div id="mm-derivation" class="derivation-content"
-                                style="display: none; padding: 20px; background: #FFF9FA; border-radius: 8px; margin-top: 15px; border-left: 4px solid var(--primary-red);">
+                            <div id="mm-derivation" class="derivation-content" style="display: none;">
                                 <h4>Derivation of \( \hat{\beta}_0 \)</h4>
                                 <p>From the first equation, we get:</p>
-                                <div class="math-block" style="overflow-x: auto;">
+                                <div class="math-block">
                                     $$ \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \iff $$
                                     $$ \frac{1}{n} \sum y_i - \hat{\beta}_0 \frac{1}{n} \sum 1 - \hat{\beta}_1
                                     \frac{1}{n} \sum x_i = 0 \iff $$
@@ -259,10 +258,10 @@
                                     $$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$
                                 </div>
 
-                                <h4 style="margin-top: 20px;">Derivation of \( \hat{\beta}_1 \)</h4>
+                                <h4>Derivation of \( \hat{\beta}_1 \)</h4>
                                 <p>From the second equation, we get (substitute for \( \hat{\beta}_0 \) and solve for \(
                                     \hat{\beta}_1 \)):</p>
-                                <div class="math-block" style="overflow-x: auto;">
+                                <div class="math-block">
                                     $$ \sum_{i=1}^{n} x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0 \iff $$
                                     $$ \sum x_i (y_i - (\bar{y} - \hat{\beta}_1 \bar{x}) - \hat{\beta}_1 x_i) = 0 \iff
                                     $$
@@ -288,14 +287,11 @@
                         <div class="formula-interpretation alternative-forms">
                             <h4 style="margin-bottom: 10px; color: var(--primary-red);">Alternative Notations of \(
                                 \hat{\beta}_1^{OLS} \):</h4>
-                            <div class="alt-math-grid"
-                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; font-size: 1.1em;">
-                                <div
-                                    style="padding: 15px; background: white; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <div class="alt-math-grid">
+                                <div>
                                     $$ \hat{\beta}_1 = \frac{\sum x_i (y_i - \bar{y})}{\sum x_i (x_i - \bar{x})} $$
                                 </div>
-                                <div
-                                    style="padding: 15px; background: white; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <div>
                                     $$ \hat{\beta}_1 = \frac{\sum y_i (x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
                                 </div>
                             </div>

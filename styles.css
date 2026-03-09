@@ -1,19 +1,24 @@
-/* Red Econ Theme Variables */
+/* TRULY PREMIUM "RED MOOD" THEME */
 :root {
-    --bg-color: #F8F0F2; /* Soft light red/pinkish background instead of white */
-    --sidebar-bg: #6A0DAD; /* Purple-ish? Wait, they want RED. Let's use deep red */
-    --sidebar-bg: #8B1A1A; /* deep academic red */
-    --sidebar-text: #FFFFFF;
-    --primary-red: #D32F2F; /* vibrant red used for borders/highlights */
-    --light-red: #FFEBEE; /* highlight red */
-    --text-main: #212529;
-    --text-muted: #495057;
-    --card-bg: #FFFFFF; /* Keep cards white for readability, but give them a red border */
-    --border-color: #FFCDD2;
-    --shadow-soft: 0 4px 6px rgba(139, 26, 26, 0.08); /* Redder shadows */
-    --shadow-hover: 0 8px 20px rgba(139, 26, 26, 0.18);
-    --border-radius: 12px;
-    --transition: all 0.25s ease;
+    --bg-color: #F8F9FA;
+    /* Ultra light grey / off-white */
+    --sidebar-bg: #2B060D;
+    /* Very deep bordeaux / night red */
+    --sidebar-text: #F1F3F5;
+    --sidebar-hover: #4A0E17;
+    --primary-red: #E63946;
+    /* Vivid crimson */
+    --light-red: #FFF0F2;
+    /* Subtle highlight */
+    --text-main: #343A40;
+    --text-muted: #868E96;
+    --card-bg: #FFFFFF;
+    --border-color: #E9ECEF;
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.03);
+    --shadow-hover: 0 12px 30px rgba(230, 57, 70, 0.08);
+    /* slight crimson tint in shadow */
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 * {
@@ -24,41 +29,78 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color); /* This will make the whole page background soft red */
+    background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
 }
 
+/* Base Layout */
 .app-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* Typography */
-h1, h2, h3, h4, h5 {
-    font-weight: 600;
-    color: var(--sidebar-bg); /* Use the academic red for contrast */
-}
-
-h1 { 
-    font-size: 1.8rem; 
+/* Typography elements */
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
 }
 
-.section-title { 
-    font-size: 2.2rem; 
-    border-bottom: 3px solid var(--primary-red);
+.section-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+    position: relative;
     padding-bottom: 12px;
-    margin-bottom: 35px;
-    color: var(--sidebar-bg);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary-red);
+    border-radius: 2px;
 }
 
 .subsection-title {
-    font-size: 1.4rem;
-    margin: 45px 0 25px;
-    color: var(--primary-red);
+    font-size: 1.5rem;
+    margin: 50px 0 25px;
+    color: #1a1a1a;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subsection-title::before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-red);
+    border-radius: 50%;
+}
+
+p,
+ul,
+li {
+    font-size: 1.05rem;
+    color: var(--text-main);
+}
+
+strong {
     font-weight: 600;
+    color: #1a1a1a;
 }
 
 /* Sidebar */
@@ -68,37 +110,33 @@ h1 {
     color: var(--sidebar-text);
     display: flex;
     flex-direction: column;
-    transition: var(--transition);
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: fixed;
     height: 100vh;
     z-index: 100;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebar.collapsed {
-    width: 70px;
+    width: 80px;
 }
 
 .sidebar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 30px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-header h2 {
     color: #fff;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
     font-weight: 700;
     letter-spacing: 0.5px;
-}
-
-.sidebar-header h2 span {
-    color: #FFCDD2; /* Soft pink-red for contrast in the logo */
 }
 
 .sidebar.collapsed .sidebar-header h2 {
@@ -108,34 +146,34 @@ h1 {
 .toggle-btn {
     background: none;
     border: none;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.6);
     font-size: 1.2rem;
     cursor: pointer;
-    opacity: 0.8;
     transition: var(--transition);
 }
 
 .toggle-btn:hover {
-    opacity: 1;
+    color: #fff;
+    transform: scale(1.1);
 }
 
 .sidebar-nav {
-    padding: 15px 0;
+    padding: 20px 0;
     overflow-y: auto;
 }
 
 /* Accordion */
 .accordion-item {
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 5px;
 }
 
 .accordion-header {
     width: 100%;
-    padding: 16px 20px;
+    padding: 14px 24px;
     background: none;
     border: none;
     text-align: left;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -147,18 +185,19 @@ h1 {
 }
 
 .accordion-header:hover {
-    background-color: rgba(0,0,0,0.1);
+    background-color: var(--sidebar-hover);
+    color: #fff;
 }
 
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease-out;
-    background-color: rgba(0,0,0,0.2);
+    transition: max-height 0.4s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .accordion-item.active .accordion-content {
-    max-height: 800px;
+    max-height: 500px;
 }
 
 .accordion-item.active .accordion-header i {
@@ -167,18 +206,20 @@ h1 {
 
 .nav-link {
     display: block;
-    padding: 12px 20px 12px 40px;
-    color: rgba(255,255,255,0.8);
+    padding: 12px 24px 12px 40px;
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     font-size: 0.85rem;
+    font-weight: 500;
     transition: var(--transition);
-    border-left: 3px solid transparent;
+    border-left: 2px solid transparent;
 }
 
-.nav-link:hover, .nav-link.active {
-    background-color: rgba(255,255,255,0.1);
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.05);
     color: #fff;
-    border-left: 3px solid #FFCDD2;
+    border-left: 2px solid var(--primary-red);
 }
 
 .sidebar.collapsed .accordion-header span,
@@ -191,24 +232,19 @@ h1 {
 .main-content {
     flex: 1;
     margin-left: 280px;
-    transition: var(--transition);
+    transition: margin-left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     display: flex;
     flex-direction: column;
 }
 
-.sidebar.collapsed ~ .main-content {
-    margin-left: 70px;
+.sidebar.collapsed~.main-content {
+    margin-left: 80px;
 }
 
 .top-nav {
-    background-color: transparent; /* No top bar color, blend with background */
-    padding: 20px 40px 0;
     display: flex;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 90;
-    height: 60px;
+    padding: 30px 50px 10px;
 }
 
 .mobile-toggle-btn {
@@ -216,127 +252,138 @@ h1 {
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: var(--sidebar-bg);
+    color: #1a1a1a;
     margin-right: 20px;
     cursor: pointer;
 }
 
 .content-wrapper {
-    padding: 20px 40px 40px;
-    max-width: 950px;
+    padding: 20px 50px 60px;
+    max-width: 900px;
+    /* limits width for better readability */
     margin: 0 auto;
     width: 100%;
 }
 
 .section-block {
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(15px);
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Typography elements */
-p {
-    margin-bottom: 15px;
-    color: var(--text-main);
-    font-size: 1.05rem;
-}
-
-strong {
-    font-weight: 600;
-    color: var(--sidebar-bg); /* Highlight text with red */
-}
-
-ul.styled-list, .concept-card ul {
-    margin-left: 22px;
-    margin-bottom: 15px;
-    color: var(--text-main);
-    font-size: 1.05rem;
+ul.styled-list,
+.concept-card ul {
+    margin-left: 24px;
+    margin-bottom: 20px;
 }
 
 ul li {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 6px;
 }
 
-/* Cards System */
-.concept-card, .formula-card, .grid-card {
+ul li::marker {
+    color: var(--primary-red);
+}
+
+/* PREMIUM CARDS SYSTEM */
+.concept-card,
+.formula-card,
+.grid-card {
     background: var(--card-bg);
     border-radius: var(--border-radius);
-    padding: 26px;
-    margin-bottom: 28px;
+    padding: 32px;
+    margin-bottom: 30px;
     box-shadow: var(--shadow-soft);
-    border: 1px solid var(--border-color); /* Give them all a slight red border */
-    border-left: 6px solid var(--primary-red); /* Thick red left border */
+    border: 1px solid var(--border-color);
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
-.concept-card:hover, .formula-card:hover, .grid-card:hover {
+.concept-card:hover,
+.formula-card:hover,
+.grid-card:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
-    border-color: var(--primary-red);
+    transform: translateY(-4px);
 }
 
 /* Concept Card */
-.concept-card {
-    border-left-color: var(--sidebar-bg);
-    background: linear-gradient(145deg, #ffffff, #fffafa);
+.concept-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    /* Deep red left edge */
 }
 
 .concept-card h3 {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 16px;
-    font-size: 1.25rem;
-    color: var(--sidebar-bg);
-    border-bottom: 2px dashed var(--border-color);
-    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: #1a1a1a;
 }
 
 .concept-card h3 i {
     color: var(--primary-red);
-    font-size: 1.2rem;
-    background: #FFF0F2;
-    padding: 8px;
-    border-radius: 50%;
+    font-size: 1.1rem;
+    opacity: 0.9;
 }
 
 /* Formula Card */
 .formula-card {
-    border-left-color: var(--primary-red);
-    background: linear-gradient(to bottom right, #FFFFFF, #FFF0F2); /* Light red gradient */
+    border: 1px solid rgba(230, 57, 70, 0.2);
+}
+
+.formula-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-red);
 }
 
 .formula-display {
-    font-size: 1.4rem; /* larger for MathJax */
+    font-size: 1.4rem;
     text-align: center;
-    padding: 30px 0;
-    margin-bottom: 25px;
-    background: #FFFFFF;
-    border-radius: 8px;
+    padding: 35px 20px;
+    margin-bottom: 30px;
+    background: #FCFDFE;
+    /* barely off-white */
+    border-radius: 12px;
     overflow-x: auto;
-    border: 2px solid var(--primary-red);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
-/* Special Highlight Card Strategy */
+/* Highlight Card */
 .highlight-card {
-    border-left-color: var(--sidebar-bg);
-    background: #FFF;
-    border: 2px solid var(--sidebar-bg);
-    box-shadow: 0 8px 16px rgba(139, 26, 26, 0.15);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
-.highlight-display {
+.highlight-card::before {
     background: var(--sidebar-bg);
-    border: none;
-    color: #FFF; /* Might not affect MathJax entirely, but provides contrast */
+    /* Deep bordeaux */
 }
 
 .formula-explanation {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .formula-explanation ul {
@@ -345,246 +392,273 @@ ul li {
 }
 
 .formula-explanation li {
-    padding: 12px 0;
-    border-bottom: 1px solid #FFCDD2;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
     font-size: 1.05rem;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    /* Remove default marker */
+    list-style-type: none;
+    padding-left: 16px;
 }
 
-.formula-explanation li:last-child {
-    border-bottom: none;
+.formula-explanation li::marker {
+    content: none;
+}
+
+.formula-explanation li:hover {
+    background: #F8F9FA;
 }
 
 .formula-interpretation {
-    background: var(--sidebar-bg);
-    padding: 18px 22px;
-    border-radius: 8px;
-    color: #FFFFFF;
+    background: var(--light-red);
+    padding: 20px 24px;
+    border-radius: 12px;
+    color: var(--sidebar-bg);
     margin-top: 25px;
     font-size: 1.05rem;
-    border-left: 4px solid #FFCDD2;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-.formula-interpretation strong {
-    color: #FFCDD2;
+    border-left: 4px solid var(--primary-red);
 }
 
 /* Grid Cards (Tables) */
-.grid-card {
-    border-left-color: var(--sidebar-bg);
+.grid-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--text-muted);
+    /* Greyish */
 }
 
 .grid-card h3 {
-    margin-bottom: 22px;
+    margin-bottom: 25px;
     display: flex;
     align-items: center;
     gap: 12px;
-    color: var(--sidebar-bg);
-    border-bottom: 2px dashed var(--border-color);
-    padding-bottom: 10px;
+    color: #1a1a1a;
 }
 
 .grid-card h3 i {
-    color: var(--primary-red);
-    font-size: 1.2rem;
-    background: #FFF0F2;
-    padding: 8px;
-    border-radius: 50%;
+    color: var(--text-muted);
 }
 
 .table-responsive {
     overflow-x: auto;
-    border-radius: 8px;
-    border: 1px solid var(--primary-red);
-    box-shadow: 0 4px 6px rgba(139, 26, 26, 0.05);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: #fff;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 1rem;
-    background: #FFFFFF;
+    font-size: 1.05rem;
 }
 
-.data-table th, .data-table td {
-    padding: 16px 20px;
+.data-table th,
+.data-table td {
+    padding: 16px 24px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
 }
 
 .data-table th {
-    background-color: var(--sidebar-bg);
+    background-color: #F8F9FA;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #1a1a1a;
+    font-size: 0.95rem;
     text-transform: uppercase;
-    font-size: 0.9rem;
     letter-spacing: 0.5px;
 }
 
-.data-table tr:nth-child(even) {
-    background-color: #FFF9FA; /* extremely light red */
-}
-
 .data-table tr:hover td {
-    background-color: #FFEBEE; /* Reddish hover */
+    background-color: rgba(230, 57, 70, 0.02);
+    /* very subtle crimson */
 }
 
 .data-table tr:last-child td {
     border-bottom: none;
 }
 
-/* Alert Boxes */
+/* Alert Boxes / Post-its */
 .alert-box {
     display: flex;
-    padding: 22px;
+    padding: 24px;
     border-radius: var(--border-radius);
-    margin-bottom: 28px;
-    gap: 18px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    margin-bottom: 30px;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    border: 1px solid transparent;
 }
 
 .alert-icon {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     flex-shrink: 0;
     margin-top: 2px;
 }
 
 .alert-content h4 {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-size: 1.15rem;
     font-weight: 700;
+    color: inherit;
+    /* adopts color from parent */
 }
 
-/* Keeping Assumption Alert but making it redder */
 .alert-box.assumption {
-    background-color: #FFF0F2;
-    border: 2px dashed #FF8A80;
+    background-color: #FFF;
+    border-color: #FFE5E5;
+    border-left: 4px solid var(--primary-red);
+    position: relative;
+    overflow: hidden;
 }
 
-.alert-box.assumption .alert-icon, .alert-box.assumption h4 {
+.alert-box.assumption::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle top right, var(--light-red) 0%, transparent 70%);
+    opacity: 0.5;
+}
+
+.alert-box.assumption h4,
+.alert-box.assumption .alert-icon {
     color: var(--sidebar-bg);
+    /* deep red text */
 }
 
-/* Premium Derivation Button */
+/* Sleek Premium Ghost Button */
 .btn-toggle-derivation {
-    background: linear-gradient(135deg, var(--sidebar-bg) 0%, var(--primary-red) 100%);
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    font-size: 1.05rem;
+    background: transparent;
+    color: var(--primary-red);
+    border: 1.5px solid var(--primary-red);
+    padding: 12px 24px;
+    font-size: 0.95rem;
     font-weight: 600;
-    border-radius: 50px; /* Pill shape for modern look */
+    border-radius: 8px;
+    /* Standard sleek radius */
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    gap: 10px;
+    transition: all 0.2s ease;
     font-family: inherit;
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: 100%;
-    max-width: 450px;
-    margin: 20px auto;
+    margin: 15px 0;
 }
 
 .btn-toggle-derivation i {
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
+    font-size: 1.1rem;
 }
 
 .btn-toggle-derivation:hover {
+    background: var(--light-red);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.5);
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--sidebar-bg) 100%);
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.1);
 }
 
 .btn-toggle-derivation:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(211, 47, 47, 0.4);
+    transform: translateY(0);
 }
 
 .derivation-container {
-    text-align: center;
     margin-top: 30px;
-    padding-top: 20px;
+    padding-top: 25px;
     border-top: 1px solid var(--border-color);
 }
 
 .derivation-content {
     text-align: left;
-    padding: 25px;
-    background: #FFFFFF;
+    padding: 30px;
+    background: #FCFDFE;
     border-radius: 12px;
     margin-top: 20px;
-    border: 2px solid var(--primary-red);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02), 0 4px 15px rgba(139, 26, 26, 0.08);
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
 .derivation-content h4 {
-    color: var(--sidebar-bg);
-    margin-bottom: 15px;
-    font-size: 1.2rem;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-size: 1.15rem;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
-.derivation-content h4::before {
-    content: "��";
-    font-size: 1.2rem;
+
+.derivation-content h4 i {
+    color: var(--text-muted);
 }
 
 .math-block {
     text-align: center;
-    padding: 15px 0;
-    background: #FFF9FA;
+    padding: 20px 0;
+    background: #fff;
     border-radius: 8px;
-    margin: 15px 0;
-    border: 1px dashed var(--border-color);
+    margin: 20px 0;
+    border: 1px solid #E9ECEF;
+    overflow-x: auto;
+}
+
+.alt-math-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.alt-math-grid>div {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    text-align: center;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
     .sidebar {
         transform: translateX(-100%);
-        box-shadow: none;
     }
-    
+
     .sidebar.mobile-open {
         transform: translateX(0);
-        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
     }
-    
-    .main-content, .sidebar.collapsed ~ .main-content {
+
+    .main-content,
+    .sidebar.collapsed~.main-content {
         margin-left: 0;
     }
-    
+
     .mobile-toggle-btn {
         display: block;
     }
-    
+
+    .top-nav {
+        padding: 20px 30px;
+    }
+
     .content-wrapper {
-        padding: 10px 20px 25px;
+        padding: 10px 30px 40px;
     }
-    
-    h1 {
-        font-size: 1.5rem;
-    }
-    
+
     .section-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
-    
+
     .alert-box {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
     }
-    
-    .alert-icon {
-        font-size: 1.5rem;
-    }
-    
+
     .alt-math-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
     }
 }
