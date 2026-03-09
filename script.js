@@ -49,3 +49,36 @@ function toggleDerivation(id) {
         }
     }
 }
+
+// Section toggler for single page app feel
+function switchSection(event, targetId) {
+    if (event) {
+        event.preventDefault();
+
+        // Update active class on nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => link.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }
+
+    // Hide all sections
+    const sections = document.querySelectorAll('.page-section');
+    sections.forEach(sec => {
+        sec.style.display = 'none';
+        sec.classList.remove('active');
+    });
+
+    // Show target section
+    const target = document.getElementById(targetId);
+    if (target) {
+        target.style.display = 'block';
+        setTimeout(() => {
+            target.classList.add('active');
+        }, 50); // slight delay for CSS transition if any
+    }
+
+    // Close sidebar on mobile
+    if (window.innerWidth <= 900) {
+        document.querySelector('.sidebar').classList.remove('mobile-open');
+    }
+}
