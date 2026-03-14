@@ -705,7 +705,6 @@
                         <div class="math-formula highlight-formula">
                             $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k + u $$
                         </div>
-                        <p><strong>Key Concept:</strong> <em>Ceteris Paribus</em> interpretation. We can observe the effect of one variable while holding others fixed.</p>
                         
                         <div class="alert-box assumption" style="margin-top:20px;">
                             <i class="fas fa-vial alert-icon"></i>
@@ -714,7 +713,7 @@
                                 <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
                                     $$ E(u \mid x_1, x_2, \dots, x_k) = 0 $$
                                 </div>
-                                <p><strong>Meaning:</strong> The error term is uncorrelated with all explanatory variables. This is the crucial condition for the <strong>unbiasedness</strong> of OLS estimators.</p>
+                                <p><strong>Meaning:</strong> The error term is uncorrelated with all explanatory variables (Zero Conditional Mean). This ensures that estimators are <strong>unbiased</strong>.</p>
                             </div>
                         </div>
                     </div>
@@ -722,47 +721,80 @@
                     <!-- Matrix Notation -->
                     <div class="concept-card">
                         <h3><i class="fas fa-table"></i> Matrix Notation</h3>
-                        <p>For more compact derivations and computations, we represent the model using matrices:</p>
+                        <p>We represent the model using matrices for cleaner derivations:</p>
                         <div class="math-formula highlight-formula">
                             $$ Y = X\beta + u $$
                         </div>
                         
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:20px;">
-                            <div class="formula-card" style="margin:0;">
-                                <p><strong>Vectors \( Y \) and \( u \) \((n \times 1)\):</strong></p>
-                                $$ Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}, \quad u = \begin{pmatrix} u_1 \\ u_2 \\ \vdots \\ u_n \end{pmatrix} $$
-                            </div>
-                            <div class="formula-card" style="margin:0;">
-                                <p><strong>Parameter Vector \( \beta \) \(((k+1) \times 1)\):</strong></p>
-                                $$ \beta = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_k \end{pmatrix} $$
-                            </div>
-                        </div>
-                        
-                        <div class="formula-card" style="margin-top:20px;">
-                            <p><strong>Design Matrix \( X \) \((n \times (k+1))\):</strong></p>
-                            $$ X = \begin{pmatrix} 1 & x_{11} & \dots & x_{1k} \\ 1 & x_{21} & \dots & x_{2k} \\ \vdots & \vdots & \ddots & \vdots \\ 1 & x_{n1} & \dots & x_{nk} \end{pmatrix} $$
-                        </div>
-                        
-                        <div class="alert-box" style="margin-top:20px;">
-                            <i class="fas fa-check-circle alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Check Dimensions</h4>
-                                <p>\( Y (n \times 1) = X (n \times (k+1)) \cdot \beta ((k+1) \times 1) + u (n \times 1) \). Correct!</p>
+                        <div class="formula-card" style="margin-top:20px; overflow-x: auto;">
+                            <div style="display: flex; justify-content: space-around; align-items: center; min-width: 600px; padding: 10px 0;">
+                                <div style="text-align: center;">
+                                    <p style="margin-bottom: 10px;"><strong>Vector \( Y \)</strong></p>
+                                    $$ \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix} $$
+                                </div>
+                                <div>$$ = $$</div>
+                                <div style="text-align: center;">
+                                    <p style="margin-bottom: 10px;"><strong>Matrix \( X \)</strong></p>
+                                    $$ \begin{pmatrix} 1 & x_{11} & \dots & x_{1k} \\ 1 & x_{21} & \dots & x_{2k} \\ \vdots & \vdots & \ddots & \vdots \\ 1 & x_{n1} & \dots & x_{nk} \end{pmatrix} $$
+                                </div>
+                                <div style="text-align: center;">
+                                    <p style="margin-bottom: 10px;"><strong>Vector \( \beta \)</strong></p>
+                                    $$ \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_k \end{pmatrix} $$
+                                </div>
+                                <div>$$ + $$</div>
+                                <div style="text-align: center;">
+                                    <p style="margin-bottom: 10px;"><strong>Vector \( u \)</strong></p>
+                                    $$ \begin{pmatrix} u_1 \\ u_2 \\ \vdots \\ u_n \end{pmatrix} $$
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- OLS Estimator (Matrix Form) -->
+                    <!-- Matrix Calculus Reference -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-book-math"></i> Matrix Calculus Reference</h3>
+                        <p>Essential derivatives for MCO matrix proofs:</p>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Expression</th>
+                                        <th>Derivative w.r.t. \( \beta \)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>\( a^T \beta \) or \( \beta^T a \)</td>
+                                        <td>\( a \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>\( \beta^T \beta \)</td>
+                                        <td>\( 2\beta \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>\( \beta^T A \beta \) <strong>(A symmetric)</strong></td>
+                                        <td style="color:var(--primary-red); font-weight:bold;">\( 2A\beta \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>\( \beta^T A \beta \) <strong>(A non-symmetric)</strong></td>
+                                        <td>\( (A + A^T)\beta \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>\( (A\beta)^T (A\beta) \)</td>
+                                        <td>\( 2A^T A \beta \)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <div class="concept-card highlight">
                         <h3><i class="fas fa-calculator"></i> OLS Estimator (Matrix Form)</h3>
                         <p>The vector of OLS estimates is given by the <strong>Normal Equations</strong>:</p>
                         <div class="math-formula highlight-formula">
                             $$ \hat{\beta} = (X^T X)^{-1} X^T Y $$
                         </div>
-                        <ul style="margin-top:15px;">
-                            <li><strong>What is estimated:</strong> The $(k+1)$ coefficients (intercept + $k$ slopes).</li>
-                            <li><strong>Dimensions:</strong> \(\hat{\beta}\) is a \(((k+1) \times 1)\) vector.</li>
-                        </ul>
+                        <p style="margin-top: 15px;">The vector \(\hat{\beta}\) contains the \((k+1)\) estimated coefficients (intercept + \(k\) slopes).</p>
 
                         <button class="action-btn" onclick="toggleDerivation('derive-ols-matrix')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
                         <div id="derive-ols-matrix" class="hidden-panel">
@@ -789,35 +821,48 @@
                     <!-- Interpretation of Coefficients -->
                     <div class="concept-card">
                         <h3><i class="fas fa-comment-dots"></i> Interpretation of Coefficients</h3>
-                        <p><strong>Intercept (\( \hat{\beta}_0 \)):</strong> Predicted value of \( y \) when all \( x_j = 0 \).</p>
-                        <p><strong>Slope Coefficients (\( \hat{\beta}_j \)):</strong> Partial effect of \( x_j \) on \( y \).</p>
+                        <p><strong>Intercept (\( \hat{\beta}_0 \)):</strong> The predicted value of \( y \) when all independent variables are zero (\( x_1 = x_2 = \dots = x_k = 0 \)).</p>
+                        <p><strong>Slope Coefficients (\( \hat{\beta}_j \)):</strong> Measures the <strong>partial effect</strong> of \( x_j \) on \( y \).</p>
                         <div class="math-formula highlight-formula">
-                            $$ \Delta \hat{y} = \hat{\beta}_j \Delta x_j \quad \text{(holding all other variables fixed)} $$
+                            $$ \Delta \hat{y} = \hat{\beta}_j \Delta x_j $$
                         </div>
-                        <p>Thus, \( \hat{\beta}_j = \frac{\Delta \hat{y}}{\Delta x_j} \) represents the <em>ceteris paribus</em> change in \( y \).</p>
+                        <p>This represents the change in \( y \) for one unit change in \( x_j \), <strong>holding all other variables fixed</strong> (<em>ceteris paribus</em>).</p>
                     </div>
 
                     <!-- MLR Assumptions -->
                     <div class="concept-card">
                         <h3><i class="fas fa-clipboard-list"></i> Multiple Linear Regression Assumptions</h3>
+                        <p>Gauss-Markov assumptions for unbiasedness in multiple regression:</p>
                         <div class="table-container">
                             <table>
                                 <tbody>
                                     <tr>
                                         <td><strong>MLR.1</strong></td>
-                                        <td><strong>Linear in Parameters:</strong> \( y = \beta_0 + \beta_1 x_1 + \dots + \beta_k x_k + u \).</td>
+                                        <td>
+                                            <strong>Linear in Parameters</strong><br>
+                                            \( y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k + u \).
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>MLR.2</strong></td>
-                                        <td><strong>Random Sampling:</strong> The data are a random sample reflecting the population.</td>
+                                        <td>
+                                            <strong>Random Sampling</strong><br>
+                                            We observe a random sample reflecting the population.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>MLR.3</strong></td>
-                                        <td><strong>No Perfect Collinearity:</strong> No independent variable is a perfect linear combination of the others. Matrix \( X \) has <em>full column rank</em>.</td>
+                                        <td>
+                                            <strong>No Perfect Collinearity</strong><br>
+                                            No independent variable is a perfect linear combination of others. \( X \) has <strong>full column rank</strong>.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>MLR.4</strong></td>
-                                        <td><strong>Zero Conditional Mean:</strong> \( E(u \mid X) = 0 \). The errors are not systematic.</td>
+                                        <td>
+                                            <strong>Zero Conditional Mean</strong><br>
+                                            \( E(u \mid x_1, \dots, x_k) = 0 \). This implies \( Cov(x_j, u) = 0 \).
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -857,30 +902,48 @@
                     <!-- Model Misspecification -->
                     <div class="concept-card">
                         <h3><i class="fas fa-exclamation-triangle"></i> Model Misspecification</h3>
-                        <p>What happens if we include irrelevant variables or omit relevant ones?</p>
+                        <p>Analyzing the impact of model choice on estimator properties.</p>
                         
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:20px;">
-                            <div class="formula-card" style="margin:0; border-left: 5px solid #ffcc00;">
-                                <h4>Overspecified Model</h4>
-                                <p>Adding irrelevant variables (variables whose true \(\beta_j = 0\)).</p>
-                                <p><strong>Result:</strong> OLS remains <strong>unbiased</strong>, but variance may increase.</p>
+                            <div class="formula-card" style="margin:0; border: 2px solid #ffcc00; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.1);">
+                                <h4 style="color:#cc9900;"><i class="fas fa-plus-circle"></i> Overspecified Model</h4>
+                                <p>Adding irrelevant variables (where true \(\beta_j = 0\)).</p>
+                                <p style="margin-top:10px; font-weight:bold; color:var(--sidebar-bg);">Result: MCO remains unbiased, but variance may increase.</p>
                             </div>
-                            <div class="formula-card" style="margin:0; border-left: 5px solid var(--primary-red);">
-                                <h4>Underspecified Model</h4>
+                            <div class="formula-card" style="margin:0; border: 2px solid var(--primary-red); box-shadow: 0 4px 15px rgba(255, 0, 102, 0.1);">
+                                <h4 style="color:var(--primary-red);"><i class="fas fa-minus-circle"></i> Underspecified Model</h4>
                                 <p>Omitting a relevant variable (Omitted Variable Bias).</p>
-                                <p><strong>Result:</strong> OLS estimators become <strong>biased</strong> if the omitted variable is correlated with included ones.</p>
+                                <p style="margin-top:10px; font-weight:bold; color:var(--primary-red);">Result: MCO estimators become biased if \( Corr(x_1, x_{omitted}) \neq 0 \).</p>
                             </div>
                         </div>
 
                         <button class="action-btn" onclick="toggleDerivation('derive-ovb')"><i class="fas fa-eye"></i> Show/Hide OVB Derivation</button>
                         <div id="derive-ovb" class="hidden-panel">
-                            <p>Suppose the true model is \( y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u \), but we estimate \( y = \beta_0 + \beta_1 x_1 + \tilde{u} \).</p>
-                            <p>The OLS estimator of \( \beta_1 \) captures the effect of \( x_2 \) through its correlation with \( x_1 \):</p>
+                            <p><strong>Bias in misspecified models:</strong> The true population model is:</p>
                             <div class="math-formula">
-                                $$ E(\tilde{\beta}_1) = \beta_1 + \beta_2 \frac{\sum (x_{i1} - \bar{x}_1)(x_{i2} - \bar{x}_2)}{\sum (x_{i1} - \bar{x}_1)^2} $$
-                                $$ E(\tilde{\beta}_1) = \beta_1 + \beta_2 \tilde{\delta}_1 $$
+                                $$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + u_i $$
                             </div>
-                            <p>Where \( \tilde{\delta}_1 \) is the slope from a regression of \( x_2 \) on \( x_1 \). If \( \beta_2 \neq 0 \) and \( Corr(x_1, x_2) \neq 0 \), then \( \tilde{\beta}_1 \) is biased.</p>
+                            <p>But we estimate a simple regression with only one explanatory variable:</p>
+                            <div class="math-formula">
+                                $$ y_i = \beta_0 + \beta_1 x_{i1} + u_i $$
+                            </div>
+                            <p>The OLS estimator is:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \frac{\sum_{i=1}^{n} y_i (x_{i1}-\bar{x}_1)}{\sum_{i=1}^{n} (x_{i1}-\bar{x}_1)^2} $$
+                            </div>
+                            <p>Substitute the true model for \( y_i \):</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \frac{\sum_{i=1}^{n} (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + u_i) (x_{i1}-\bar{x}_1)}{\sum_{i=1}^{n} (x_{i1}-\bar{x}_1)^2} $$
+                                $$ = \frac{ \beta_0 \sum (x_{i1}-\bar{x}_1) + \beta_1 \sum x_{i1}(x_{i1}-\bar{x}_1) + \beta_2 \sum x_{i2}(x_{i1}-\bar{x}_1) + \sum u_i (x_{i1}-\bar{x}_1) }{\sum (x_{i1}-\bar{x}_1)^2} $$
+                            </div>
+                            <p>Using properties of sample means: \( \sum (x_{i1}-\bar{x}_1) = 0 \) and \( \sum x_{i1}(x_{i1}-\bar{x}_1) = \sum (x_{i1}-\bar{x}_1)^2 \):</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \beta_1 + \beta_2 \frac{\sum_{i=1}^{n} x_{i2}(x_{i1}-\bar{x}_1)}{\sum_{i=1}^{n} (x_{i1}-\bar{x}_1)^2} + \frac{\sum_{i=1}^{n} u_i (x_{i1}-\bar{x}_1)}{\sum_{i=1}^{n} (x_{i1}-\bar{x}_1)^2} $$
+                            </div>
+                            <p>Taking expectations:</p>
+                            <div class="math-formula">
+                                $$ E(\hat{\beta}_1) = \beta_1 + \beta_2 \frac{\sum (x_{i2}-\bar{x}_2)(x_{i1}-\bar{x}_1)}{\sum (x_{i1}-\bar{x}_1)^2} $$
+                            </div>
                         </div>
 
                         <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:30px;">Summary of Omitted Variable Bias</h4>
@@ -908,7 +971,6 @@
                             </table>
                         </div>
                     </div>
-
                     <!-- Variance of OLS estimators -->
                     <div class="concept-card">
                         <h3><i class="fas fa-wave-square"></i> Variance of OLS Estimators</h3>
@@ -961,45 +1023,7 @@
                         </div>
                         <p>Alternatively: \( Var(\hat{\beta}_j) = \frac{\sigma^2}{SST_j(1 - R_j^2)} \), where \( R_j^2 \) is the R-squared from regressing \( x_j \) on all other independent variables.</p>
                     </div>
-
-                    <!-- Matrix Calculus Reference -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-book-math"></i> Matrix Calculus Reference</h3>
-                        <p>Common derivatives used for OLS derivations:</p>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Expression</th>
-                                        <th>Derivative w.r.t. \( \beta \)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>\( a^T \beta \)</td>
-                                        <td>\( a \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\( \beta^T a \)</td>
-                                        <td>\( a \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\( \beta^T \beta \)</td>
-                                        <td>\( 2\beta \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\( \beta^T A \beta \text{ (A symmetric)} \)</td>
-                                        <td>\( 2A\beta \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>\( (A\beta)^T (A\beta) \)</td>
-                                        <td>\( 2A^T A \beta \)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    </div>
+                </section>
 
             </div>
         </main>
