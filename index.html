@@ -492,15 +492,64 @@
                             $$ E(\hat{\beta}_0) = \beta_0 \quad \text{and} \quad E(\hat{\beta}_1) = \beta_1 $$
                         </div>
                         <p>Therefore, \( \hat{\beta}_0 \) and \( \hat{\beta}_1 \) are unbiased estimators.</p>
-                        <button class="action-btn" onclick="toggleDerivation('derive-unbiased')"><i
-                                class="fas fa-eye"></i>
-                            Show/Hide Proof</button>
-                        <div id="derive-unbiased" class="hidden-panel">
-                            <p>To prove this, represent \( \hat{\beta}_1 \) uniquely in terms of population parameters
-                                and
-                                the error terms \( u_i \). Then calculate its expectation conditionally on the sample
-                                values
-                                of \( x \), applying assumption SLR.4 \( E(u|x) = 0 \).</p>
+                        <button class="action-btn" onclick="toggleDerivation('derive-unbiased-b1')"><i class="fas fa-eye"></i> Show/Hide Proof for \( \hat{\beta}_1 \)</button>
+                        <div id="derive-unbiased-b1" class="hidden-panel">
+                            <p>Start from the OLS estimator:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \frac{\sum_{i=1}^{n} y_i(x_i-\bar{x})}{\sum_{i=1}^{n}(x_i-\bar{x})^2} $$
+                            </div>
+                            <p>Using the linear model:</p>
+                            <div class="math-formula">
+                                $$ y_i = \beta_0 + \beta_1 x_i + u_i $$
+                            </div>
+                            <p>Substitute:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \frac{\sum (\beta_0 + \beta_1 x_i + u_i)(x_i-\bar{x})}{\sum (x_i-\bar{x})^2} $$
+                            </div>
+                            <p>Expand:</p>
+                            <div class="math-formula">
+                                $$ = \beta_0 \frac{\sum (x_i-\bar{x})}{\sum (x_i-\bar{x})^2} + \beta_1 \frac{\sum x_i(x_i-\bar{x})}{\sum (x_i-\bar{x})^2} + \frac{\sum u_i(x_i-\bar{x})}{\sum (x_i-\bar{x})^2} $$
+                            </div>
+                            <p>Use properties:</p>
+                            <div class="math-formula">
+                                $$ \sum (x_i-\bar{x}) = 0 $$
+                                $$ \sum x_i(x_i-\bar{x}) = \sum (x_i-\bar{x})^2 $$
+                            </div>
+                            <p>Thus:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \beta_1 + \frac{\sum u_i(x_i-\bar{x})}{\sum (x_i-\bar{x})^2} $$
+                            </div>
+                            <p>Take expectations conditional on \( x \):</p>
+                            <div class="math-formula">
+                                $$ E(\hat{\beta}_1) = \beta_1 + \frac{\sum (x_i-\bar{x})E(u_i)}{\sum (x_i-\bar{x})^2} $$
+                            </div>
+                            <p>Using the assumption \( E(u_i|x_i)=0 \) we obtain:</p>
+                            <div class="math-formula">
+                                $$ E(\hat{\beta}_1)=\beta_1 $$
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-unbiased-b0')"><i class="fas fa-eye"></i> Show/Hide Proof for \( \hat{\beta}_0 \)</button>
+                        <div id="derive-unbiased-b0" class="hidden-panel">
+                            <p>Recall:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$
+                            </div>
+                            <p>Take expectation:</p>
+                            <div class="math-formula">
+                                $$ E(\hat{\beta}_0) = E(\bar{y}) - \bar{x}E(\hat{\beta}_1) $$
+                            </div>
+                            <p>Since \( \bar{y} = \beta_0 + \beta_1 \bar{x} + \bar{u} \), we have:</p>
+                            <div class="math-formula">
+                                $$ E(\bar{y}) = \beta_0 + \beta_1 \bar{x} $$
+                            </div>
+                            <p>Thus:</p>
+                            <div class="math-formula">
+                                $$ E(\hat{\beta}_0) = \beta_0 + \beta_1 \bar{x} - \bar{x}\beta_1 $$
+                                $$ E(\hat{\beta}_0) = \beta_0 $$
+                            </div>
                         </div>
                     </div>
 
@@ -539,14 +588,40 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="action-btn" onclick="toggleDerivation('derive-variances')"><i
-                                class="fas fa-eye"></i>
-                            Show/Hide Derivation</button>
+                        <button class="action-btn" onclick="toggleDerivation('derive-variances')"><i class="fas fa-eye"></i> Show/Hide Proof</button>
                         <div id="derive-variances" class="hidden-panel">
-                            <p>Derivation builds upon the linear expression of the estimators defined in the
-                                unbiasedness
-                                proof. We then calculate the variance rather than the expectation, using properties of
-                                independent elements and SLR.5.</p>
+                            <p>Start from the rewritten OLS estimator:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \beta_1 + \frac{\sum_{i=1}^{n} u_i(x_i-\bar{x})}{\sum_{i=1}^{n}(x_i-\bar{x})^2} $$
+                            </div>
+                            <p>Since the variance of a constant is zero:</p>
+                            <div class="math-formula">
+                                $$ Var(\hat{\beta}_1) = Var\left(\frac{\sum u_i(x_i-\bar{x})}{\sum (x_i-\bar{x})^2}\right) $$
+                            </div>
+                            <p>Factor out the constant denominator:</p>
+                            <div class="math-formula">
+                                $$ = \frac{1}{\left(\sum (x_i-\bar{x})^2\right)^2} Var\left(\sum u_i(x_i-\bar{x})\right) $$
+                            </div>
+                            <p>Using the variance of a sum:</p>
+                            <div class="math-formula">
+                                $$ = \frac{1}{\left(\sum (x_i-\bar{x})^2\right)^2} \sum Var\left(u_i(x_i-\bar{x})\right) $$
+                            </div>
+                            <p>Since \( x_i \) are constants:</p>
+                            <div class="math-formula">
+                                $$ = \frac{1}{\left(\sum (x_i-\bar{x})^2\right)^2} \sum (x_i-\bar{x})^2 Var(u_i) $$
+                            </div>
+                            <p>Using \( Var(u_i)=\sigma^2 \):</p>
+                            <div class="math-formula">
+                                $$ = \frac{1}{\left(\sum (x_i-\bar{x})^2\right)^2} \sum (x_i-\bar{x})^2 \sigma^2 $$
+                            </div>
+                            <p>Factor out \( \sigma^2 \):</p>
+                            <div class="math-formula">
+                                $$ = \sigma^2 \frac{\sum (x_i-\bar{x})^2}{\left(\sum (x_i-\bar{x})^2\right)^2} $$
+                            </div>
+                            <p>Simplify:</p>
+                            <div class="math-formula">
+                                $$ Var(\hat{\beta}_1)=\frac{\sigma^2}{\sum (x_i-\bar{x})^2} $$
+                            </div>
                         </div>
                     </div>
 
