@@ -37,6 +37,7 @@
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-1-2')">1.2 OLS
                             Properties</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-1-3')">1.3 Multiple Regression Model</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-1-4')">1.4 Inference</a>
                     </div>
                 </div>
             </nav>
@@ -1024,6 +1025,150 @@
                         <p>Alternatively: \( Var(\hat{\beta}_j) = \frac{\sigma^2}{SST_j(1 - R_j^2)} \), where \( R_j^2 \) is the R-squared from regressing \( x_j \) on all other independent variables.</p>
                     </div>
                 </section>
+
+                <!-- SECTION 1.4 INFERENCE -->
+                <section id="section-1-4" class="page-section" style="display:none;">
+                    <h1 class="page-title">1.4 Multiple Regression Analysis: Inference</h1>
+
+                    <!-- Gauss-Markov Theorem -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-trophy"></i> Gauss-Markov Theorem</h3>
+                        <p>Under assumptions <strong>MLR.1 through MLR.5</strong> (Gauss-Markov assumptions), the OLS estimator is the <strong>BLUE</strong>:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \text{B.L.U.E. = Best Linear Unbiased Estimator} $$
+                        </div>
+                        <ul style="margin-top:15px;">
+                            <li><strong>Linear:</strong> \(\hat{\beta}_j\) can be expressed as a linear function of \(y_i\): \(\hat{\beta}_j = \sum w_{ij} y_i \).</li>
+                            <li><strong>Best:</strong> Within the class of linear unbiased estimators, OLS has the <strong>minimum variance</strong> (it is efficient).</li>
+                        </ul>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-blue-linearity')"><i class="fas fa-eye"></i> Show/Hide Simple Case (Linearity)</button>
+                        <div id="derive-blue-linearity" class="hidden-panel">
+                            <p>For simple regression, the OLS estimator for the slope is:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \frac{\sum (x_i - \bar{x}) y_i}{\sum (x_i - \bar{x})^2} = \sum w_i y_i $$
+                            </div>
+                            <p>where the weights are \( w_i = \frac{x_i - \bar{x}}{\sum (x_k - \bar{x})^2} \). Since \(w_i\) only depends on \(x\), \(\hat{\beta}_1\) is a linear function of \(y\).</p>
+                        </div>
+                    </div>
+
+                    <!-- Normality Assumption (MLR.6) -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-bell"></i> Normality Assumption (MLR.6)</h3>
+                        <p>To perform statistical inference (tests and confidence intervals), we need to know the distribution of the error term:</p>
+                        <div class="alert-box assumption">
+                            <i class="fas fa-microchip alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>MLR.6 Normality</h4>
+                                <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                                    $$ u \sim N(0, \sigma^2) $$
+                                </div>
+                                <p>The error \(u\) is independent of \(x\) and follows a <strong>Normal Distribution</strong>.</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Classical Linear Model (CLM):</strong> Assumptions <strong>MLR.1 to MLR.6</strong> together are called the CLM assumptions.</p>
+                        <div class="alert-box" style="margin-top:15px;">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <p>Under CLM, the OLS estimator is <strong>BUE</strong> (Best Unbiased Estimator), which is even stronger than BLUE.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Normal Sampling Distribution -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-chart-area"></i> Normal Sampling Distribution</h3>
+                        <p>Under MLR.1–MLR.6, the OLS estimators follow a normal distribution:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \hat{\beta}_j \sim N\left( \beta_j, Var(\hat{\beta}_j) \right) $$
+                        </div>
+                        <p>Standardizing gives us the standard normal result (if \(\sigma\) was known):</p>
+                        <div class="math-formula">
+                            $$ \frac{\hat{\beta}_j - \beta_j}{sd(\hat{\beta}_j)} \sim N(0, 1) $$
+                        </div>
+                        <p><em>However, in practice we must estimate \(\sigma\), leading us to the \(t\)-distribution.</em></p>
+                    </div>
+
+                    <!-- Hypothesis Testing: t-test -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-microscope"></i> Hypothesis Testing (t-test)</h3>
+                        <p>Under CLM assumptions, the standardized estimator follows a \(t\)-distribution:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \frac{\hat{\beta}_j - \beta_j}{se(\hat{\beta}_j)} \sim t_{n-k-1} $$
+                        </div>
+                        <p><strong>t-ratio for \(H_0: \beta_j = 0\):</strong></p>
+                        <div class="math-formula">
+                            $$ t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{se(\hat{\beta}_j)} $$
+                        </div>
+                        <p>We reject \(H_0\) if \(|t| > t_{critical}\) or if \(p\text{-value} < \alpha\).</p>
+                        
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:20px;">
+                            <div class="formula-card" style="margin:0;">
+                                <h4>One-sided Test</h4>
+                                \(H_1: \beta_j > 0\) (or \(< 0\))<br>
+                                Focus on one tail.
+                            </div>
+                            <div class="formula-card" style="margin:0;">
+                                <h4>Two-sided Test</h4>
+                                \(H_1: \beta_j \neq 0\)<br>
+                                Focus on both tails.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Intervals -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-arrows-alt-h"></i> Confidence Intervals</h3>
+                        <p>A \((1-\alpha)\) confidence interval for \(\beta_j\) is constructed as:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \hat{\beta}_j \pm t_{n-k-1, 1-\alpha/2} \cdot se(\hat{\beta}_j) $$
+                        </div>
+                        <p><strong>Rule of thumb (95% CI):</strong> For large samples (\(df > 120\)), the critical value is approx. \(2\).</p>
+                        <div class="alert-box">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <p>If the CI contains \(0\), we cannot reject the null hypothesis \(H_0: \beta_j = 0\) at the \(\alpha\) significance level.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Economic vs Statistical Significance -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-balance-scale-right"></i> Economic vs. Statistical Significance</h3>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                            <div class="formula-card" style="margin:0; border-left: 5px solid var(--primary-red);">
+                                <h4>Statistical Significance</h4>
+                                <p>Is the \(p\)-value small enough? Is the effect different from zero purely due to chance?</p>
+                            </div>
+                            <div class="formula-card" style="margin:0; border-left: 5px solid #007bff;">
+                                <h4>Economic Significance</h4>
+                                <p>Is the <strong>magnitude</strong> of \(\beta_j\) large enough to matter in the real world?</p>
+                            </div>
+                        </div>
+                        <p style="margin-top:15px;"><em>Caution:</em> A variable can be statistically significant but economically irrelevant (very small effect), or vice-versa (large effect but high standard error).</p>
+                    </div>
+
+                    <!-- Testing Linear Combinations -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-link"></i> Testing Linear Combinations</h3>
+                        <p>Sometimes we want to test if two parameters are equal: \(H_0: \beta_1 = \beta_2\).</p>
+                        <p><strong>The t-statistic:</strong></p>
+                        <div class="math-formula highlight-formula">
+                            $$ t = \frac{\hat{\beta}_1 - \hat{\beta}_2}{se(\hat{\beta}_1 - \hat{\beta}_2)} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-linear-combo')"><i class="fas fa-eye"></i> Show/Hide Rewriting Trick</button>
+                        <div id="derive-linear-combo" class="hidden-panel">
+                            <p>Define \(\theta = \beta_1 - \beta_2\). The null is \(H_0: \theta = 0\).</p>
+                            <p>Substitute \(\beta_1 = \theta + \beta_2\) into the original model:</p>
+                            <div class="math-formula">
+                                $$ y = \beta_0 + (\theta + \beta_2)x_1 + \beta_2 x_2 + u $$
+                                $$ y = \beta_0 + \theta x_1 + \beta_2(x_1 + x_2) + u $$
+                            </div>
+                            <p>By defining a new variable \(x^* = x_1 + x_2\), we can estimate the model and the \(t\)-ratio for \(x_1\) will directly test our hypothesis.</p>
+                        </div>
+                    </div>
 
             </div>
         </main>
