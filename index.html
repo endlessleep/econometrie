@@ -47,6 +47,8 @@
                     </button>
                     <div class="accordion-content">
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1')">t-test (one-sided, right)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-2')">t-test (two-sided)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-3')">Confidence Interval</a>
                     </div>
                 </div>
             </nav>
@@ -1225,6 +1227,94 @@
                         
                         <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
                         <p style="text-align: center;">Compare \( t_{obs} \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
+                    </div>
+                </section>
+
+                <!-- SECTION METHOD 2 -->
+                <section id="section-method-2" class="page-section" style="display:none;">
+                    <h1 class="page-title">🎯 t-test (two-sided) — Econometrics</h1>
+                    
+                    <div class="concept-card highlight">
+                        <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
+                        <div class="math-formula highlight-formula">
+                            $$ H_0 : \beta_j = \beta_{j,0} \quad \text{vs} \quad H_1 : \beta_j \neq \beta_{j,0} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
+                        <div class="math-formula">
+                            $$ t = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 3. Decision rule</h3>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0; color: var(--primary-red); font-weight: bold;">
+                            $$ \text{Reject } H_0 \text{ if } |t| > c $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
+                        <div class="math-formula">
+                            $$ c = t_{n-k-1,\;1-\alpha/2} $$
+                        </div>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-method2-step4')" style="margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Critical Value Derivation</button>
+                        <div id="derive-method2-step4" class="hidden-panel">
+                            <div class="math-formula">
+                                $$ P(-c < t < c \mid H_0) = 1 - \alpha $$
+                                $$ P(t < -c \ \text{or} \ t > c) = \alpha $$
+                                $$ P(t < -c) = P(t > c) = \frac{\alpha}{2} $$
+                                $$ P(t < c) = 1 - \frac{\alpha}{2} $$
+                                $$ c = t_{n-k-1,\;1-\alpha/2} $$
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
+                        <div class="math-formula">
+                            $$ t_{obs} = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
+                        <p style="text-align: center;">Compare \( |t_{obs}| \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
+                    </div>
+                </section>
+
+                <!-- SECTION METHOD 3 -->
+                <section id="section-method-3" class="page-section" style="display:none;">
+                    <h1 class="page-title" style="color: #6f42c1;">🎯 Confidence Interval</h1>
+                    
+                    <div class="concept-card highlight" style="border-left: 5px solid #6f42c1;">
+                        <div class="math-formula highlight-formula" style="background-color: rgba(111, 66, 193, 0.05); border-color: rgba(111, 66, 193, 0.2); color: #6f42c1;">
+                            $$ \hat{\beta}_j - t_{n-k-1,\;1-\alpha/2} \cdot SE(\hat{\beta}_j) \;\le\; \beta_j \;\le\; \hat{\beta}_j + t_{n-k-1,\;1-\alpha/2} \cdot SE(\hat{\beta}_j) $$
+                        </div>
+                        
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \hat{\beta}_j \;\mp\; t_{n-k-1,\;1-\alpha/2} \cdot SE(\hat{\beta}_j) $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-method3-ci')" style="background-color:#6f42c1; color:white; border-color:#6f42c1; margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Development (\(-c < t < c\))</button>
+                        <div id="derive-method3-ci" class="hidden-panel">
+                            <h4 style="margin-bottom: 10px; color: #6f42c1;">🔍 Development (without probability)</h4>
+                            <div class="math-formula">
+                                $$ -c < \frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} < c $$
+                            </div>
+                            <div class="math-formula">
+                                $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}_j) $$
+                            </div>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_j - c \cdot SE(\hat{\beta}_j) < \beta_j < \hat{\beta}_j + c \cdot SE(\hat{\beta}_j) $$
+                            </div>
+                        </div>
                     </div>
                 </section>
 
