@@ -45,8 +45,8 @@
                         <span><i class="fas fa-tasks" style="margin-right:8px;"></i> 1. method</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
-                    <div class="accordion-content">
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1')">t-test (one-sided, right)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1-left')">t-test (one-sided, left)</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-2')">t-test (two-sided)</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-3')">Confidence Interval</a>
                     </div>
@@ -1189,14 +1189,14 @@
                     <div class="concept-card highlight">
                         <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
                         <div class="math-formula highlight-formula">
-                            $$ H_0 : \beta_j \le 0 \quad \text{vs} \quad H_1 : \beta_j > 0 $$
+                            $$ H_0 : \beta_j \le \beta_{j,0} \quad \text{vs} \quad H_1 : \beta_j > \beta_{j,0} $$
                         </div>
                         
                         <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
                         
                         <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
                         <div class="math-formula">
-                            $$ t = \frac{\hat{\beta}_j - 0}{SE(\hat{\beta}_j)} $$
+                            $$ t = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
                         </div>
                         <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
                             $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
@@ -1213,14 +1213,79 @@
                         
                         <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
                         <div class="math-formula">
-                            $$ P(t > c \mid H_0) = \alpha \quad \Rightarrow \quad c = t_{n-k-1,\;1-\alpha} $$
+                            $$ c = t_{n-k-1,\;1-\alpha} $$
+                        </div>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-method1-step4')" style="margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-method1-step4" class="hidden-panel">
+                            <div class="math-formula">
+                                $$ P(t > c \mid H_0) = \alpha $$
+                                $$ P(t < c) = 1 - \alpha $$
+                                $$ c = t_{n-k-1,\;1-\alpha} $$
+                            </div>
                         </div>
                         
                         <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
                         
                         <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
                         <div class="math-formula">
-                            $$ t_{obs} = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)} $$
+                            $$ t_{obs} = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
+                        <p style="text-align: center;">Compare \( t_{obs} \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
+                    </div>
+                </section>
+
+                <!-- SECTION METHOD 1 LEFT -->
+                <section id="section-method-1-left" class="page-section" style="display:none;">
+                    <h1 class="page-title" style="color: #007bff;">🎯 t-test (one-sided, left) — Econometrics</h1>
+                    
+                    <div class="concept-card highlight" style="border-left: 5px solid #007bff;">
+                        <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
+                        <div class="math-formula highlight-formula" style="background-color: rgba(0, 123, 255, 0.05); border-color: rgba(0, 123, 255, 0.2); color: #007bff;">
+                            $$ H_0 : \beta_j \ge \beta_{j,0} \quad \text{vs} \quad H_1 : \beta_j < \beta_{j,0} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
+                        <div class="math-formula">
+                            $$ t = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 3. Decision rule</h3>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0; color: #007bff; font-weight: bold;">
+                            $$ \text{Reject } H_0 \text{ if } t < c $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
+                        <div class="math-formula">
+                            $$ c = t_{n-k-1,\;\alpha} = -t_{n-k-1,\;1-\alpha} $$
+                        </div>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-method1-left-step4')" style="background-color: #007bff; color: white; border-color: #007bff; margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-method1-left-step4" class="hidden-panel">
+                            <div class="math-formula">
+                                $$ P(t < c \mid H_0) = \alpha $$
+                                $$ c = t_{n-k-1,\;\alpha} $$
+                            </div>
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
+                        <div class="math-formula">
+                            $$ t_{obs} = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
                         </div>
                         
                         <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
