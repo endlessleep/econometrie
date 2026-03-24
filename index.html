@@ -40,6 +40,15 @@
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-1-4')">1.4 Inference</a>
                     </div>
                 </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span><i class="fas fa-tasks" style="margin-right:8px;"></i> 1. method</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content" style="display: none;">
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1')">t-test (one-sided, right)</a>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -1169,6 +1178,55 @@
                             <p>By defining a new variable \(x^* = x_1 + x_2\), we can estimate the model and the \(t\)-ratio for \(x_1\) will directly test our hypothesis.</p>
                         </div>
                     </div>
+                </section>
+
+                <!-- SECTION METHOD 1 -->
+                <section id="section-method-1" class="page-section" style="display:none;">
+                    <h1 class="page-title">🎯 t-test (one-sided, right) — Econometrics</h1>
+                    
+                    <div class="concept-card highlight">
+                        <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
+                        <div class="math-formula highlight-formula">
+                            $$ H_0 : \beta_j \le 0 \quad \text{vs} \quad H_1 : \beta_j > 0 $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
+                        <div class="math-formula">
+                            $$ t = \frac{\hat{\beta}_j - 0}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 3. Decision rule</h3>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0; color: var(--primary-red); font-weight: bold;">
+                            $$ \text{Reject } H_0 \text{ if } t > c $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
+                        <div class="math-formula">
+                            $$ P(t > c \mid H_0) = \alpha \quad \Rightarrow \quad c = t_{n-k-1,\;1-\alpha} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
+                        <div class="math-formula">
+                            $$ t_{obs} = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
+                        <p style="text-align: center;">Compare \( t_{obs} \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
+                    </div>
+                </section>
 
             </div>
         </main>
