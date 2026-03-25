@@ -51,8 +51,7 @@
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1-left')">t-test (one-sided, left)</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-2')">t-test (two-sided)</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-3')">Confidence Interval</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-4')">Empirical Interpretation Guide</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-5')">Assumptions Cheat Sheet</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-4')">🎯 Midterm Sheet</a>
                     </div>
                 </div>
             </nav>
@@ -1398,12 +1397,15 @@
                     </div>
                 </section>
 
-                <!-- SECTION METHOD 4 -->
+                <!-- SECTION METHOD 4: MIDTERM SHEET -->
                 <section id="section-method-4" class="page-section" style="display:none;">
-                    <h1 class="page-title" style="color: #20c997;">🎯 Empirical Interpretation Guide</h1>
+                    <h1 class="page-title" style="color: #ff9f43;">🎯 Midterm Sheet: Empirical &amp; Theoretical Survival Guide</h1>
                     
-                    <div class="concept-card highlight" style="border-left: 5px solid #20c997;">
-                        <h2><i class="fas fa-table" style="color: #20c997;"></i> Functional Forms (Logs)</h2>
+                    <!-- PART 1: EMPIRICAL -->
+                    <div class="concept-card highlight" style="border-left: 5px solid #20c997; margin-bottom: 30px;">
+                        <h2 style="color: #20c997;"><i class="fas fa-table"></i> PART 1: Empirical Exercise Guidelines</h2>
+                        
+                        <h3 style="margin-top: 20px;">1. Functional Forms (Logs)</h3>
                         <p>Memorize this table for interpreting the slope parameter \(\beta_1\):</p>
                         
                         <table style="width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 25px;">
@@ -1439,10 +1441,8 @@
                             </tr>
                         </table>
 
-                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
-
-                        <h3 style="color: #20c997; margin-bottom: 15px;"><i class="fas fa-balance-scale-right"></i> Omitted Variable Bias (OVB)</h3>
-                        <p>If we omit a relevant variable \(x_2\), the estimator \(\hat{\beta}_1\) absorbs the bias. The direction of the bias depends on the correlation between \(x_1\) and \(x_2\), and the sign of the true \(\beta_2\):</p>
+                        <h3 style="margin-top: 20px;"><i class="fas fa-balance-scale-right"></i> 2. Omitted Variable Bias (OVB) Direction</h3>
+                        <p>If we omit a relevant variable \(x_2\), the estimator \(\hat{\beta}_1\) absorbs the bias. The direction depends on the correlation between \(x_1\) and \(x_2\), and the sign of the true \(\beta_2\):</p>
                         
                         <table style="width: 100%; border-collapse: collapse; margin-top: 15px; text-align: center;">
                             <tr style="background: rgba(32, 201, 151, 0.1); border-bottom: 2px solid #20c997;">
@@ -1462,61 +1462,86 @@
                             </tr>
                         </table>
                     </div>
-                </section>
 
-                <!-- SECTION METHOD 5 -->
-                <section id="section-method-5" class="page-section" style="display:none;">
-                    <h1 class="page-title" style="color: #fd7e14;">🎯 Assumptions Cheat Sheet</h1>
-                    
+                    <!-- PART 2: THEORETICAL -->
                     <div class="concept-card highlight" style="border-left: 5px solid #fd7e14;">
-                        <h2 style="color: #fd7e14; margin-bottom: 10px;"><i class="fas fa-shield-alt"></i> SLR & MLR Hypotheses Matrix</h2>
-                        <p>A survival guide to exactly what each assumption does, and why we need it for OLS.</p>
+                        <h2 style="color: #fd7e14; margin-bottom: 10px;"><i class="fas fa-brain"></i> PART 2: Theoretical Derivations &amp; OLS Assumptions</h2>
+                        <p>A survival guide to what each assumption does, separating small-sample from large-sample properties.</p>
 
                         <div style="overflow-x: auto; margin-top: 20px;">
                             <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
                                 <tr style="background: rgba(253, 126, 20, 0.1); border-bottom: 2px solid #fd7e14;">
                                     <th style="padding: 15px; text-align: left;">Assumption</th>
                                     <th style="padding: 15px; text-align: left;">Meaning</th>
-                                    <th style="padding: 15px; text-align: left;">Guarantees</th>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                     <td style="padding: 15px; font-weight: bold;">(S)MLR.1</td>
                                     <td style="padding: 15px;">Linear in parameters (\(\beta\)).</td>
-                                    <td style="padding: 15px;">Foundation of the model.</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                     <td style="padding: 15px; font-weight: bold;">(S)MLR.2</td>
                                     <td style="padding: 15px;">Random sampling from the population.</td>
-                                    <td style="padding: 15px;">Aids unbiasedness.</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                     <td style="padding: 15px; font-weight: bold;">(S)MLR.3</td>
-                                    <td style="padding: 15px;">No perfect collinearity / sample variation in \(x\).</td>
-                                    <td style="padding: 15px;">Allows OLS to be mathematically computed (matrix invertibility / non-zero denominator).</td>
+                                    <td style="padding: 15px;">No perfect collinearity / sample variation in \(x\). Allows matrix invertibility.</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(253,126,20,0.5);">
                                     <td style="padding: 15px; font-weight: bold; color: #fd7e14;">(S)MLR.4</td>
-                                    <td style="padding: 15px;">Zero conditional mean: \(E(u|x) = 0\).</td>
-                                    <td style="padding: 15px;"><strong>Crucial for UNBIASEDNESS</strong>. (If it fails: Omitted Variable Bias).</td>
+                                    <td style="padding: 15px;"><strong>Zero conditional mean:</strong> \(E(u|x) = 0\).<br><span style="font-size: 0.9em; color: rgba(255,255,255,0.7);">Crucial for UNBIASEDNESS. Weak form: \(Cov(x,u)=0\) (Crucial for CONSISTENCY).</span></td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                     <td style="padding: 15px; font-weight: bold; color: #feca57;">(S)MLR.5</td>
-                                    <td style="padding: 15px;">Homoskedasticity: \(Var(u|x) = \sigma^2\).</td>
-                                    <td style="padding: 15px;">Required for <strong>EFFICIENCY (BLUE)</strong> and valid standard errors.</td>
+                                    <td style="padding: 15px;"><strong>Homoskedasticity:</strong> \(Var(u|x) = \sigma^2\).<br><span style="font-size: 0.9em; color: rgba(255,255,255,0.7);">Required for EFFICIENCY (BLUE) and valid standard errors.</span></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 15px; font-weight: bold;">MLR.6</td>
-                                    <td style="padding: 15px;">Normality of residuals: \(u \sim \mathcal{N}(0, \sigma^2)\).</td>
-                                    <td style="padding: 15px;">Required for <strong>EXACT \(t\) and \(F\) tests</strong> in small samples.</td>
+                                    <td style="padding: 15px; font-weight: bold; color: #ff6b6b;">MLR.6</td>
+                                    <td style="padding: 15px;"><strong>Normality of residuals:</strong> \(u \sim \mathcal{N}(0, \sigma^2)\).<br><span style="font-size: 0.9em; color: rgba(255,255,255,0.7);">Required ONLY for EXACT \(t\) and \(F\) tests in SMALL samples.</span></td>
                                 </tr>
                             </table>
                         </div>
                         
-                        <div class="alert-box" style="margin-top:25px; border-left: 4px solid #fd7e14; background: rgba(253,126,20,0.05);">
-                            <i class="fas fa-lightbulb" style="color: #fd7e14;"></i>
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+
+                        <h3 style="color: #fd7e14; margin-bottom: 15px;">Deep Dive Exams Explanations: Unbiasedness vs Consistency vs BLUE</h3>
+                        
+                        <div class="alert-box" style="margin-bottom: 15px; border-left: 4px solid #f39c12; background: rgba(243,156,18,0.05);">
                             <div class="alert-content">
-                                <p><strong>Key Exam Takeaway:</strong></p>
-                                <p style="margin-top: 5px;"><strong>Unbiasedness</strong> requires MLR.1 to MLR.4.<br><strong>Gauss-Markov (BLUE)</strong> requires MLR.1 to MLR.5.<br><strong>Consistency</strong> requires MLR.1 to MLR.4 (specifically zero correlation).</p>
+                                <h4 style="color: #f39c12; margin-bottom: 5px;">1. Unbiasedness (Small Sample Property)</h4>
+                                <p><strong>Requires: MLR.1 through MLR.4 (\(E(u|x) = 0\))</strong></p>
+                                <p style="margin-top: 5px;">Unbiasedness means that if we draw many samples and run regressions on all of them, the average of all our \(\hat{\beta}\) estimates will exactly equal the true population \(\beta\). <strong>Crucially: we DO NOT need MLR.5 (homoskedasticity) or MLR.6 (normality) to be unbiased.</strong> As long as MLR.4 holds (the unobserved errors \(u\) don't systematically change with our \(x\) variables), OLS is unbiased.</p>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-bottom: 15px; border-left: 4px solid #3498db; background: rgba(52,152,219,0.05);">
+                            <div class="alert-content">
+                                <h4 style="color: #3498db; margin-bottom: 5px;">2. Consistency (\(\text{plim}\), Large Sample Asymptotics - Lecture 1.5)</h4>
+                                <p><strong>Requires: MLR.1 through MLR.4' (\(Cov(x,u) = 0\))</strong></p>
+                                <p style="margin-top: 5px;">Consistency is a large sample property (asymptotics, \(n \to \infty\)). The \(\text{plim}\) (probability limit) of \(\hat{\beta}\) converges exactly to the true \(\beta\). 
+                                <br><br>
+                                <strong>Why is it different from Unbiasedness?</strong> For consistency, we can actually <em>relax</em> MLR.4. We do NOT need the strict Zero Conditional Mean (\(E(u|x)=0\)). Instead, we only need the weaker condition of <strong>Zero Correlation</strong> (\(Cov(x,u)=0\)). 
+                                <br><br>
+                                <strong>Exam Trap:</strong> "Do we need Homoskedasticity (MLR.5) or Normality (MLR.6) for consistency?" <strong>NO! Absolutely not.</strong> Even if variance explodes (heteroskedasticity) or residuals are not normally distributed, as long as \(x\) and \(u\) are uncorrelated, our estimator will consistently hit the true target as sample size grows.</p>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-bottom: 15px; border-left: 4px solid #9b59b6; background: rgba(155,89,182,0.05);">
+                            <div class="alert-content">
+                                <h4 style="color: #9b59b6; margin-bottom: 5px;">3. Efficiency & Gauss-Markov (BLUE)</h4>
+                                <p><strong>Requires: MLR.1 through MLR.5</strong></p>
+                                <p style="margin-top: 5px;">Gauss-Markov states that OLS is the "Best Linear Unbiased Estimator" (BLUE). "Best" strictly means "Lowest Variance".
+                                <br><br>
+                                If MLR.5 (Homoskedasticity) fails (meaning variance of errors changes depending on \(x\)), OLS is <strong>Still Unbiased and Consistent</strong>, but it is <strong>No Longer Efficient (Not BLUE)</strong>. The standard errors will be incorrectly calculated, causing \(t\)-tests to be wrong, but the estimate \(\hat{\beta}\) itself is still valid.</p>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-bottom: 15px; border-left: 4px solid #e74c3c; background: rgba(231,76,60,0.05);">
+                            <div class="alert-content">
+                                <h4 style="color: #e74c3c; margin-bottom: 5px;">4. Role of Normality (MLR.6) vs. Central Limit Theorem (CLT)</h4>
+                                <p style="margin-top: 5px;"><strong>In Small Samples:</strong> We desperately need MLR.6 (\(u\) is normally distributed). Without it, the \(\hat{\beta}\) distribution is unknown, and we mathematically cannot use Student's \(t\)-test or \(F\)-test critical values.</p>
+                                <p style="margin-top: 5px;"><strong>In Large Samples (Asymptotics):</strong> This is the magic of Lecture 1.5! Because the error term \(u\) is the sum of many unobserved factors, the <strong>Central Limit Theorem (CLT)</strong> guarantees that \(\hat{\beta}\) will have an <strong>approximate normal distribution</strong> regardless of the underlying distribution of \(u\).
+                                <br>
+                                \(\Rightarrow\) <strong>Exam conclusion:</strong> In large samples, we can safely drop MLR.6. Standard \(t\) and \(F\) tests are perfectly valid asymptotically just by using CLT.</p>
                             </div>
                         </div>
 
