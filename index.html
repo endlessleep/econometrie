@@ -471,9 +471,6 @@
                                             \( y = \beta_0 + \beta_1 x + u \) <br>
                                             \( \beta_0 \) is the population intercept, \( \beta_1 \) is the population
                                             slope. The presence of the intercept implies \( E(u) = 0 \).
-                                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--sidebar-bg); font-size: 0.9em;">
-                                                <strong>Why necessary for unbiasedness:</strong> So that we can plug in the linear model for \(y_i\) and \(\bar{y}\), and use \(E(u_i) = 0\).
-                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -481,9 +478,6 @@
                                         <td>
                                             <strong>Random sampling</strong><br>
                                             We observe a random sample of size \( n \) drawn from the population.
-                                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--sidebar-bg); font-size: 0.9em;">
-                                                <strong>Why necessary for unbiasedness:</strong> So that the sample is not affected by sampling biases and can reveal undistorted characteristics of the population of interest, also allowing us to condition on \(x_i\).
-                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -501,17 +495,31 @@
                                             <strong>Zero conditional mean</strong><br>
                                             \( E(u|x) = 0 \) <br>
                                             This implies \( Cov(x,u) = 0 \) and \( E(u) = 0 \).
-                                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--primary-red); font-size: 0.9em; color: var(--primary-red);">
-                                                <strong>Why necessary for unbiasedness:</strong> So that we can condition on \(x_i\). SLR.4 can also justify the final simplification instead of SLR.1 as conditional \(E(u|x) = 0 \implies\) unconditional \(E(u) = 0\).
-                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <h4 style="color:var(--primary-red); font-size: 1.15rem; margin-top:25px;">Unbiasedness result
-                        </h4>
+                        <div class="alert-box" style="margin-top:30px; border-left: 4px solid var(--primary-red); background: rgba(220, 53, 69, 0.05);">
+                            <i class="fas fa-lightbulb" style="color: var(--primary-red);"></i>
+                            <div class="alert-content">
+                                <h4 style="color: var(--primary-red); margin-bottom: 10px;">Why are these necessary for Unbiasedness?</h4>
+                                <ul style="list-style: none; padding-left: 0;">
+                                    <li style="margin-bottom: 15px;">
+                                        <strong>– (Linearity of the model):</strong> so that we can plug in the linear model for \(y_n\) and \(y_1\), and use \(E(u_i) = 0\).
+                                    </li>
+                                    <li style="margin-bottom: 15px;">
+                                        <strong>– (Random sampling):</strong> so that the sample is not aﬀected by sampling biases and can reveal undistorted characteristics of the population of interest, also allowing for condition on \(x_i\).
+                                    </li>
+                                    <li>
+                                        <strong>– (Zero conditional mean):</strong> so that we can condition on \(x_i\). MLR.4 can also justify the final simplification instead of MLR.1 as conditional \(E(u|x) = 0 \Rightarrow\) unconditional \(E(u) = 0\).
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h4 style="color:var(--primary-red); font-size: 1.15rem; margin-top:35px;">Unbiasedness result</h4>
                         <p>Under assumptions SLR.1–SLR.4,</p>
                         <div class="math-formula highlight-formula">
                             $$ E(\hat{\beta}_0) = \beta_0 \quad \text{and} \quad E(\hat{\beta}_1) = \beta_1 $$
