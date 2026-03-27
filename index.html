@@ -1266,38 +1266,48 @@
                             </div>
                         </div>
 
+
                         <!-- BLOCK 3: THEORETICAL PROOF LOGIC (SLR/MLR) -->
                         <div class="concept-card highlight" style="border-left: 5px solid #fd7e14; background: rgba(253, 126, 20, 0.02);">
-                            <h2 style="color: #fd7e14; margin-bottom: 15px;"><i class="fas fa-scroll"></i> Block 3: Proof Logic & Unbiasedness</h2>
+                            <h2 style="color: #fd7e14; margin-bottom: 25px;"><i class="fas fa-scroll"></i> Block 3: The Pillars of Unbiasedness (MLR.1 - MLR.4)</h2>
                             
-                            <div class="alert-box" style="margin-top: 15px; border-left: 4px solid #fd7e14; background: rgba(253,126,20,0.05);">
-                                <i class="fas fa-brain" style="color: #fd7e14; font-size: 1.5em; align-self: center;"></i>
-                                <div class="alert-content">
-                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">Why are these necessary for Unbiasedness?</h4>
-                                    <ul style="list-style: none; padding-left: 0; font-size: 0.95em;">
-                                        <li style="margin-bottom: 12px;"><strong>– (Linearity of the model):</strong> so that we can plug in the linear model for \(y_n\) and \(y_1\), and use \(E(u_i) = 0\).</li>
-                                        <li style="margin-bottom: 12px;"><strong>– (Random sampling):</strong> so that the sample is not aﬀected by sampling biases and can reveal undistorted characteristics of the population of interest, also allowing for condition on \(x_i\).</li>
-                                        <li><strong>– (Zero conditional mean):</strong> so that we can condition on \(x_i\). MLR.4 can also justify the final simplification instead of MLR.1 as conditional \(E(u|x) = 0 \Rightarrow\) unconditional \(E(u) = 0\).</li>
-                                    </ul>
+                            <p style="margin-bottom: 25px; opacity: 0.9;">To prove that our OLS estimator is <strong>Unbiased</strong> (\(E[\hat{\beta}] = \beta\)), we strictly rely on the first four Gauss-Markov assumptions. Here is exactly why each one is a "must-have":</p>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                                <!-- MLR.1 -->
+                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">1</div>
+                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.1: Linear in Parameters</h4>
+                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> This allows us to write the model as a sum where we can explicitly plug in the population model into the OLS formula. Without linearity, we couldn't isolate the error term (\(u\)) to use the property \(E(u) = 0\).</p>
+                                </div>
+
+                                <!-- MLR.2 -->
+                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">2</div>
+                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.2: Random Sampling</h4>
+                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> It guarantees that our sample is an undistorted reflection of the population. Formally, it allows us to treat the observations as independent, which is vital when we condition on \(x_i\) to take expectations across the sample.</p>
+                                </div>
+
+                                <!-- MLR.3 -->
+                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">3</div>
+                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.3: No Perfect Collinearity</h4>
+                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> This is a computational necessity. If one variable is a perfect linear function of another, we can't mathematically calculate the OLS estimator (the matrix \(\mathbf{X'X}\) would not be invertible). We need "variation" to identify separate effects.</p>
+                                </div>
+
+                                <!-- MLR.4 -->
+                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">4</div>
+                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.4: Zero Conditional Mean</h4>
+                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> The "Kill-Shot" for bias. It ensures \(E[u|x] = 0\), meaning the error isn't "helping" or "hurting" specific values of \(x\). This justifies the final simplification in the proof where the term involving \(u\) vanishes.</p>
                                 </div>
                             </div>
 
                             <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
 
-                            <h4 style="color: #fd7e14; margin-bottom: 20px;">The "Golden Hierarchy" of OLS</h4>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                                <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(253,126,20,0.1);">
-                                    <strong style="color: #fd7e14;">Unbiased (\(E[\hat{\beta}] = \beta\))</strong><br>
-                                    Needs MLR.1 to MLR.4.
-                                </div>
-                                <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,165,0,0.1);">
-                                    <strong style="color: #ffa500;">Efficiency (BLUE)</strong><br>
-                                    Adds MLR.5 (Homoskedasticity).
-                                </div>
-                                <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(52,152,219,0.1);">
-                                    <strong style="color: #3498db;">Consistency (\(\text{plim}\))</strong><br>
-                                    Needs MLR.1 to MLR.4' (Zero Correlation).
-                                </div>
+                            <h4 style="color: #fd7e14; margin-bottom: 20px;"><i class="fas fa-trophy"></i> The "Blue" Addition: MLR.5</h4>
+                            <div style="background: rgba(46, 204, 113, 0.05); padding: 15px; border-radius: 10px; border: 1px solid rgba(46, 204, 113, 0.2);">
+                                <p style="font-size: 0.95em;"><strong>MLR.5 (Homoskedasticity):</strong> This is <u>not</u> needed for unbiasedness, but it is necessary for <strong>Efficiency</strong>. It ensures OLS has the minimum variance among all linear unbiased estimators (making it <strong>BLUE</strong>).</p>
                             </div>
                         </div>
 
