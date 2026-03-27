@@ -465,19 +465,25 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td><strong>SLR.1</strong></td>
+                                        <td style="vertical-align: top;"><strong>SLR.1</strong></td>
                                         <td>
                                             <strong>Linear in parameters</strong><br>
                                             \( y = \beta_0 + \beta_1 x + u \) <br>
                                             \( \beta_0 \) is the population intercept, \( \beta_1 \) is the population
                                             slope. The presence of the intercept implies \( E(u) = 0 \).
+                                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--sidebar-bg); font-size: 0.9em;">
+                                                <strong>Why necessary for unbiasedness:</strong> So that we can plug in the linear model for \(y_i\) and \(\bar{y}\), and use \(E(u_i) = 0\).
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><strong>SLR.2</strong></td>
+                                        <td style="vertical-align: top;"><strong>SLR.2</strong></td>
                                         <td>
                                             <strong>Random sampling</strong><br>
                                             We observe a random sample of size \( n \) drawn from the population.
+                                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--sidebar-bg); font-size: 0.9em;">
+                                                <strong>Why necessary for unbiasedness:</strong> So that the sample is not affected by sampling biases and can reveal undistorted characteristics of the population of interest, also allowing us to condition on \(x_i\).
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -490,11 +496,14 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><strong>SLR.4</strong></td>
+                                        <td style="vertical-align: top;"><strong>SLR.4</strong></td>
                                         <td>
                                             <strong>Zero conditional mean</strong><br>
                                             \( E(u|x) = 0 \) <br>
                                             This implies \( Cov(x,u) = 0 \) and \( E(u) = 0 \).
+                                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--primary-red); font-size: 0.9em; color: var(--primary-red);">
+                                                <strong>Why necessary for unbiasedness:</strong> So that we can condition on \(x_i\). SLR.4 can also justify the final simplification instead of SLR.1 as conditional \(E(u|x) = 0 \implies\) unconditional \(E(u) = 0\).
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
