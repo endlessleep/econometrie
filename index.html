@@ -764,7 +764,7 @@
                     <!-- Matrix Calculus Reference -->
                     <div class="concept-card">
                         <h3><i class="fas fa-book-math"></i> Matrix Calculus Reference</h3>
-                        <p>Essential derivatives for MCO matrix proofs:</p>
+                        <p>Essential derivatives for OLS matrix proofs:</p>
                         <div class="table-container">
                             <table>
                                 <thead>
@@ -919,12 +919,12 @@
                             <div class="formula-card" style="margin:0; border: 2px solid #ffcc00; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.1);">
                                 <h4 style="color:#cc9900;"><i class="fas fa-plus-circle"></i> Overspecified Model</h4>
                                 <p>Adding irrelevant variables (where true \(\beta_j = 0\)).</p>
-                                <p style="margin-top:10px; font-weight:bold; color:var(--sidebar-bg);">Result: MCO remains unbiased, but variance may increase.</p>
+                                <p style="margin-top:10px; font-weight:bold; color:var(--sidebar-bg);">Result: OLS remains unbiased, but variance may increase.</p>
                             </div>
                             <div class="formula-card" style="margin:0; border: 2px solid var(--primary-red); box-shadow: 0 4px 15px rgba(255, 0, 102, 0.1);">
                                 <h4 style="color:var(--primary-red);"><i class="fas fa-minus-circle"></i> Underspecified Model</h4>
                                 <p>Omitting a relevant variable (Omitted Variable Bias).</p>
-                                <p style="margin-top:10px; font-weight:bold; color:var(--primary-red);">Result: MCO estimators become biased if \( Corr(x_1, x_{omitted}) \neq 0 \).</p>
+                                <p style="margin-top:10px; font-weight:bold; color:var(--primary-red);">Result: OLS estimators become biased if \( Corr(x_1, x_{omitted}) \neq 0 \).</p>
                             </div>
                         </div>
 
