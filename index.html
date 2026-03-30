@@ -12,6 +12,14 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- MathJax for LaTeX -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="styles.css">
@@ -47,11 +55,12 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="accordion-content">
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1')">🧩 1. t-test (one-sided, right)</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1-left')">🧩 1. t-test (one-sided, left)</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-2')">⚖️ 2. t-test (two-sided)</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-3')">📊 3. Confidence Interval</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-4')" style="background: rgba(255, 159, 67, 0.1); border-left: 3px solid #ff9f43; font-weight: bold;">📚 Theoretical Midterm Sheet</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1')">t-test (one-sided, right)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-1-left')">t-test (one-sided, left)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-2')">t-test (two-sided)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-3')">Confidence Interval</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-f-test')">F-Test (Joint Significance)</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-4')">🎯 Midterm Sheet</a>
                     </div>
                 </div>
             </nav>
@@ -768,7 +777,7 @@
                     <!-- Matrix Calculus Reference -->
                     <div class="concept-card">
                         <h3><i class="fas fa-book-math"></i> Matrix Calculus Reference</h3>
-                        <p>Essential derivatives for OLS matrix proofs:</p>
+                        <p>Essential derivatives for MCO matrix proofs:</p>
                         <div class="table-container">
                             <table>
                                 <thead>
@@ -923,12 +932,12 @@
                             <div class="formula-card" style="margin:0; border: 2px solid #ffcc00; box-shadow: 0 4px 15px rgba(255, 204, 0, 0.1);">
                                 <h4 style="color:#cc9900;"><i class="fas fa-plus-circle"></i> Overspecified Model</h4>
                                 <p>Adding irrelevant variables (where true \(\beta_j = 0\)).</p>
-                                <p style="margin-top:10px; font-weight:bold; color:var(--sidebar-bg);">Result: OLS remains unbiased, but variance may increase.</p>
+                                <p style="margin-top:10px; font-weight:bold; color:var(--sidebar-bg);">Result: MCO remains unbiased, but variance may increase.</p>
                             </div>
                             <div class="formula-card" style="margin:0; border: 2px solid var(--primary-red); box-shadow: 0 4px 15px rgba(255, 0, 102, 0.1);">
                                 <h4 style="color:var(--primary-red);"><i class="fas fa-minus-circle"></i> Underspecified Model</h4>
                                 <p>Omitting a relevant variable (Omitted Variable Bias).</p>
-                                <p style="margin-top:10px; font-weight:bold; color:var(--primary-red);">Result: OLS estimators become biased if \( Corr(x_1, x_{omitted}) \neq 0 \).</p>
+                                <p style="margin-top:10px; font-weight:bold; color:var(--primary-red);">Result: MCO estimators become biased if \( Corr(x_1, x_{omitted}) \neq 0 \).</p>
                             </div>
                         </div>
 
@@ -1184,167 +1193,1135 @@
                         </div>
                     </div>
                 </section>
-                
 
-                <!-- RESTORED INDIVIDUAL METHOD PAGES -->
-                <!-- SECTION METHOD 1 (RIGHT) -->
+                <!-- SECTION METHOD 1 -->
                 <section id="section-method-1" class="page-section" style="display:none;">
-                    <h1 class="page-title" style="color: #ff6b6b;">🎯 t-test (one-sided, right)</h1>
-                    <div class="concept-card highlight" style="border-left: 5px solid #ff6b6b;">
-                        <h3>🔹 1. Hypotheses</h3>
+                    <h1 class="page-title">🎯 t-test (one-sided, right) — Econometrics</h1>
+                    
+                    <div class="concept-card highlight">
+                        <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
                         <div class="math-formula highlight-formula">
                             $$ H_0 : \beta_j \le \beta_{j,0} \quad \text{vs} \quad H_1 : \beta_j > \beta_{j,0} $$
                         </div>
+                        
                         <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
-                        <h3>🔹 2. Decision Rule</h3>
-                        <p>Reject \( H_0 \) if \( t_{obs} > c \), where \( c = t_{n-k-1, 1-\alpha} \).</p>
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
+                        <div class="math-formula">
+                            $$ t = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 3. Decision rule</h3>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0; color: var(--primary-red); font-weight: bold;">
+                            $$ \text{Reject } H_0 \text{ if } t > c $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
+                        <div class="math-formula">
+                            $$ c = t_{n-k-1,\;1-\alpha} $$
+                        </div>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: var(--sidebar-bg);"><i class="fas fa-info-circle"></i> <em>Note: if \(df > 120\), it is fine to use the standard normal approximation.</em></p>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-method1-step4')" style="margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-method1-step4" class="hidden-panel">
+                            <div class="math-formula">
+                                $$ P(t > c \mid H_0) = \alpha $$
+                                $$ P(t < c) = 1 - \alpha $$
+                                $$ c = t_{n-k-1,\;1-\alpha} $$
+                            </div>
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
                         <div class="math-formula">
                             $$ t_{obs} = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
                         </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
+                        <p style="text-align: center;">Compare \( t_{obs} \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
                     </div>
                 </section>
 
-                <!-- SECTION METHOD 1-LEFT -->
+                <!-- SECTION METHOD 1 LEFT -->
                 <section id="section-method-1-left" class="page-section" style="display:none;">
-                    <h1 class="page-title" style="color: #3498db;">🎯 t-test (one-sided, left)</h1>
-                    <div class="concept-card highlight" style="border-left: 5px solid #3498db;">
-                        <h3>🔹 1. Hypotheses</h3>
-                        <div class="math-formula highlight-formula">
+                    <h1 class="page-title" style="color: #007bff;">🎯 t-test (one-sided, left) — Econometrics</h1>
+                    
+                    <div class="concept-card highlight" style="border-left: 5px solid #007bff;">
+                        <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
+                        <div class="math-formula highlight-formula" style="background-color: rgba(0, 123, 255, 0.05); border-color: rgba(0, 123, 255, 0.2); color: #007bff;">
                             $$ H_0 : \beta_j \ge \beta_{j,0} \quad \text{vs} \quad H_1 : \beta_j < \beta_{j,0} $$
                         </div>
+                        
                         <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
-                        <h3>🔹 2. Decision Rule</h3>
-                        <p>Reject \( H_0 \) if \( t_{obs} < -c \), where \( c = t_{n-k-1, 1-\alpha} \).</p>
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
+                        <div class="math-formula">
+                            $$ t = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 3. Decision rule</h3>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0; color: #007bff; font-weight: bold;">
+                            $$ \text{Reject } H_0 \text{ if } t < c $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
+                        <div class="math-formula">
+                            $$ c = t_{n-k-1,\;\alpha} = -t_{n-k-1,\;1-\alpha} $$
+                        </div>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: #007bff;"><i class="fas fa-info-circle"></i> <em>Note: if \(df > 120\), it is fine to use the standard normal approximation.</em></p>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-method1-left-step4')" style="background-color: #007bff; color: white; border-color: #007bff; margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-method1-left-step4" class="hidden-panel">
+                            <div class="math-formula">
+                                $$ P(t < c \mid H_0) = \alpha $$
+                                $$ c = t_{n-k-1,\;\alpha} $$
+                            </div>
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
+                        <div class="math-formula">
+                            $$ t_{obs} = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
+                        <p style="text-align: center;">Compare \( t_{obs} \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
                     </div>
                 </section>
 
                 <!-- SECTION METHOD 2 -->
                 <section id="section-method-2" class="page-section" style="display:none;">
-                    <h1 class="page-title" style="color: #ff4757;">🎯 t-test (two-sided)</h1>
-                    <div class="concept-card highlight" style="border-left: 5px solid #ff4757;">
-                        <h3>🔹 1. Hypotheses</h3>
+                    <h1 class="page-title">🎯 t-test (two-sided) — Econometrics</h1>
+                    
+                    <div class="concept-card highlight">
+                        <h3 style="margin-bottom: 20px;">🔹 1. Hypotheses</h3>
                         <div class="math-formula highlight-formula">
                             $$ H_0 : \beta_j = \beta_{j,0} \quad \text{vs} \quad H_1 : \beta_j \neq \beta_{j,0} $$
                         </div>
+                        
                         <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
-                        <h3>🔹 2. Decision Rule</h3>
-                        <p>Reject \( H_0 \) if \( |t_{obs}| > c \), where \( c = t_{n-k-1, 1-\alpha/2} \).</p>
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 2. Test statistic</h3>
+                        <div class="math-formula">
+                            $$ t = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \text{Under } H_0 : \quad t \sim t_{n - k - 1} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 3. Decision rule</h3>
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0; color: var(--primary-red); font-weight: bold;">
+                            $$ \text{Reject } H_0 \text{ if } |t| > c $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 4. Critical value (table)</h3>
+                        <div class="math-formula">
+                            $$ c = t_{n-k-1,\;1-\alpha/2} $$
+                        </div>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: var(--sidebar-bg);"><i class="fas fa-info-circle"></i> <em>Note: if \(df > 120\), it is fine to use the standard normal approximation.</em></p>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-method2-step4')" style="margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide Critical Value Derivation</button>
+                        <div id="derive-method2-step4" class="hidden-panel">
+                            <div class="math-formula">
+                                $$ P(-c < t < c \mid H_0) = 1 - \alpha $$
+                                $$ P(t < -c \ \text{or} \ t > c) = \alpha $$
+                                $$ P(t < -c) = P(t > c) = \frac{\alpha}{2} $$
+                                $$ P(t < c) = 1 - \frac{\alpha}{2} $$
+                                $$ c = t_{n-k-1,\;1-\alpha/2} $$
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 5. Observed value (coef / SE)</h3>
+                        <div class="math-formula">
+                            $$ t_{obs} = \frac{\hat{\beta}_j - \beta_{j,0}}{SE(\hat{\beta}_j)} $$
+                        </div>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--sidebar-bg); margin: 30px 0;">
+                        
+                        <h3 style="margin-bottom: 20px;">🔹 6. Conclusion</h3>
+                        <p style="text-align: center;">Compare \( |t_{obs}| \) with \( c \) and conclude whether to reject \( H_0 \) or not.</p>
                     </div>
                 </section>
 
                 <!-- SECTION METHOD 3 -->
                 <section id="section-method-3" class="page-section" style="display:none;">
                     <h1 class="page-title" style="color: #6f42c1;">🎯 Confidence Interval</h1>
-                    <div class="concept-card highlight" style="border-left: 5px solid #6f42c1;">
-                        <div class="math-formula highlight-formula">
-                            $$ \hat{\beta}_j \pm t_{n-k-1, 1-\alpha/2} \cdot SE(\hat{\beta}_j) $$
-                        </div>
-                        <p style="margin-top: 15px;">Reject \( H_0 \) if the tested value \( \beta_{j,0} \) is <strong>outside</strong> this interval.</p>
-                    </div>
-                </section>
-
-                <!-- CONSOLIDATED THEORETICAL MIDTERM SHEET -->
-                <section id="section-method-4" class="page-section" style="display:none;">
-                    <h1 class="page-title" style="color: #ff9f43; text-align: center; margin-bottom: 40px;">📚 Theoretical Midterm Sheet (Assumptions & Asymptotics)</h1>
                     
-                    <div style="display: flex; flex-direction: column; gap: 40px;">
+                    <div class="concept-card highlight" style="border-left: 5px solid #6f42c1;">
+                        <div class="math-formula highlight-formula" style="background-color: rgba(111, 66, 193, 0.05); border-color: rgba(111, 66, 193, 0.2); color: #6f42c1;">
+                            $$ \hat{\beta}_j - t_{n-k-1,\;1-\alpha/2} \cdot SE(\hat{\beta}_j) \;\le\; \beta_j \;\le\; \hat{\beta}_j + t_{n-k-1,\;1-\alpha/2} \cdot SE(\hat{\beta}_j) $$
+                        </div>
+                        
+                        <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                            $$ \hat{\beta}_j \;\mp\; t_{n-k-1,\;1-\alpha/2} \cdot SE(\hat{\beta}_j) $$
+                        </div>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: #6f42c1;"><i class="fas fa-info-circle"></i> <em>Note: if \(df > 120\), it is fine to use the standard normal approximation for the critical value \(t\).</em></p>
+                        
+                        <div class="alert-box" style="margin-top:20px; border-left: 4px solid #6f42c1;">
+                            <i class="fas fa-check-circle" style="color: #6f42c1;"></i>
+                            <div class="alert-content">
+                                <p><strong>To verify</strong>, we can also compare \(\beta_{j,0}\) to the confidence interval: if it lies within the interval, this confirms that we do not reject \(H_0\).</p>
+                            </div>
+                        </div>
 
-                        <!-- BLOCK 1: THE PILLARS OF UNBIASEDNESS (MLR.1 - MLR.4) -->
-                        <div class="concept-card highlight" style="border-left: 5px solid #fd7e14; background: rgba(253, 126, 20, 0.02);">
-                            <h2 style="color: #fd7e14; margin-bottom: 25px;"><i class="fas fa-scroll"></i> Block 1: Why MLR.1 - MLR.4 are Necessary for Unbiasedness</h2>
+                        <button class="action-btn" onclick="toggleDerivation('derive-method3-ci')" style="background-color:#6f42c1; color:white; border-color:#6f42c1; margin-top: 15px;"><i class="fas fa-eye"></i> Show/Hide</button>
+                        <div id="derive-method3-ci" class="hidden-panel">
+                            <h4 style="margin-bottom: 10px; color: #6f42c1;">🔍 \(-c < t < c\)</h4>
+                            <div class="math-formula">
+                                $$ -c < \frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} < c $$
+                            </div>
+                            <div class="math-formula">
+$$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}_j) $$
+                            </div>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_j - c \cdot SE(\hat{\beta}_j) < \beta_j < \hat{\beta}_j + c \cdot SE(\hat{\beta}_j) $$
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION METHOD 4: F-TEST -->
+                <section id="section-method-f-test" class="page-section" style="display:none;">
+                    <h1 class="page-title" style="color: #ff4757;">🧪 Method: F-Test for Joint Hypothesis</h1>
+                    
+                    <div class="alert-box" style="margin-bottom: 25px; border-left: 5px solid #ff4757; background: rgba(255,71,87,0.05);">
+                        <i class="fas fa-info-circle" style="color: #ff4757; font-size: 1.5em; align-self: center;"></i>
+                        <div class="alert-content">
+                            <h3 style="color: #ff4757; margin-bottom: 5px;">When to use F-Test?</h3>
+                            <p>Use the F-test when you want to test <strong>multiple linear restrictions</strong> simultaneously (e.g., $H_0: \beta_1 = 0, \beta_2 = 0$). The $t$-test is only for a single hypothesis.</p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 1 & 2 -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                        <div class="concept-card highlight" style="border-left: 5px solid #ff4757; margin: 0;">
+                            <h2 style="color: #ff4757; font-size: 1.2rem;"><i class="fas fa-sitemap"></i> 1. Methodology (R vs UR)</h2>
+                            <p style="font-size: 0.9rem; margin-top: 10px;">Compare two versions of the model:</p>
+                            <ul style="font-size: 0.85rem; margin-top: 10px;">
+                                <li><span class="fluo">Unrestricted (UR):</span> The full model with all variables ($k$ independent variables).</li>
+                                <li><span class="fluo">Restricted (R):</span> The model after imposing $H_0$ ($q$ variables are removed or restricted).</li>
+                            </ul>
+                            <p style="font-size: 0.8rem; margin-top: 10px; font-style: italic;">Logic: $SSR_R \ge SSR_{UR}$ always. We test if the increase in $SSR$ is significant.</p>
+                        </div>
+
+                        <div class="concept-card highlight" style="border-left: 5px solid #ff4757; margin: 0;">
+                            <h2 style="color: #ff4757; font-size: 1.2rem;"><i class="fas fa-question-circle"></i> 2. Hypotheses</h2>
+                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                                <p style="font-weight: bold; color: #ffbcbc; margin-bottom: 5px;">$H_0$: $\beta_{k-q+1} = \dots = \beta_k = 0$</p>
+                                <p style="font-size: 0.85rem;">(The $q$ variables have no effect on $y$)</p>
+                                <hr style="margin: 10px 0; border: 0; border-top: 1px dashed rgba(255,255,255,0.1);">
+                                <p style="font-weight: bold; color: #ffbcbc; margin-bottom: 5px;">$H_1$: At least one $\beta_j \neq 0$</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: STATISTIC -->
+                    <div class="concept-card highlight" style="border-left: 5px solid #fd7e14; margin-bottom: 30px;">
+                        <h2 style="color: #fd7e14;"><i class="fas fa-calculator"></i> 3. Test Statistics (Forms)</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                            <div class="formula-card">
+                                <h4 style="color: #fd7e14; text-align: center;">Standard / SSR Form</h4>
+                                <div class="math-formula" style="font-size: 1.1rem; padding: 20px;">
+                                    $$ F = \frac{(SSR_R - SSR_{UR})/q}{SSR_{UR}/(n-k-1)} $$
+                                </div>
+                            </div>
+                            <div class="formula-card">
+                                <h4 style="color: #fd7e14; text-align: center;">R-Squared Form</h4>
+                                <div class="math-formula" style="font-size: 1.1rem; padding: 20px;">
+                                    $$ F = \frac{(R^2_{UR} - R^2_R)/q}{(1 - R^2_{UR})/(n-k-1)} $$
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4 & 5 -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                        <div class="concept-card highlight" style="border-left: 5px solid #fd7e14; margin: 0;">
+                            <h2 style="color: #fd7e14; font-size: 1.2rem;"><i class="fas fa-users-cog"></i> 4. Degrees of Freedom</h2>
+                            <ul style="font-size: 0.95rem; margin-top: 15px; line-height: 1.8;">
+                                <li><strong style="color: #feca57;">$q$:</strong> Number of restrictions (Variables dropped).</li>
+                                <li><strong style="color: #feca57;">$n-k-1$:</strong> Degrees of freedom of the <em style="color: #bbb;">Unrestricted</em> model.</li>
+                                <li><strong>Distribution:</strong> $F \sim F_{q, \;n-k-1}$</li>
+                            </ul>
+                        </div>
+
+                        <div class="concept-card highlight" style="border-left: 5px solid #20c997; margin: 0;">
+                            <h2 style="color: #20c997; font-size: 1.2rem;"><i class="fas fa-gavel"></i> 5. Decision Rule</h2>
+                            <p style="margin-top: 15px; font-size: 1rem;">Compare your $F$-statistic to the <strong>Critical Value</strong> ($c$) from the table:</p>
+                            <div style="background: rgba(32, 201, 151, 0.1); padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">
+                                <p style="font-weight: bold; color: #20c997; font-size: 1.2rem;">If $F_{stat} > c \Rightarrow$ Reject $H_0$</p>
+                                <p style="font-size: 0.9rem; margin-top: 5px; color: #fff;">Conclusion: The restrictions are <strong>rejected</strong>. The dropped variables are jointly significant.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CASE STUDY -->
+                    <div class="concept-card highlight" style="border-left: 5px solid #feca57;">
+                        <h2 style="color: #feca57;"><i class="fas fa-star"></i> Case Study: Overall Significance</h2>
+                        <p style="margin-top: 10px;">This checks if <strong>any</strong> of your variables have explanatory power.</p>
+                        <div style="background: rgba(254, 202, 87, 0.05); padding: 20px; border-radius: 8px; margin-top: 15px;">
+                            <ul style="line-height: 1.8;">
+                                <li><strong>$H_0$:</strong> $\beta_1 = 0, \beta_2 = 0, \dots, \beta_k = 0$ (All zero except intercept)</li>
+                                <li><strong>Restricted Model $R^2$:</strong> $R^2_R = 0$</li>
+                                <li><strong>Simplified Formula:</strong></li>
+                            </ul>
+                            <div class="math-formula highlight-formula" style="font-size: 1.3rem;">
+                                $$ F = \frac{R^2 / k}{(1 - R^2) / (n-k-1)} $$
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION METHOD 4: THE ABSOLUTE MASTER HYBRID SHEET -->
+                <section id="section-method-4" class="page-section" style="display:none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                        <h1 class="page-title" style="color: #ff9f43; font-size: 3.2rem; margin-bottom: 0;">🎯 Absolute Master Midterm Sheet</h1>
+                        <span style="background: #ff9f43; color: white; padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 0.9rem; text-transform: uppercase;">Final Edition: Theory & Empirical</span>
+                    </div>
+
+                    <!-- MODULE 1: EMPIRICAL ANALYSIS MASTERY -->
+                    <div class="concept-card highlight" style="border-left: 10px solid #20c997; padding: 50px; margin-bottom: 60px;">
+                        <h2 style="color: #20c997; font-size: 2.2rem; margin-bottom: 30px; border-bottom: 3px solid rgba(32, 201, 151, 0.1); padding-bottom: 15px;">
+                            <i class="fas fa-microscope"></i> MODULE 1: Empirical Analysis Mastery
+                        </h2>
+
+                        <!-- 1.1 Functional Forms & Log Traps -->
+                        <div class="formula-card" style="margin-bottom: 40px; border: 2px solid rgba(32, 201, 151, 0.3); padding: 35px;">
+                            <h4 style="color: #20c997; font-size: 1.5rem;"><i class="fas fa-chart-line"></i> 1.1 Functional Forms: Interpretations & The "Log-Trap"</h4>
+                            <div class="table-container" style="margin: 20px 0;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 1.15rem;">
+                                    <thead>
+                                        <tr style="background: rgba(32, 201, 151, 0.1); color: #20c997;">
+                                            <th style="padding: 15px; color: #20c997;">Model</th>
+                                            <th style="padding: 15px; color: #20c997;">Regression Form</th>
+                                            <th style="padding: 15px; color: #20c997;">Interpretation Rule</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Level-Log</strong></td>
+                                            <td>$y = \beta_0 + \beta_1 \ln(x) + u$</td>
+                                            <td>A 1% change in $x$ leads to a $(\beta_1 / 100)$ unit change in $y$.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Log-Level</strong></td>
+                                            <td>$\ln(y) = \beta_0 + \beta_1 x + u$</td>
+                                            <td>A 1 unit change in $x$ leads to a $(100 \beta_1)\%$ change in $y$.</td>
+                                        </tr>
+                                        <tr style="background: rgba(32, 201, 151, 0.05);">
+                                            <td><strong>Log-Log</strong></td>
+                                            <td>$\ln(y) = \beta_0 + \beta_1 \ln(x) + u$</td>
+                                            <td><strong>Elasticity:</strong> A 1% change in $x$ leads to a $\beta_1\%$ change in $y$.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Quadratic</strong></td>
+                                            <td>$y = \beta_0 + \beta_1 x + \beta_2 x^2 + u$</td>
+                                            <td>$dy/dx = \beta_1 + 2\beta_2 x$. Turning point: $x^* = -\beta_1 / 2\beta_2$.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h5 style="color: #ff4757; font-size: 1.2rem; margin-top: 20px;"><i class="fas fa-exclamation-triangle"></i> The Log-Selection Bias (Crucial Reasoning)</h5>
+                            <p style="font-size: 1.1rem; line-height: 1.7;">
+                                <strong>The Rule:</strong> Log transformations require <strong>strictly positive</strong> values ($x, y > 0$).
+                                <br><strong>The Trap:</strong> If your dataset contains zeros or negatives (e.g., zero-wage workers or loss-making firms), they are automatically dropped. 
+                                <br><strong>The Bias:</strong> Since those dropped observations are NOT random (they share a specific characteristic like "being poor" or "failing"), you have violated <strong>MLR.2 (Random Sampling)</strong>. This creates <strong>Sample Selection Bias</strong>, and your estimated $\beta$ will not represent the whole population. 
+                            </p>
+                            <p style="font-size: 1.1rem; line-height: 1.7; margin-top: 15px;">
+                                <i class="fas fa-lightbulb" style="color:#feca57;"></i> <strong>Why Logs?</strong> To reduce skewness, handle extreme outliers, and allow % change (elasticity) interpretation.
+                            </p>
+                        </div>
+
+                        <!-- 1.1.b QUADRATIC TERMS -->
+                        <div class="formula-card" style="border: 3px solid #20c997; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+                            <h4 style="color: #20c997; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-chart-area"></i> 💡 Quadratic Terms in OLS ($x^2$)</h4>
                             
-                            <p style="margin-bottom: 25px; opacity: 0.9;">To prove \(E[\hat{\beta}] = \beta\), we strictly rely on these four. Here is exactly why each one is a "must-have":</p>
-
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                                <!-- MLR.1 -->
-                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">1</div>
-                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.1: Linear in Parameters</h4>
-                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> This allows us to write the model in a way that we can explicitly <u>plug in</u> the population model into the OLS formula. Without linearity, we couldn't isolate the error term (\(u\)) to use the property \(E(u) = 0\).</p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px;">
+                                <div>
+                                    <h5 style="color: #157a5b; font-size: 1.3rem; margin-bottom: 15px;">🔍 The Model</h5>
+                                    <div class="math-formula highlight-formula" style="border-color: #20c997; background: rgba(32, 201, 151, 0.05);">
+                                        $$y = \beta_0 + \beta_1 x + \beta_2 x^2 + u$$
+                                    </div>
+                                    <p style="font-size: 1.15rem; line-height: 1.7; margin-top: 15px;">
+                                        👉 <strong>Rule 1:</strong> The effect of $x$ on $y$ is <strong>NOT constant</strong>.
+                                        <br>👉 <strong>Rule 2:</strong> It depends entirely on the current level of $x$.
+                                    </p>
                                 </div>
-
-                                <!-- MLR.2 -->
-                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">2</div>
-                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.2: Random Sampling</h4>
-                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> It guarantees that our sample is an <u>undistorted</u> reflection of the population. Formally, it allows us to treat the observations as independent, vital when we condition on \(x_i\) to take expectations.</p>
-                                </div>
-
-                                <!-- MLR.3 -->
-                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">3</div>
-                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.3: No Perfect Collinearity</h4>
-                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> A computational must. If variables are perfectly correlated, we can't mathematically <u>calculate</u> the estimator (the matrix \(\mathbf{X'X}\) is not invertible). We need "variation" to identify effects.</p>
-                                </div>
-
-                                <!-- MLR.4 -->
-                                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid rgba(253,126,20,0.2); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 4em; opacity: 0.05; color: #fd7e14; font-weight: 800;">4</div>
-                                    <h4 style="color: #fd7e14; margin-bottom: 10px;">MLR.4: Zero Conditional Mean</h4>
-                                    <p style="font-size: 0.9em; line-height: 1.5;"><strong>Why it's necessary:</strong> The <u>Kill-Shot</u> for bias. It ensures \(E[u|x] = 0\), meaning the error isn't "helping" or "hurting" specific values of \(x\). This justifies the final simplification where the error term vanishes.</p>
+                                <div style="background: rgba(32, 201, 151, 0.08); padding: 30px; border-radius: 15px; border: 1px dashed #20c997;">
+                                    <h5 style="color: #157a5b; font-size: 1.2rem; margin-bottom: 15px;">⚡ The Marginal Effect</h5>
+                                    <p style="font-size: 1.2rem; line-height: 1.7;">
+                                        Take the derivative with respect to $x$:
+                                    </p>
+                                    <div style="font-size: 1.4rem; font-weight: 800; color: #157a5b; text-align: center; margin: 15px 0;">
+                                        $\frac{\text{d}y}{\text{d}x} = \beta_1 + 2\beta_2 x$
+                                    </div>
+                                    <p style="font-size: 1.1rem; line-height: 1.6; color: #444;">
+                                        The slope of the curve changes as you move along the $x$-axis!
+                                    </p>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- BLOCK 2: OLS ASYMPTOTICS (Large Samples) -->
-                        <div class="concept-card highlight" style="border-left: 5px solid #ff4757; background: rgba(255, 71, 87, 0.02);">
-                            <h2 style="color: #ff4757; margin-bottom: 15px;"><i class="fas fa-infinity"></i> Block 2: OLS Asymptotics & Consistency</h2>
-                            <p style="margin-bottom: 25px;">What happens when the sample grows to infinity? (\(n \to \infty\))</p>
-
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                                <div style="background: rgba(255,71,87,0.05); padding: 20px; border-radius: 12px;">
-                                    <h4 style="color: #ff4757;">Consistency (\(\text{plim}\))</h4>
-                                    <div class="math-formula">$$ \text{plim}(\hat{\beta}_j) = \beta_j + \frac{Cov(x,u)}{Var(x)} $$</div>
-                                    <p style="font-size: 0.9em; margin-top: 10px;">Requires only MLR.1 to MLR.4. If \(Cov(x,u) = 0\), OLS is <strong>consistent</strong>.</p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                                <div style="padding: 25px; border-radius: 12px; background: #e9fdf6; border-left: 5px solid #20c997;">
+                                    <h5 style="margin-bottom: 10px; color: #157a5b;">📉 Concave vs Convex</h5>
+                                    <ul style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 0;">
+                                        <li><strong>$\beta_2 < 0$:</strong> Concave (Inverted U). The effect eventually <strong>diminishes</strong>.</li>
+                                        <li><strong>$\beta_2 > 0$:</strong> Convex (U-shaped). The effect <strong>accelerates</strong>.</li>
+                                    </ul>
                                 </div>
-                                <div style="background: rgba(46, 204, 113, 0.05); padding: 20px; border-radius: 12px;">
-                                    <h4 style="color: #2ecc71;">Asymptotic Normality (CLT)</h4>
-                                    <p style="font-size: 0.9em;">Thanks to the Central Limit Theorem, for large \(n\), OLS estimators are approximately Normal <u>even if \(u\) is not normal</u>. This justifies using \(t\) and \(F\) tests in large samples without MLR.6.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- BLOCK 3: EMPIRICAL INTERPRETATION GUIDE -->
-                        <div class="concept-card highlight" style="border-left: 5px solid #20c997; background: rgba(32, 201, 151, 0.02);">
-                            <h2 style="color: #20c997; margin-bottom: 15px;"><i class="fas fa-keyboard"></i> Block 3: Empirical Cheat Sheet</h2>
-                            <div style="display: flex; flex-wrap: wrap; gap: 30px; margin-top: 20px;">
-                                <div style="flex: 1; min-width: 300px;">
-                                    <h4 style="color: #20c997; margin-bottom: 10px;">Log-Log Interpretation</h4>
-                                    <p style="font-size: 0.9em;">\(\log(y) = \beta_0 + \beta_1 \log(x) + u\)</p>
-                                    <div class="math-formula">$$ \% \Delta y \approx \beta_1 \% \Delta x $$</div>
-                                    <p style="font-size: 0.8em; opacity: 0.8;">\(\beta_1\) is directly the **elasticity**.</p>
-                                </div>
-                                <div style="flex: 1; min-width: 300px;">
-                                    <h4 style="color: #ff6b6b; margin-bottom: 10px;">Omitted Variable Bias (OVB)</h4>
-                                    <div class="math-formula" style="color: #ff6b6b;">$$ \text{Bias} = \beta_{\text{omitted}} \cdot \text{Corr}(x_{\text{inc}}, x_{\text{omitted}}) $$</div>
+                                <div style="padding: 25px; border-radius: 12px; background: #e9fdf6; border-left: 5px solid #20c997;">
+                                    <h5 style="margin-bottom: 10px; color: #157a5b;">🎯 Special Case</h5>
+                                    <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 0;">
+                                        If $y = \beta_0 + \beta_2 x^2$:
+                                        <br>Then $\frac{\text{d}y}{\text{d}x} = 2\beta_2 x$. 
+                                        <br>👉 The effect depends <strong>entirely</strong> on $x$.
+                                    </p>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
-                </section>
-                                    "The Central Limit Theorem (CLT) says that as \(n\) increases, the distribution of \(\hat{\beta}\) converges to Normal <strong>regardless of the distribution of \(u\)</strong>."
+                            <div style="margin-top: 40px; text-align: center; border: 2px solid #20c997; padding: 25px; border-radius: 15px; background: white;">
+                                <p style="font-size: 1.25rem; font-weight: 800; font-style: italic; color: #157a5b;">
+                                    ⚡ Exam Reflex: "With quadratic terms, the effect of $X$ varies with its level. It is no longer a straight line!"
                                 </p>
-                                <p style="margin-top: 15px; color: #2ecc71; font-weight: bold;">\(\Rightarrow\) Conclusion: In large samples, standard \(t\) and \(F\) tests work perfectly even if residuals aren't normal!</p>
                             </div>
+                        </div>
 
-                            <!-- LM TEST LOGIC -->
-                            <div style="background: rgba(241, 196, 15, 0.05); padding: 25px; border-radius: 12px;">
-                                <h4 style="color: #f1c40f; margin-bottom: 15px;">3. The LM Test (Lagrange Multiplier) Step-by-Step</h4>
-                                <p>Used in large samples to test multiple linear restrictions (like the F-test, but for large \(n\)).</p>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px;">
-                                    <div style="background: rgba(0,0,0,0.1); padding: 12px; border-radius: 8px; font-size: 0.85em;"><strong>1. Run Restricted</strong><br>Save residuals \(\tilde{u}\).</div>
-                                    <div style="background: rgba(0,0,0,0.1); padding: 12px; border-radius: 8px; font-size: 0.85em;"><strong>2. Regress \(\tilde{u}\)</strong><br>On ALL variables.</div>
-                                    <div style="background: rgba(0,0,0,0.1); padding: 12px; border-radius: 8px; font-size: 0.85em;"><strong>3. Calculate LM</strong><br>\(n \times R_{\text{aux}}^2\)</div>
-                                    <div style="background: rgba(0,0,0,0.1); padding: 12px; border-radius: 8px; font-size: 0.85em;"><strong>4. Decision</strong><br>\(LM \sim \chi_q^2\)</div>
+                        <!-- 1.2 Scaling, Shifts & OVB -->
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 60px; margin-bottom: 60px;">
+                            <!-- SCALING UNIT CLARITY -->
+                            <div class="formula-card" style="margin: 0; border: 2px solid rgba(32, 201, 151, 0.4); padding: 50px; border-radius: 20px; background: white; box-shadow: var(--shadow-soft);">
+                                <h4 style="color: #20c997; font-size: 1.8rem; margin-bottom: 30px;"><i class="fas fa-expand-arrows-alt"></i> 🔵 1.2 Scaling (Changing Units)</h4>
+                                
+                                <div style="margin-bottom: 40px;">
+                                    <h5 style="color: #20c997; font-weight: 800; font-size: 1.3rem; margin-bottom: 15px;">👉 Case 1: Level Model (Normal)</h5>
+                                    
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px;">
+                                        <!-- Multiplied Y -->
+                                        <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(32,201,151,0.2);">
+                                            <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px;">If $Y$ is rescaled (multiplied by $c$):</p>
+                                            <ul style="font-size: 1.1rem; line-height: 1.6;">
+                                                <li>Both <strong>intercept</strong> ($\hat{\beta}_0$) and <strong>slope</strong> ($\hat{\beta}_1$) are multiplied by $c$.</li>
+                                                <li>Standard errors are also multiplied by $c$.</li>
+                                                <li>$t$-stats and $R^2$ remain <strong>identical</strong>.</li>
+                                            </ul>
+                                        </div>
+                                        <!-- Multiplied X -->
+                                        <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(32,201,151,0.2);">
+                                            <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px;">If $X$ is rescaled (multiplied by $c$):</p>
+                                            <ul style="font-size: 1.1rem; line-height: 1.6;">
+                                                <li>The <strong>slope</strong> ($\hat{\beta}_1$) is <strong>divided</strong> by $c$.</li>
+                                                <li>The <strong>intercept</strong> ($\hat{\beta}_0$) is <strong>NOT affected</strong>. ✅</li>
+                                                <li>Standard Errors are divided by $c$.</li>
+                                                <li>$t$-stats and $R^2$ remain <strong>identical</strong>.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div style="background: rgba(32, 201, 151, 0.08); padding: 25px; border-radius: 12px; border-left: 6px solid #20c997;">
+                                        <p style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0;">🌟 The Scaling Intuition:</p>
+                                        <p style="font-size: 1.15rem; margin-top: 10px; line-height: 1.6;">
+                                            Rescaling is just changing the ruler (meters to km). The <strong>statistical significance</strong> and the <strong>fit ($R^2$)</strong> are invariant because they measure "quality" and "signal", which stay the same regardless of units.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 50px;">
+                                    <h5 style="color: #20c997; font-weight: 800; font-size: 1.3rem; margin-bottom: 15px;">👉 Case 2: Model with LOGS</h5>
+                                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 15px;">
+                                        $\ln(y) = \beta_0 + \beta_1 \ln(x) + u$
+                                        <br>If you multiply $x$ by 1000 : $\ln(1000x) = \ln(x) + \ln(1000)$
+                                    </p>
+                                    <div style="background: rgba(32, 201, 151, 0.08); padding: 25px; border-radius: 12px; border-left: 6px solid #20c997;">
+                                        <p style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">Final Result:</p>
+                                        <ul style="font-size: 1.2rem;">
+                                            <li>The coefficient <span class="fluo">$\hat{\beta}$ does NOT change</span> ✅</li>
+                                            <li>The standard error <span class="fluo">does NOT change</span></li>
+                                            <li>The $t$-stat does NOT change</li>
+                                            <li><strong>Only the intercept changes</strong> (it absorbs the constant)</li>
+                                        </ul>
+                                    </div>
+                                    <p style="font-size: 1.15rem; font-style: italic; margin-top: 20px; color: #666;">
+                                        <strong>Intuition:</strong> In log models, we measure <strong>percentages</strong>. A percentage is naturally stable, regardless of the unit (grams or tons).
+                                    </p>
+                                </div>
+
+                                <div style="margin-top: 50px;">
+                                    <h5 style="color: #20c997; font-weight: 800; font-size: 1.3rem; margin-bottom: 20px;">👉 Case 3: Data Shifting (Translation)</h5>
+                                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 25px;">
+                                        What happens if we add or subtract a constant to $X$ or $Y$? (i.e., shifting the whole data cloud vertically or horizontally).
+                                    </p>
+                                    <div style="background: rgba(32, 201, 151, 0.05); padding: 30px; border-radius: 12px; border: 2px dashed #20c997; border-left: 6px solid #20c997;">
+                                        <p style="font-size: 1.2rem; font-weight: 800; color: #157a5b; margin-bottom: 15px;">🌟 The Invariance Rule:</p>
+                                        <ul style="font-size: 1.2rem; line-height: 1.8;">
+                                            <li>The <strong>Slope estimate ($\hat{\beta}_1$) is UNAFFECTED</strong>. ✅</li>
+                                            <li>Only the <strong>Intercept ($\hat{\beta}_0$) changes</strong> to absorb the repositioning.</li>
+                                        </ul>
+                                    </div>
+                                    <p style="font-size: 1.15rem; font-style: italic; margin-top: 25px; color: #666;">
+                                        <strong>Intuition:</strong> A shift doesn't change the "tilt" or the correlation between variables; it only changes the baseline.
+                                    </p>
+                                    <div style="margin-top: 25px; text-align: center; border: 2px solid #20c997; padding: 20px; border-radius: 12px; background: white;">
+                                        <p style="font-size: 1.2rem; font-weight: 800; color: #20c997; margin-bottom: 0;">
+                                            ⚡ Exam Reflex: "Shifting data (adding a constant) does NOT change the slope. Only the intercept is affected."
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
+                            <!-- OVB MASTER DIVE -->
+                            <div class="formula-card" style="margin: 0; border: 2px solid #ff4757; padding: 50px; border-radius: 20px; background: white; box-shadow: var(--shadow-soft);">
+                                <h4 style="color: #ff4757; font-size: 1.8rem; margin-bottom: 30px;"><i class="fas fa-search-plus"></i> 🔴 1.3 OVB (Omitted Variable Bias)</h4>
+                                
+                                <div style="margin-bottom: 40px; line-height: 1.8;">
+                                    <p style="font-size: 1.3rem; margin-bottom: 20px;">
+                                        <strong>OVB</strong> stands for <strong>Omitted Variable Bias</strong>.
+                                    </p>
+                                    <p style="font-size: 1.2rem;">
+                                        It occurs when your model is <span style="color: #ff4757; font-weight: 800;">incorrect</span> because you are missing a crucial variable ($X_2$) that "works in the shadows".
+                                    </p>
+                                    <div style="background: rgba(255, 71, 87, 0.05); padding: 30px; border-radius: 12px; border: 2px dashed #ff4757; margin: 30px 0;">
+                                        <p style="font-size: 1.2rem; font-weight: 800; color: #ff4757; margin-bottom: 10px;">Why is it serious?</p>
+                                        <p style="font-size: 1.2rem; margin-bottom: 0;">
+                                            Your variable $X_1$ is forced to <strong>"steal"</strong> the effect of the missing variable. Your result is therefore <span class="fluo">polluted</span>.
+                                            <br>👉 <strong>Violation:</strong> We break the <strong>MLR.4</strong> assumption (Exogeneity). Causal interpretation is dead. 💀
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 50px;">
+                                    <h5 style="color: #ff4757; font-weight: 800; font-size: 1.3rem; margin-bottom: 20px;">📊 Bias Sign Logic Table ($\beta_2 \cdot \tilde{\delta}_1$)</h5>
+                                    <div class="table-container">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 1.1rem; border: 2px solid #ffccd8;">
+                                            <thead>
+                                                <tr style="background: #ff4757; color: white;">
+                                                    <th style="padding: 20px; border: 1px solid white;"></th>
+                                                    <th style="padding: 20px; border: 1px solid white;">Corr($X_1, X_2$) > 0</th>
+                                                    <th style="padding: 20px; border: 1px solid white;">Corr($X_1, X_2$) < 0</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="font-weight: 800; padding: 25px; background: rgba(255,71,87,0.05); border: 1px solid #ffccd8;">$\beta_2 > 0$</td>
+                                                    <td style="padding: 25px; color: #20c997; font-weight: 800; text-align: center; border: 1px solid #ffccd8;">POSITIVE BIAS (+) <br><small>(Upward Bias)</small></td>
+                                                    <td style="padding: 25px; color: #ff4757; font-weight: 800; text-align: center; border: 1px solid #ffccd8;">NEGATIVE BIAS (-) <br><small>(Downward Bias)</small></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: 800; padding: 25px; background: rgba(255,71,87,0.05); border: 1px solid #ffccd8;">$\beta_2 < 0$</td>
+                                                    <td style="padding: 25px; color: #ff4757; font-weight: 800; text-align: center; border: 1px solid #ffccd8;">NEGATIVE BIAS (-) <br><small>(Downward Bias)</small></td>
+                                                    <td style="padding: 25px; color: #20c997; font-weight: 800; text-align: center; border: 1px solid #ffccd8;">POSITIVE BIAS (+) <br><small>(Upward Bias)</small></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 40px; padding: 30px; background: rgba(255, 71, 87, 0.08); border-radius: 15px; border: 2px solid #ff4757;">
+                                    <h5 style="color: #ff4757; font-weight: 800; font-size: 1.4rem; margin-bottom: 20px;"><i class="fas fa-link"></i> 🔵 The Causal Bridge: Ceteris Paribus</h5>
+                                    <p style="font-size: 1.2rem; line-height: 1.8;">
+                                        For OLS to uncover a <strong>Causal Effect</strong> (the "True Relationship"), we require the model to explicitly include all relevant factors to <strong>hold them fixed</strong> (Ceteris Paribus).
+                                    </p>
+                                    <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 15px; border-left: 5px solid #ff4757;">
+                                        <p style="font-size: 1.15rem; margin-bottom: 0;">
+                                            👉 <strong>The Logic:</strong> If an important variable is missing from the model but affects $Y$, it stays in the error term ($u$).
+                                            <br>👉 <strong>The Danger:</strong> If this missing variable is <strong>correlated with your $X$</strong>, then $E[u \mid X] \neq 0$. 
+                                            <br>👉 <strong>Result:</strong> Your estimated coefficient is <strong>Biased</strong> and does NOT represent the true effect. You can no longer say "all else being equal".
+                                        </p>
+                                    </div>
+                                    <p style="font-size: 1.15rem; font-style: italic; margin-top: 15px; border-top: 1px solid rgba(255, 71, 87, 0.2); padding-top: 15px;">
+                                        <strong>Exam Reflex:</strong> "We include control variables not because we care about them, but to <strong>clean the error term</strong> $u$ and satisfy the Exogeneity assumption."
+                                    </p>
+                                </div>
+
+                                <!-- OVER VS UNDERESTIMATION -->
+                                <div style="margin-top: 50px; padding: 40px; border: 3px solid #ff4757; border-radius: 20px; background: white;">
+                                    <h5 style="color: #ff4757; font-weight: 800; font-size: 1.5rem; margin-bottom: 25px;"><i class="fas fa-exclamation-circle"></i> ⚠️ Bias Direction vs. Over/Underestimation</h5>
+                                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 30px;">
+                                        <strong>The Trap:</strong> "Upward Bias" does <strong>NOT</strong> always mean "Overestimation". It depends on the sign of your coefficient $\beta_1$!
+                                    </p>
+
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                                        <!-- Beta 1 > 0 -->
+                                        <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 15px; border: 1px solid #20c997;">
+                                            <h6 style="color: #157a5b; font-size: 1.3rem; margin-bottom: 15px;">Case A: $\beta_1 > 0$ (Positive effect)</h6>
+                                            <ul style="font-size: 1.15rem; line-height: 1.6;">
+                                                <li>🔼 <strong>Upward:</strong> Overestimation</li>
+                                                <li>🔽 <strong>Downward:</strong> Underestimation</li>
+                                            </ul>
+                                        </div>
+                                        <!-- Beta 1 < 0 -->
+                                        <div style="background: rgba(255, 71, 87, 0.05); padding: 25px; border-radius: 15px; border: 1px solid #ff4757;">
+                                            <h6 style="color: #ff4757; font-size: 1.3rem; margin-bottom: 15px;">Case B: $\beta_1 < 0$ (Negative effect)</h6>
+                                            <ul style="font-size: 1.15rem; line-height: 1.6;">
+                                                <li>🔼 <strong>Upward:</strong> <span style="text-decoration: underline;">Underestimation</span> (closer to 0)</li>
+                                                <li>🔽 <strong>Downward:</strong> <span style="text-decoration: underline;">Overestimation</span> (further from 0)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-top: 35px; background: #fff5f6; padding: 25px; border-radius: 12px; border-left: 6px solid #ff4757;">
+                                        <p style="font-size: 1.2rem; font-weight: 800; color: #ff4757; margin-bottom: 10px;">🌟 The 2-Step Exam Strategy:</p>
+                                        <ol style="font-size: 1.15rem; line-height: 1.7; margin-left: 20px;">
+                                            <li>Find the <strong>Bias Direction</strong> first (Sign of $\beta_2 \times$ Sign of Corr).</li>
+                                            <li>Check the <strong>Sign of $\beta_1$</strong> to decide if you are over or underestimating.</li>
+                                        </ol>
+                                    </div>
+                                    <p style="font-size: 1.1rem; margin-top: 20px; font-style: italic; text-align: center; color: #666;">
+                                        👉 "Bias direction concerns the value of the estimate. Over/Underestimation concerns the magnitude relative to reality."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 1.4 Inference & Diagnostics: DEEP DIVES -->
+                        <div id="diagnostics-deep-dive" style="margin-top: 60px;">
+                            <h3 style="color: #20c997; font-size: 2.2rem; margin-bottom: 40px; border-bottom: 2px solid rgba(32, 201, 151, 0.1); padding-bottom: 15px;">
+                                <i class="fas fa-stethoscope"></i> 💡 1.4 Inference & Diagnostics (Deep Dive)
+                            </h3>
+
+                            <!-- MULTICOLLINEARITY & VIF -->
+                            <div class="formula-card" style="border: 3px solid #20c997; padding: 45px; border-radius: 20px; margin-bottom: 50px;">
+                                <h4 style="color: #20c997; font-size: 1.7rem; margin-bottom: 25px;"><i class="fas fa-users-cog"></i> 🔵 Multicollinearity & VIF</h4>
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 40px;">
+                                    <div>
+                                        <p style="font-size: 1.25rem; line-height: 1.8;">
+                                            <strong>Definition:</strong> Occurs when one explanatory variable is highly correlated with other regressors.
+                                            <br>👉 <strong>Intuition:</strong> "Too many variables are telling the same story."
+                                        </p>
+                                        <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 12px; border: 2px dashed #20c997; margin: 20px 0;">
+                                            <p style="font-size: 1.15rem; font-weight: 800; color: #157a5b; margin-bottom: 10px;">🔴 Relation to MLR.3 (Gauss-Markov)</p>
+                                            <p style="font-size: 1.15rem; margin-bottom: 0;">
+                                                <strong>Perfect Multicollinearity:</strong> (e.g., $x_2 = 2x_1$) <span style="color: #ff4757; font-weight: 800;">VIOLATES</span> MLR.3. OLS cannot be computed (Matrix is singular).
+                                                <br><strong>High Multicollinearity:</strong> <span style="color: #20c997; font-weight: 800;">SATISFIES</span> MLR.3. It is allowed, but comes at a price!
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style="background: rgba(32, 201, 151, 0.08); padding: 30px; border-radius: 15px;">
+                                        <h5 style="color: #157a5b; font-size: 1.3rem; margin-bottom: 15px;">⚠️ Consequences on OLS:</h5>
+                                        <ul style="font-size: 1.15rem; line-height: 1.8;">
+                                            <li>✅ <strong>No Bias</strong>: Estimators are still centered on the truth.</li>
+                                            <li>❌ <strong>Precision Loss</strong>: Variance of estimators $(\text{Var}(\hat{\beta}))$ explodes.</li>
+                                            <li>❌ <strong>High SE</strong>: Standard Errors become very large.</li>
+                                            <li>❌ <strong>Low t-stats</strong>: Variables look "Insignificant" because the noise drowns out the signal.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 30px; border-top: 1px solid rgba(32, 201, 151, 0.2); padding-top: 25px;">
+                                    <h5 style="color: #20c997; font-size: 1.3rem; margin-bottom: 15px;">🎯 Detection & Thresholds</h5>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                                        <div style="background: rgba(32, 201, 151, 0.03); padding: 20px; border-radius: 10px; border: 1px solid rgba(32,201,151,0.2);">
+                                            <strong>1. Simple Correlation:</strong>
+                                            <br>Examine correlation between $x_i$ and $x_j$. 
+                                            If <strong>$> 75\text{--}80\%$</strong>, multicollinearity is likely a concern.
+                                        </div>
+                                        <div style="background: rgba(32, 201, 151, 0.03); padding: 20px; border-radius: 10px; border: 1px solid rgba(32,201,151,0.2);">
+                                            <strong>2. VIF (Variance Inflation Factor):</strong>
+                                            <br>$VIF_j = 1 / (1 - R_j^2)$, where $R_j^2$ is from regressing $x_j$ on all other $x$.
+                                        </div>
+                                    </div>
+
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center; margin-top: 25px;">
+                                        <div style="padding: 15px; background: rgba(32, 201, 151, 0.1); border-radius: 10px;"><strong>VIF = 1</strong><br>Ideal (No Correlation)</div>
+                                        <div style="padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 10px;"><strong>VIF > 5</strong><br>Potential concern</div>
+                                        <div style="padding: 15px; background: rgba(255, 71, 87, 0.1); border-radius: 10px; border: 2px solid #ff4757;"><strong>VIF > 10</strong><br>Severe Problem! 🔥</div>
+                                    </div>
+                                </div>
+
+                                <!-- REMEDIES -->
+                                <div style="margin-top: 40px; background: #f0fdf9; padding: 30px; border-radius: 15px; border-left: 5px solid #20c997;">
+                                    <h5 style="color: #157a5b; font-size: 1.3rem; margin-bottom: 20px;"><i class="fas fa-tools"></i> Multicollinearity: Remedies</h5>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                                        <div style="font-size: 1.1rem; line-height: 1.6;">
+                                            <p><strong>1. Do nothing:</strong> Best to avoid potential Omitted Variable Bias (OVB) if the estimates are still reliable/significant.</p>
+                                            <p><strong>2. Drop a redundant variable:</strong> Only if the variable is not theoretically essential for the model.</p>
+                                        </div>
+                                        <div style="font-size: 1.1rem; line-height: 1.6;">
+                                            <p><strong>3. Transform variables:</strong> Use ratios, sums, or thresholds (dummies) if variables are theoretically essential.</p>
+                                            <p><strong>4. Increase Sample size ($N \uparrow$):</strong> More data reduces the variance and the standard error of OLS estimators.</p>
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 1rem; margin-top: 15px; border-top: 1px solid rgba(32,201,151,0.2); padding-top: 10px; font-style: italic;">
+                                        Ref: Wooldridge (2012), 3.4 "Multicollinearity".
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- HETEROSKEDASTICITY -->
+                            <div class="formula-card" style="border: 3px solid #20c997; padding: 45px; border-radius: 20px; margin-bottom: 50px;">
+                                <h4 style="color: #20c997; font-size: 1.7rem; margin-bottom: 25px;"><i class="fas fa-wave-square"></i> 🔵 Heteroskedasticity (MLR.5 Violation)</h4>
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 40px;">
+                                    <div>
+                                        <p style="font-size: 1.25rem; line-height: 1.8;">
+                                            <strong>Definition:</strong> Variance of errors is not constant: $\text{Var}(u \mid X) \neq \sigma^2$.
+                                            <br>👉 <strong>Intuition:</strong> "Some data points are naturally silent/precise, while others are noisy/chaotic."
+                                        </p>
+                                        <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 12px; border: 2px dashed #20c997; margin: 20px 0;">
+                                            <p style="font-size: 1.15rem; font-weight: 800; color: #157a5b; margin-bottom: 10px;">🔴 Relation to MLR.5 (Gauss-Markov)</p>
+                                            <p style="font-size: 1.15rem; margin-bottom: 0;">
+                                                Heteroskedasticity <span style="color: #ff4757; font-weight: 800;">VIOLATES</span> MLR.5 (Homoskedasticity).
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style="background: rgba(32, 201, 151, 0.08); padding: 30px; border-radius: 15px;">
+                                        <h5 style="color: #157a5b; font-size: 1.3rem; margin-bottom: 15px;">⚠️ Consequences:</h5>
+                                        <ul style="font-size: 1.15rem; line-height: 1.8;">
+                                            <li>✅ <strong>Estimates</strong>: Still <span class="fluo">Unbiased</span> and <span class="fluo">Consistent</span>.</li>
+                                            <li>❌ <strong>Efficiency</strong>: OLS is no longer BLUE (it's not the best).</li>
+                                            <li>❌ <strong>Inference</strong>: Standard Errors are <strong>WRONG</strong>. Classic $t$ and $F$ tests are invalid.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 30px; padding: 25px; background: #e9fdf6; border-radius: 12px; border-left: 5px solid #20c997;">
+                                    <p style="font-size: 1.2rem; margin-bottom: 0;">
+                                        👉 <strong>Final Remedy:</strong> Use <strong>WHITE Robust Standard Errors</strong>. They correct the inference without changing the coefficients.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- SIGNIFICANCE VS R2 -->
+                            <div class="formula-card" style="border: 3px solid #20c997; padding: 45px; border-radius: 20px;">
+                                <h4 style="color: #20c997; font-size: 1.7rem; margin-bottom: 25px;"><i class="fas fa-balance-scale-left"></i> 🔵 Significance vs R² (The Deep Logic)</h4>
+                                <p style="font-size: 1.25rem; line-height: 1.8; margin-bottom: 35px;">
+                                    <strong>Do NOT confuse them:</strong> Significance measures "Is the effect real?", while $R^2$ measures "How much do we explain?".
+                                </p>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                                    <!-- Low R2 but Significant -->
+                                    <div style="background: rgba(32, 201, 151, 0.05); padding: 30px; border-radius: 15px; border: 1px solid rgba(32,201,151,0.2);">
+                                        <h5 style="color: #157a5b; font-size: 1.3rem; margin-bottom: 10px;">📉 Low R² / Significant β</h5>
+                                        <p style="font-size: 1.1rem; line-height: 1.6;">
+                                            <strong>Interpretation:</strong> The variable has a <strong>real, detectable effect</strong> on $Y$.
+                                            <br>👉 BUT, $Y$ depends on many other factors not in the model.
+                                            <br>👉 Example: Education and Wages. Education matters, but luck and talent explain most wage variation.
+                                        </p>
+                                    </div>
+                                    <!-- High R2 but Insignificant -->
+                                    <div style="background: rgba(255, 71, 87, 0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,71,87,0.2);">
+                                        <h5 style="color: #ff4757; font-size: 1.3rem; margin-bottom: 10px;">📈 High R² / Insignificant β</h5>
+                                        <p style="font-size: 1.1rem; line-height: 1.6;">
+                                            <strong>Interpretation:</strong> The model fits the data perfectly as a whole.
+                                            <br>👉 BUT, you can't tell <strong>who did what</strong>.
+                                            <br>👉 Usually caused by <strong>Multicollinearity</strong> (variables move together).
+                                        </p>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 30px; text-align: center; border: 2px solid #20c997; padding: 25px; border-radius: 15px; background: white;">
+                                    <h5 style="color: #157a5b; margin-bottom: 10px; font-size: 1.2rem;">⚡ Exam Reflex:</h5>
+                                    <p style="font-size: 1.2rem; font-weight: 800; font-style: italic; margin-bottom: 0;">
+                                        "Significance is about detection. $R^2$ is about explanation. A low $R^2$ is NOT a death sentence for your research!"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 2: THEORETICAL POWERHOUSE (PROBLEM 3) -->
+                    <!-- MODULE 2: THEORETICAL POWERHOUSE -->
+                    <div class="concept-card highlight" style="border-left: 10px solid #fd7e14; padding: 50px; margin-bottom: 60px;">
+                        <h2 style="color: #fd7e14; font-size: 2.2rem; margin-bottom: 30px; border-bottom: 3px solid rgba(253, 126, 20, 0.1); padding-bottom: 15px;">
+                            <i class="fas fa-calculator"></i> MODULE 2: Theoretical Powerhouse
+                        </h2>
+
+                        <!-- 2.1 Deriving OLS: Optimization vs Logic -->
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 40px;">
+                            
+                            <!-- OLS DERIVATION -->
+                            <div class="formula-card" style="margin: 0; border: 2px solid rgba(253, 126, 20, 0.3); padding: 35px;">
+                                <h4 style="color: #fd7e14; font-size: 1.5rem;"><i class="fas fa-compress"></i> Ordinary Least Squares (OLS)</h4>
+                                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px;">
+                                    <strong>Goal:</strong> Choose $\beta_0, \beta_1$ to make errors as small as possible.
+                                </p>
+                                
+                                <button class="action-btn" onclick="toggleDerivation('derive-ols-min')" style="background: #fd7e14; color: white;">
+                                    <i class="fas fa-eye"></i> Show/Hide Derivation of OLS
+                                </button>
+                                
+                                <div id="derive-ols-min" class="hidden-panel" style="margin-top:20px; padding:25px; background: rgba(253, 126, 20, 0.05); border-radius:12px; border-left: 4px solid #fd7e14;">
+                                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                                        We start with the model: $y_i = \beta_0 + \beta_1 x_i + u_i$
+                                        <br>We define predicted values: $\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i$
+                                        <br>And residuals: $\hat{u}_i = y_i - \hat{y}_i = y_i - (\beta_0 + \beta_1 x_i)$
+                                        <br><br><strong>Minimize the Sum of Squared Residuals (SSR):</strong>
+                                        $$S(\beta_0,\beta_1) = \sum (y_i - \beta_0 - \beta_1 x_i)^2$$
+                                        Take derivatives (FOCs) and set to zero:
+                                        $$\frac{\partial S}{\partial \beta_0} = -2 \sum (y_i - \beta_0 - \beta_1 x_i) = 0$$
+                                        $$\frac{\partial S}{\partial \beta_1} = -2 \sum x_i (y_i - \beta_0 - \beta_1 x_i) = 0$$
+                                        Solving for $\hat{\beta}_1$ gives the <strong>Covariance/Variance</strong> form:
+                                        $$\hat{\beta}_1 = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}$$
+                                        And the intercept: $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- MM DERIVATION -->
+                            <div class="formula-card" style="margin: 0; border: 2px solid rgba(253, 126, 20, 0.3); padding: 35px;">
+                                <h4 style="color: #fd7e14; font-size: 1.5rem;"><i class="fas fa-superscript"></i> Method of Moments (MM)</h4>
+                                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px;">
+                                    <strong>Goal:</strong> Force the sample data to respect the model's theoretical logic.
+                                </p>
+
+                                <button class="action-btn" onclick="toggleDerivation('derive-mm-ortho')" style="background: #e67e22; color: white;">
+                                    <i class="fas fa-eye"></i> Show/Hide Derivation of MM
+                                </button>
+
+                                <div id="derive-mm-ortho" class="hidden-panel" style="margin-top:20px; padding:25px; background: rgba(230, 126, 34, 0.05); border-radius:12px; border-left: 4px solid #e67e22;">
+                                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                                        We start with the assumption: $E(u_i \mid x_i) = 0$
+                                        <br>This implies two conditions: $E(u_i) = 0$ and $E(x_i u_i) = 0$.
+                                        <br><br><strong>Sample Equivalents:</strong>
+                                        <br>Replace $E[\cdot]$ with sample averaging $\frac{1}{n} \sum$:
+                                        <br>1. $\frac{1}{n} \sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0$
+                                        <br>2. $\frac{1}{n} \sum x_i (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0$
+                                        <br><br>Multiply by $n$ to get the <strong>Normal Equations</strong>:
+                                        $$\sum y_i = n\hat{\beta}_0 + \hat{\beta}_1 \sum x_i$$
+                                        $$\sum x_i y_i = \hat{\beta}_0 \sum x_i + \hat{\beta}_1 \sum x_i^2$$
+                                        These are exactly the same equations as OLS!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2.2 VARIABILITY OF X & OLS PRECISION -->
+                        <div class="formula-card" style="border: 3px solid #fd7e14; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+                            <h4 style="color: #fd7e14; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-chart-line"></i> 💡 Variability of X and OLS Precision</h4>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px;">
+                                <div>
+                                    <h5 style="color: #e67e22; font-size: 1.3rem; margin-bottom: 15px;">🔍 The Core Result</h5>
+                                    <p style="font-size: 1.15rem; line-height: 1.6;">
+                                        The precision of the OLS estimator is directly tied to how much the independent variable varies.
+                                    </p>
+                                    <div class="math-formula highlight-formula" style="border-color: #fd7e14; background: rgba(253, 126, 20, 0.05);">
+                                        $$\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{\sum (x_i - \bar{x})^2}$$
+                                    </div>
+                                </div>
+                                <div style="background: rgba(253, 126, 20, 0.08); padding: 30px; border-radius: 15px; border: 1px dashed #fd7e14;">
+                                    <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 15px;">🧠 Intuition</h5>
+                                    <p style="font-size: 1.1rem; line-height: 1.7;">
+                                        The denominator $\sum (x_i - \bar{x})^2$ measures the <strong>Information Content</strong> of $X$. 
+                                        <br>👉 The more $X$ varies, the more "signal" we have to detect how $Y$ responds.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                                <div style="padding: 25px; border-radius: 12px; background: #fff8f1; border-left: 5px solid #20c997;">
+                                    <p style="font-size: 1.2rem; margin-bottom: 0;">
+                                        🚀 <strong>High Variability in X:</strong>
+                                        <br>Large denominator $\rightarrow$ Small $\text{Var}(\hat{\beta}_1)$
+                                        <br>👉 <strong>Result:</strong> More precise estimates.
+                                    </p>
+                                </div>
+                                <div style="padding: 25px; border-radius: 12px; background: #fff8f1; border-left: 5px solid #ff4757;">
+                                    <p style="font-size: 1.2rem; margin-bottom: 0;">
+                                        📉 <strong>Low Variability in X:</strong>
+                                        <br>Small denominator $\rightarrow$ Large $\text{Var}(\hat{\beta}_1)$
+                                        <br>👉 <strong>Result:</strong> Less precise estimates.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 40px; padding: 25px; background: rgba(253, 126, 20, 0.05); border-radius: 15px; border: 2px solid #fd7e14;">
+                                <h5 style="color: #fd7e14; font-size: 1.3rem; margin-bottom: 10px;">⚠️ The Extreme Case (Failure of MLR.3)</h5>
+                                <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 0;">
+                                    If $X$ is constant, $\sum (x_i - \bar{x})^2 = 0$. 
+                                    <br>The variance becomes infinite. <strong>OLS cannot compute $\hat{\beta}_1$</strong>. This is a violation of MLR.3 (No perfect collinearity with the constant).
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- 2.3 VARIANCE OF COMPOSITE ESTIMATORS -->
+                        <div class="formula-card" style="border: 3px solid #fd7e14; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+                            <h4 style="color: #fd7e14; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-plus-square"></i> 💡 Variance of Composite Estimators ($\hat{\beta}_1 + \hat{\beta}_2$)</h4>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 40px; margin-bottom: 30px;">
+                                <div>
+                                    <h5 style="color: #e67e22; font-size: 1.3rem; margin-bottom: 15px;">🔍 The Formula for $\hat{\theta}_1 = \hat{\beta}_1 + \hat{\beta}_2$</h5>
+                                    <p style="font-size: 1.15rem; line-height: 1.6;">
+                                        When testing the sum or difference of two coefficients, the variance is not just the sum of variances!
+                                    </p>
+                                    <div class="math-formula highlight-formula" style="border-color: #fd7e14; background: rgba(253, 126, 20, 0.05); font-size: 1.4rem;">
+                                        $$\text{Var}(\hat{\beta}_1 + \hat{\beta}_2) = \text{Var}(\hat{\beta}_1) + \text{Var}(\hat{\beta}_2) + 2\text{Cov}(\hat{\beta}_1, \hat{\beta}_2)$$
+                                    </div>
+                                    <p style="font-size: 1.15rem; margin-top: 15px;">
+                                        Or using <strong>Correlation</strong> ($Corr = Cov / \sqrt{V_1 V_2}$):
+                                        <br>$$\text{Var}(\hat{\beta}_1 + \hat{\beta}_2) = \text{Var}(\hat{\beta}_1) + \text{Var}(\hat{\beta}_2) + 2\text{Corr}(\hat{\beta}_1, \hat{\beta}_2) \sqrt{\text{Var}(\hat{\beta}_1)\text{Var}(\hat{\beta}_2)}$$
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(253, 126, 20, 0.08); padding: 30px; border-radius: 15px; border: 2px dashed #fd7e14;">
+                                <h5 style="color: #fd7e14; font-size: 1.3rem; margin-bottom: 15px;">🚀 The "Diversification" Logic</h5>
+                                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 0;">
+                                    👉 <strong>Negative Correlation ($\text{Corr} < 0$):</strong> 
+                                    <br>The negative covariance piece <strong>reduces</strong> the total variance. 
+                                    <br><span style="color: #20c997; font-weight: 800;">Result:</span> You achieve a more stable/precise composite estimator.
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 30px; text-align: center; border: 2px solid #fd7e14; padding: 25px; border-radius: 15px; background: white;">
+                                <h5 style="color: #e67e22; margin-bottom: 10px; font-size: 1.2rem;">⚡ Exam Reflex:</h5>
+                                <p style="font-size: 1.25rem; font-weight: 800; font-style: italic; color: #fd7e14; margin-bottom: 0;">
+                                    "When combining coefficients, the covariance term is crucial. A negative correlation between estimates improves the precision of their sum!"
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- DEEP DIFFERENCE -->
+                        <div class="formula-card" style="background: rgba(253, 126, 20, 0.08); border: 3px solid #fd7e14; padding: 40px; border-radius: 20px; margin-bottom: 50px;">
+                            <h4 style="color: #fd7e14; font-size: 1.6rem; margin-bottom: 20px;"><i class="fas fa-brain"></i> Deep Difference to remember</h4>
+                            <ul style="font-size: 1.25rem; line-height: 1.8;">
+                                <li><strong>OLS:</strong> Minimizes the sum of squared errors (Least Squares). It's an optimization problem.</li>
+                                <li><strong>MM:</strong> Imposes orthogonality conditions (Ortho = at a right angle/no correlation) between $x$ and $u$. It's a logic requirement.</li>
+                                <li>👉 <strong>Both</strong> result in the same Normal Equations and the same estimators.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 2.2 Algebraic Properties & Sums of Squares -->
+                        <div class="formula-card" style="margin-bottom: 40px; border: 2px solid rgba(253, 126, 20, 0.3); padding: 35px;">
+                            <h4 style="color: #fd7e14; font-size: 1.5rem; margin-bottom: 25px;"><i class="fas fa-list-ol"></i> Core Algebraic Properties (Always True)</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                                <div>
+                                    <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                        <li>1. $\sum \hat{u}_i = 0$ (Residuals sum to zero)</li>
+                                        <li>2. $\sum x_{ij} \hat{u}_i = 0$ (Zero correlation with $x$)</li>
+                                        <li>3. $\bar{y} = \hat{\beta}_0 + \hat{\beta}_1 \bar{x}_1 + \dots$ (Regression line passes through means)</li>
+                                        <li>4. <span class="fluo">$SST = SSR + SSE$</span> (Variation Decomposition)</li>
+                                    </ul>
+                                </div>
+                                <div style="background: rgba(253, 126, 20, 0.05); padding: 25px; border-radius: 12px; border: 1px dashed #fd7e14;">
+                                    <h5 style="color: #fd7e14; font-size: 1.2rem;">Sum of Squares Formulas</h5>
+                                    <p style="font-size: 1.05rem;">
+                                        $SST = \sum (y_i - \bar{y})^2$ (Total variation)
+                                        <br>$SSR = \sum (\hat{y}_i - \bar{y})^2$ (Explained variation)
+                                        <br>$SSE = \sum \hat{u}_i^2$ (Unexplained variation/Residuals)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2.3 Proof Matrix: SLR vs MLR -->
+                        <div class="formula-card" style="margin-bottom: 40px; border: 2px solid rgba(253, 126, 20, 0.3); padding: 35px;">
+                            <h4 style="color: #fd7e14; font-size: 1.5rem; margin-bottom: 25px;"><i class="fas fa-file-code"></i> Proof Basics: SLR vs MLR forms</h4>
+                            <div class="table-container">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 1.15rem;">
+                                    <thead>
+                                        <tr style="background: #4A0E17; color: white;">
+                                            <th style="padding: 20px;">Metric</th>
+                                            <th style="padding: 20px;">SLR (Single Linear Reg)</th>
+                                            <th style="padding: 20px;">MLR (Multiple / Matrix form)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Estimator</strong></td>
+                                            <td>$\frac{\sum (x_i-\bar{x})(y_i-\bar{y})}{\sum (x_i-\bar{x})^2}$</td>
+                                            <td>$(X'X)^{-1}X'y$</td>
+                                        </tr>
+                                        <tr style="background: rgba(253, 126, 20, 0.04);">
+                                            <td><strong>Unbiasedness</strong></td>
+                                            <td>$\beta_1 + \frac{\sum w_i u_i}{SST_x}$</td>
+                                            <td>$\beta + (X'X)^{-1}X'u$</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sampling Var</strong></td>
+                                            <td>$\sigma^2 / SST_x$</td>
+                                            <td>$\sigma^2 (X'X)^{-1}$</td>
+                                        </tr>
+                                        <tr style="background: rgba(253, 126, 20, 0.04);">
+                                            <td><strong>Linearity</strong></td>
+                                            <td>$\sum w_i y_i$</td>
+                                            <td>$Ay$, where $A = (X'X)^{-1}X'$</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- 2.4 F-test Forms -->
+                        <div class="formula-card" style="border: 2px solid rgba(253, 126, 20, 0.3); padding: 35px;">
+                            <h4 style="color: #fd7e14; font-size: 1.4rem; margin-bottom: 20px;"><i class="fas fa-percentage"></i> F-Test Statistic Forms</h4>
+                            <p style="font-size: 1.15rem; line-height: 1.7;">
+                                Use these to compare <strong>Restricted</strong> (R) vs <strong>Unrestricted</strong> (U) models:
+                                <br><strong>SSE Form:</strong> $F = \frac{(SSE_R - SSE_U)/q}{SSE_U/(n-k-1)}$
+                                <br><strong>R² Form:</strong> $F = \frac{(R^2_U - R^2_R)/q}{(1-R^2_U)/(n-k-1)}$
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- MODULE 3: THE DEEP REASONING ENGINE (MLR NECESSITY) -->
+                    <div class="concept-card highlight" style="border-left: 10px solid #a29bfe; padding: 60px; margin-bottom: 60px; border-radius: 20px; background: white; box-shadow: var(--shadow-soft);">
+                        <h2 style="color: #a29bfe; font-size: 2.5rem; margin-bottom: 40px; border-bottom: 4px solid rgba(162, 155, 254, 0.1); padding-bottom: 20px;">
+                            <i class="fas fa-brain"></i> MODULE 3: The Deep Reasoning Engine (MLR Master)
+                        </h2>
+
+                    <!-- MODULE 3: THE DEEP REASONING ENGINE (MLR NECESSITY) -->
+                    <div class="concept-card highlight" style="border-left: 10px solid #a29bfe; padding: 60px; margin-bottom: 60px; border-radius: 20px; background: white; box-shadow: var(--shadow-soft);">
+                        <h2 style="color: #a29bfe; font-size: 2.5rem; margin-bottom: 40px; border-bottom: 4px solid rgba(162, 155, 254, 0.1); padding-bottom: 20px;">
+                            <i class="fas fa-brain"></i> MODULE 3: The Deep Reasoning Engine (MLR Master)
+                        </h2>
+
+                        <!-- 3.1 THE UNBIASEDNESS ARCHITECTURE (MLR 1-4) -->
+                        <div style="margin-bottom: 60px;">
+                            <h3 style="color: #a29bfe; font-size: 2rem; margin-bottom: 30px;"><i class="fas fa-shield-alt"></i> 🔵 1. Why OLS is Unbiased: MLR 1 to 4</h3>
+                            <p style="font-size: 1.25rem; line-height: 1.8; margin-bottom: 45px; color: #444;">
+                                <strong>Unbiasedness</strong> ($E[\hat{\beta}] = \beta$) is the "Holy Grail". It means that on average, your estimator captures the <strong>True Population Parameter</strong>. To achieve this, you need 4 core assumptions. If even one is missing, your result is <span style="color: #ff4757; font-weight: 800;">BIASED</span> and misleading.
+                            </p>
+
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 50px;">
+                                <!-- MLR 1 -->
+                                <div class="formula-card" style="margin: 0; border: 2px solid rgba(162, 155, 254, 0.4); padding: 45px; border-radius: 15px;">
+                                    <h4 style="color: #a29bfe; font-size: 1.5rem; margin-bottom: 15px;"><i class="fas fa-pen-nib"></i> MLR.1: Linear in Parameters</h4>
+                                    <p style="font-size: 1.2rem; line-height: 1.8;">
+                                        👉 <strong>The Rule:</strong> The model MUST be linear in its parameters ($\beta$). You can have $x^2$ or $\log(x)$, but never $\beta^2$.
+                                        <br>👉 <strong>Failure:</strong> If the true relationship between $Y$ and $X$ is nonlinear/complex and you force a straight line, your estimation will be <strong>permanently shifted</strong> from the truth.
+                                    </p>
+                                </div>
+                                <!-- MLR 2 -->
+                                <div class="formula-card" style="margin: 0; border: 2px solid rgba(162, 155, 254, 0.4); padding: 45px; border-radius: 15px;">
+                                    <h4 style="color: #a29bfe; font-size: 1.5rem; margin-bottom: 15px;"><i class="fas fa-random"></i> MLR.2: Random Sampling</h4>
+                                    <p style="font-size: 1.2rem; line-height: 1.8;">
+                                        👉 <strong>The Rule:</strong> Your sample must be a faithful, random representation of the population.
+                                        <br>👉 <strong>The Trap:</strong> If you use logs and automatically drop zero or negative observations (e.g., ignoring bankrupt firms), your sample is biased toward "survivors". This is <strong>Selection Bias</strong>.
+                                    </p>
+                                </div>
+                                <!-- MLR 3 -->
+                                <div class="formula-card" style="margin: 0; border: 2px solid rgba(162, 155, 254, 0.4); padding: 45px; border-radius: 15px;">
+                                    <h4 style="color: #a29bfe; font-size: 1.5rem; margin-bottom: 15px;"><i class="fas fa-ban"></i> MLR.3: No Perfect Collinearity</h4>
+                                    <p style="font-size: 1.2rem; line-height: 1.8;">
+                                        👉 <strong>The Rule:</strong> Explanatory variables must not be perfect linear combinations of each other.
+                                        <br>👉 <strong>Intuition:</strong> OLS needs to see each $X$ vary <strong>independently</strong>. If $X_1$ and $X_2$ always move together in lockstep, the model is "blind" and the math literally fails (Matrix is non-invertible).
+                                    </p>
+                                </div>
+                                <!-- MLR 4 -->
+                                <div class="formula-card" style="margin: 0; border: 2px solid rgba(162, 155, 254, 0.4); padding: 45px; border-radius: 15px;">
+                                    <h4 style="color: #a29bfe; font-size: 1.5rem; margin-bottom: 15px;"><i class="fas fa-bullseye"></i> MLR.4: Zero Conditional Mean (Exogeneity)</h4>
+                                    <p style="font-size: 1.2rem; line-height: 1.8;">
+                                        👉 <strong>The Absolute Queen:</strong> $E[u \mid X] = 0$. Factors in the error term ($u$) must NOT be correlated with your $X$ variables.
+                                        <br>👉 <strong>OVB Crisis:</strong> If you omit a variable that affects $Y$ AND is linked to $X$, your coefficient will "steal" that hidden variable's effect. The result is <strong>Endogenous</strong> and mathematically <span style="color: #ff4757; font-weight: 800;">BIASED</span>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3.2 THE PRECISION & INFERENCE LAYER (MLR 5-6) -->
+                        <div style="margin-bottom: 60px;">
+                            <h3 style="color: #a29bfe; font-size: 2rem; margin-bottom: 30px;"><i class="fas fa-layer-group"></i> 🔵 2. Precision, Efficiency & Inference: MLR 5 and 6</h3>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 50px;">
+                                <!-- MLR 5 -->
+                                <div class="formula-card" style="margin: 0; border: 2px solid rgba(162, 155, 254, 0.4); padding: 45px; border-radius: 15px;">
+                                    <h4 style="color: #a29bfe; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-wave-square"></i> MLR.5: Homoskedasticity (Efficiency)</h4>
+                                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 25px;">
+                                        👉 <strong>The Rule:</strong> The variance of errors is constant ($\sigma^2$).
+                                        <br>👉 <strong>Utility:</strong> This allows OLS to be <strong>BLUE</strong> (Best Linear Unbiased Estimator).
+                                    </p>
+                                    <div style="background: rgba(255, 71, 87, 0.05); padding: 25px; border-radius: 12px; border: 1px solid #ff4757;">
+                                        <h5 style="color: #ff4757; margin-bottom: 10px;">🔴 When MLR.5 is Violated (Heteroskedasticity):</h5>
+                                        <ul style="font-size: 1.15rem; line-height: 1.7;">
+                                            <li>✅ <strong>Coefficients</strong>: Still centers correctly (Unbiased).</li>
+                                            <li>⚠️ <strong>Efficiency</strong>: OLS is no longer optimal. It treats noisy observations and precise observations as equal, which is wasteful.</li>
+                                            <li>❌ <strong>Inference</strong>: Standard Errors are <strong>WRONG</strong>. $t$-tests and $F$-tests are invalid. Conclusions about "Significance" are potentially false.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- MLR 6 -->
+                                <div class="formula-card" style="margin: 0; border: 2px solid rgba(162, 155, 254, 0.4); padding: 45px; border-radius: 15px;">
+                                    <h4 style="color: #a29bfe; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-bell"></i> MLR.6: Normality (Exact Inference)</h4>
+                                    <p style="font-size: 1.2rem; line-height: 1.8;">
+                                        👉 <strong>Utility:</strong> Essential for $t$ and $F$ tests to be <span style="font-weight: 800; color: #a29bfe;">EXACT</span> in small samples.
+                                    </p>
+                                    <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 12px; border: 1px solid #20c997; margin-top: 20px;">
+                                        <h5 style="color: #157a5b; margin-bottom: 10px;">🌟 The Massive "Save" : Asymptotic Validity (CLT)</h5>
+                                        <p style="font-size: 1.15rem; line-height: 1.7;">
+                                            In <strong>Large Samples ($n > 30$)</strong>, we don't worry about non-normality!
+                                            <br>👉 <strong>Why?</strong> The Central Limit Theorem (CLT) ensures that the distribution of $\hat{\beta}$ converges to Normal regardless of the error distribution.
+                                            <br>👉 <strong>The Result:</strong> Our tests become <strong>Asymptotically Valid</strong>.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3.3 CONSISTENCY -->
+                        <div class="formula-card" style="background: rgba(162, 155, 254, 0.05); border: 3px solid #a29bfe; padding: 50px; border-radius: 20px; margin-bottom: 50px;">
+                            <h4 style="color: #a29bfe; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-infinity"></i> 🔵 3. Consistency (The bare minimum)</h4>
+                            <p style="font-size: 1.3rem; line-height: 1.8;">
+                                <strong>Consistency</strong> means that with an infinite sample, you hit the truth exactly.
+                                <br>👉 <strong>Condition:</strong> We only need <strong>Zero Correlation</strong> ($Cov(X, u) = 0$). 
+                                <br>👉 This is less demanding than MLR.4, and we do not need normality or homoskedasticity for this property to hold.
+                            </p>
+                        </div>
+
+                        <!-- 🎓 EXAM LOGIC: T-TEST VALIDITY -->
+                        <div class="formula-card" style="border: 4px solid #a29bfe; padding: 45px; border-radius: 20px; background: white; box-shadow: 0 10px 30px rgba(162, 155, 254, 0.15);">
+                            <h4 style="color: #a29bfe; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-graduation-cap"></i> 🎓 Exam Logic: When is the t-test valid?</h4>
+                            
+                            <p style="font-size: 1.25rem; line-height: 1.8; margin-bottom: 30px;">
+                                For a $t$-test (or $F$-test) to provide <strong>Exact Inference</strong>, we technically require <strong>ALL SIX assumptions (MLR.1 to MLR.6)</strong>. If an assumption is broken, the test is likely "lying" to you.
+                            </p>
+
+                            <div style="background: rgba(162, 155, 254, 0.05); padding: 35px; border-radius: 15px; border: 1px solid rgba(162, 155, 254, 0.3);">
+                                <h5 style="color: #a29bfe; font-size: 1.3rem; margin-bottom: 25px;"><i class="fas fa-shield-alt"></i> The Universal Diagnostic Guide (Impact of Violations)</h5>
+                                
+                                <ul style="list-style-type: none; padding-left: 0; font-size: 1.15rem; line-height: 1.8;">
+                                    <li style="margin-bottom: 20px;">
+                                        <strong>1. Linearity (MLR.1):</strong> If the true population model is non-linear but you estimate a linear OLS, your estimators are <strong>Biased</strong>. The $t$-test is centered on the wrong value and is therefore invalid. ❌
+                                    </li>
+                                    <li style="margin-bottom: 20px; border-top: 1px solid rgba(162, 155, 254, 0.2); padding-top: 15px;">
+                                        <strong>2. Random Sampling (MLR.2):</strong> If your sample is not random (e.g., selection bias), the results do not represent the population. Your estimated $\hat{\beta}$ is <strong>Biased</strong>, rendering the $t$-test meaningless for the population. ❌
+                                    </li>
+                                    <li style="margin-bottom: 20px; border-top: 1px solid rgba(162, 155, 254, 0.2); padding-top: 15px;">
+                                        <strong>3. No Perfect Collinearity (MLR.3):</strong> High correlation (multicollinearity) does NOT violate MLR.3. The $t$-test remains <strong>technically valid</strong>, but it becomes very difficult to identify individual effects, leading to high standard errors. ⚠️
+                                    </li>
+                                    <li style="margin-bottom: 20px; border-top: 1px solid rgba(162, 155, 254, 0.2); padding-top: 15px;">
+                                        <strong>4. Exogeneity (MLR.4):</strong> Omitted Variable Bias (OVB) or Endogeneity violates MLR.4. This makes your $\hat{\beta}$ <strong>Biased</strong>, which means your $t$-test is testing a "polluted" coefficient that does not reflect the true causal effect. ❌
+                                    </li>
+                                    <li style="margin-bottom: 20px; border-top: 1px solid rgba(162, 155, 254, 0.2); padding-top: 15px;">
+                                        <strong>5. Homoskedasticity (MLR.5):</strong> Heteroskedasticity results in <strong>Invalid Standard Errors</strong>. Since the $t$-statistic is calculated using these standard errors, the entire $t$-test (and $F$-test) is invalid unless you use robust corrections. ❌
+                                    </li>
+                                    <li style="margin-bottom: 10px; border-top: 1px solid rgba(162, 155, 254, 0.2); padding-top: 15px;">
+                                        <strong>6. Normality (MLR.6):</strong> If errors are non-normal, the $t$-test is <strong>Invalid for small samples</strong>. However, it remains "Asymptotically Valid" in large samples ($n > 30$) thanks to the Central Limit Theorem. ⚠️
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div style="margin-top: 30px; padding: 20px; background: #fdfdfd; border-radius: 10px; border-left: 5px solid #a29bfe;">
+                                <p style="font-size: 1.15rem; margin-bottom: 0;">
+                                    🌟 <strong>The "Large Sample" Exception:</strong> With $n > 30$, the CLT "saves" you from MLR.6 (Normality). The $t$-test becomes <strong>Asymptotically Valid</strong> even without normality.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
 
-                <!-- SECTION 1.5 -->
                 <section id="section-1-5" class="page-section" style="display:none;">
                     <h1 class="page-title">1.5 Testing Multiple Linear Restrictions &amp; OLS Asymptotics</h1>
                     
