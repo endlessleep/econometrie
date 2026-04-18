@@ -63,6 +63,15 @@
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-4')">🎯 Midterm Sheet</a>
                     </div>
                 </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span><i class="fas fa-layer-group" style="margin-right:8px;"></i> Chapter 2</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-1')">2.1 Data Scaling &amp; Functional Forms &amp; Model Comparison</a>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -1877,9 +1886,33 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                                 <div style="display: grid; grid-template-columns: 1fr; gap: 40px;">
                                     <div>
                                         <p style="font-size: 1.25rem; line-height: 1.8;">
-                                            <strong>Definition:</strong> Variance of errors is not constant: $\text{Var}(u \mid X) \neq \sigma^2$.
-                                            <br>👉 <strong>Intuition:</strong> "Some data points are naturally silent/precise, while others are noisy/chaotic."
+                                            <strong>Definition:</strong> Since $\text{Var}(Y \mid X) = \text{Var}(u \mid X)$, if the variance of $Y$ increases with $X$, the error term is heteroskedastic.
                                         </p>
+                                        <div class="math-formula highlight-formula" style="border-color: #20c997; background: rgba(32, 201, 151, 0.05); margin: 20px 0; font-size: 1.4rem;">
+                                            $$\boxed{\text{Var}(Y \mid X) = \text{Var}(u \mid X)}$$
+                                        </div>
+                                        
+                                        <div style="background: white; padding: 25px; border-radius: 12px; border: 1px dashed #20c997; margin-top: 20px;">
+                                            <h5 style="color: #157a5b; font-size: 1.25rem; font-weight: 800; margin-bottom: 15px;">👉 Pourquoi ? (The Logic)</h5>
+                                            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 0;">
+                                                Si $X$ est <strong>fixé</strong>, alors on a :
+                                            </p>
+                                            <div class="math-formula" style="font-size: 1.3rem; margin: 15px 0;">$$ Y = \text{constante} + u $$</div>
+                                            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 0;">
+                                                👉 Seule l’erreur varie $\rightarrow$ <strong>toute la variance vient de $u$</strong>.
+                                            </p>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px;">
+                                            <div style="padding: 20px; background: rgba(32, 201, 151, 0.08); border-radius: 10px; border-left: 5px solid #20c997;">
+                                                <h6 style="font-weight: 800; color: #157a5b; font-size: 1.1rem; margin-bottom: 10px;">✅ Homoskédasticité :</h6>
+                                                <p style="font-size: 1.15rem; margin-bottom: 0;">$\text{Var}(u \mid X) = \sigma^2$ (Constante)</p>
+                                            </div>
+                                            <div style="padding: 20px; background: rgba(255, 71, 87, 0.08); border-radius: 10px; border-left: 5px solid #ff4757;">
+                                                <h6 style="font-weight: 800; color: #ff4757; font-size: 1.1rem; margin-bottom: 10px;">❌ Hétéroscédasticité :</h6>
+                                                <p style="font-size: 1.15rem; margin-bottom: 0;">$\text{Var}(u \mid X)$ <strong>dépend de</strong> $X$</p>
+                                            </div>
+                                        </div>
                                         <div style="background: rgba(32, 201, 151, 0.05); padding: 25px; border-radius: 12px; border: 2px dashed #20c997; margin: 20px 0;">
                                             <p style="font-size: 1.15rem; font-weight: 800; color: #157a5b; margin-bottom: 10px;">🔴 Relation to MLR.5 (Gauss-Markov)</p>
                                             <p style="font-size: 1.15rem; margin-bottom: 0;">
@@ -2277,6 +2310,59 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                                 <br>👉 <strong>Condition:</strong> We only need <strong>Zero Correlation</strong> ($Cov(X, u) = 0$). 
                                 <br>👉 This is less demanding than MLR.4, and we do not need normality or homoskedasticity for this property to hold.
                             </p>
+
+                            <div style="margin-top: 40px; background: white; padding: 35px; border-radius: 15px; border: 2px solid #a29bfe; box-shadow: 0 5px 15px rgba(162,155,254,0.1);">
+                                <h5 style="color: #a29bfe; font-size: 1.4rem; margin-bottom: 20px;"><i class="fas fa-book"></i> 📘 Bloc de révision – plim et moyenne (LLN)</h5>
+                                
+                                <p style="font-size: 1.2rem; line-height: 1.8;">
+                                    Le résultat fondamental à connaître est :
+                                </p>
+                                <div class="math-formula highlight-formula" style="border-color: #a29bfe; background: rgba(162, 155, 254, 0.05);">
+                                    $$\text{plim}(\bar{X}) = E(X)$$
+                                </div>
+                                <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 25px; color: #555;">
+                                    Cela vient de la <strong>loi des grands nombres (LLN)</strong> : quand la taille de l’échantillon devient grande, la moyenne empirique converge vers l’espérance.
+                                </p>
+                                
+                                <hr style="border: 0; height: 1px; background: rgba(162, 155, 254, 0.3); margin: 25px 0;">
+                                
+                                <p style="font-size: 1.15rem; line-height: 1.7;">
+                                    Dans le modèle de régression, on a : $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$
+                                    <br>On cherche la probabilité limite de cet estimateur :
+                                    <br>$\text{plim}(\hat{\beta}_0) = \text{plim}(\bar{y} - \hat{\beta}_1 \bar{x})$
+                                </p>
+                                
+                                <div style="background: rgba(162, 155, 254, 0.05); padding: 20px; border-radius: 12px; margin-top: 20px;">
+                                    <h6 style="font-weight: 800; color: #4A0E17; font-size: 1.15rem; margin-bottom: 10px;">Propriétés des plim :</h6>
+                                    <ul style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">
+                                        <li>la plim d’une somme/différence est la somme/différence des plim.</li>
+                                        <li>la plim d’un produit est le produit des plim.</li>
+                                    </ul>
+                                </div>
+                                
+                                <p style="font-size: 1.15rem; line-height: 1.8; margin-top: 25px;">
+                                    Donc :
+                                    <br>$\text{plim}(\hat{\beta}_0) = \text{plim}(\bar{y}) - \text{plim}(\hat{\beta}_1)\cdot \text{plim}(\bar{x})$
+                                    <br><br>Par la loi des grands nombres : $\text{plim}(\bar{y}) = E(y), \quad \text{plim}(\bar{x}) = E(x)$
+                                    <br>Et si l’estimateur est consistant : $\text{plim}(\hat{\beta}_1) = \beta_1$
+                                    <br><br>On obtient donc :
+                                    <br><strong>$\text{plim}(\hat{\beta}_0) = E(y) - \beta_1 E(x)$</strong>
+                                    <br><br>Or, dans le modèle $E(y) = \beta_0 + \beta_1 E(x)$.
+                                    <br>Donc :
+                                </p>
+                                <div class="math-formula highlight-formula" style="border-color: #a29bfe; background: rgba(162, 155, 254, 0.1); font-size: 1.4rem;">
+                                    $$\text{plim}(\hat{\beta}_0) = \beta_0$$
+                                </div>
+                                
+                                <div style="margin-top: 30px; border-left: 5px solid #ff4757; background: #fff5f6; padding: 25px; border-radius: 10px;">
+                                    <h6 style="color: #ff4757; font-weight: 800; font-size: 1.25rem; margin-bottom: 15px;">🔹 À retenir absolument</h6>
+                                    <ul style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 0;">
+                                        <li>Une <strong>moyenne</strong> $\rightarrow$ devient une <strong>espérance</strong>.</li>
+                                        <li>Un <strong>estimateur consistant</strong> $\rightarrow$ devient le <strong>vrai paramètre</strong>.</li>
+                                        <li><strong>Toujours remplacer avant de simplifier.</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 🎓 EXAM LOGIC: T-TEST VALIDITY -->
@@ -2425,6 +2511,50 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         <div class="math-formula highlight-formula">
                             $$ \text{plim}(\hat{\beta}_j) = \beta_j \quad \text{under MLR.1 through MLR.4} $$
                         </div>
+
+                        <!-- 📘 Revision Block Added -->
+                        <div class="concept-card" style="border-left: 5px solid #007bff; background: #f8f9fa; margin-top: 30px; padding: 30px;">
+                            <h4 style="color: #007bff; margin-bottom: 20px;"><i class="fas fa-book-reader"></i> 📘 Bloc de révision – plim et moyenne (LLN)</h4>
+                            <p>Le résultat fondamental à connaître est :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\bar{X}) = E(X) $$</div>
+                            <p>Cela vient de la <strong>loi des grands nombres (LLN)</strong> : quand la taille de l’échantillon devient grande, la moyenne empirique converge vers l’espérance.</p>
+                            
+                            <hr style="margin: 25px 0; border: 0; border-top: 1px dashed #007bff;">
+                            
+                            <p>Dans le modèle de régression, on a :</p>
+                            <div class="math-formula" style="background: white;">$$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} $$</div>
+                            <p>On cherche la probabilité limite de cet estimateur :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\hat{\beta}_0) = \text{plim}(\bar{y} - \hat{\beta}_1 \bar{x}) $$</div>
+                            <p>On utilise les propriétés des <strong>plim</strong> :</p>
+                            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                                <li>La plim d’une somme/différence est la somme/différence des plim</li>
+                                <li>La plim d’un produit est le produit des plim</li>
+                            </ul>
+                            <p>Donc :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\hat{\beta}_0) = \text{plim}(\bar{y}) - \text{plim}(\hat{\beta}_1)\cdot \text{plim}(\bar{x}) $$</div>
+                            <p>Par la loi des grands nombres :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\bar{y}) = E(y), \quad \text{plim}(\bar{x}) = E(x) $$</div>
+                            <p>Et si l’estimateur est consistant :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\hat{\beta}_1) = \beta_1 $$</div>
+                            <p>On obtient donc :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\hat{\beta}_0) = E(y) - \beta_1 E(x) $$</div>
+                            <p>Or, dans le modèle :</p>
+                            <div class="math-formula" style="background: white;">$$ E(y) = \beta_0 + \beta_1 E(x) $$</div>
+                            <p>Donc :</p>
+                            <div class="math-formula" style="background: white;">$$ \text{plim}(\hat{\beta}_0) = \beta_0 $$</div>
+                            
+                            <div class="alert-box" style="margin-top: 25px; border-left: 4px solid #007bff; background: rgba(0, 123, 255, 0.05); padding: 15px; display: flex; align-items: flex-start; gap: 15px;">
+                                <i class="fas fa-lightbulb" style="color: #007bff; font-size: 1.5rem; margin-top: 5px;"></i>
+                                <div class="alert-content">
+                                    <h4 style="color: #007bff; margin-bottom: 5px;">🔹 À retenir absolument</h4>
+                                    <ul style="list-style-type: none; padding-left: 0; margin-bottom: 0;">
+                                        <li>👉 Une moyenne → devient une espérance</li>
+                                        <li>👉 Un estimateur consistant → devient le vrai paramètre</li>
+                                        <li>👉 Toujours remplacer avant de simplifier</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <p><strong>Important:</strong> We do not need MLR.5 (homoskedasticity) or MLR.6 (normality) for consistency. For MLR.4, we only need <strong>zero correlation</strong> \(Cov(x_j, u) = 0\).</p>
                         <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
                             $$ \text{plim}(\hat{\beta}_1) - \beta_1 = \frac{Cov(x_1, u)}{Var(x_1)} $$
@@ -2461,6 +2591,591 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             </div>
                         </div>
                     </div>
+                </section>
+
+                <!-- ==================== SECTION 2.1 ==================== -->
+                <section id="section-2-1" class="page-section" style="display:none;">
+                    <h1 class="page-title">DATA SCALING &amp; FUNCTIONAL FORMS &amp; MODEL COMPARISON</h1>
+
+                    <!-- ── INTRO CARD ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-rocket"></i> Why This Chapter Matters</h3>
+                        <p>This chapter explains how econometric results react to changes in units, how to interpret logarithmic and nonlinear models, and how to compare competing specifications correctly.</p>
+                        <p style="margin-top:12px;">The central idea is simple: <strong>coefficients never speak alone</strong>. Their meaning depends on the functional form of the model.</p>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-bullseye alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Learning Goals</h4>
+                                <ul style="margin-top:8px;">
+                                    <li>Understand how scaling affects coefficients, standard errors, t-stats and p-values</li>
+                                    <li>Interpret log-level, level-log and log-log models correctly</li>
+                                    <li>Compute marginal effects in quadratic and interaction models</li>
+                                    <li>Compare models using \(R^2\), adjusted \(R^2\), and valid model comparison logic</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>Never interpret a coefficient before checking the functional form of the model.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION A — DATA SCALING ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-ruler-combined"></i> Effects of Data Scaling on OLS Statistics</h3>
+                        <p>Rescaling data does not change the underlying economic relationship. It only changes the numerical units used to express variables. For example, income may be measured in euros, thousands of euros, or CZK. The model remains the same economically, but the numerical values of coefficients may change.</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Why do we rescale data?</h4>
+                        <p>We mainly rescale data for <strong>reporting purposes</strong>:</p>
+                        <ul>
+                            <li>to avoid too many decimals</li>
+                            <li>to work with more intuitive units</li>
+                            <li>to make coefficients easier to read and compare</li>
+                        </ul>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Deep Intuition</h4>
+                                <p>Scaling changes the ruler, not the relationship.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION B — SCALING AN INDEPENDENT VARIABLE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-arrow-right"></i> Scaling an Independent Variable</h3>
+                        <p>Suppose we rescale \(x_1\) by a nonzero constant \(c\). Define a new variable \( x_1^* = c x_1 \). Starting from the original model:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
+                        </div>
+                        <p>Since \( x_1 = x_1^*/c \), we can rewrite the model as:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \frac{\beta_1}{c}\,x_1^* + \beta_2 x_2 + u $$
+                        </div>
+                        <p>Therefore, in the rescaled model:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \gamma_0 = \beta_0, \qquad \gamma_1 = \frac{\beta_1}{c}, \qquad \gamma_2 = \beta_2 $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Interpretation</h4>
+                        <p>If an explanatory variable is multiplied by \(c\), its slope is divided by \(c\). The intercept and the slopes of the other regressors do <em>not</em> change.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-scale-x')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-scale-x" class="hidden-panel">
+                            <p>Start from the fitted equation \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 \).</p>
+                            <div class="math-formula">
+                                $$ \hat{y} = \hat{\beta}_0 + \frac{\hat{\beta}_1}{c}(cx_1) + \hat{\beta}_2 x_2 $$
+                            </div>
+                            <p>Defining \(x_1^* = cx_1\):</p>
+                            <div class="math-formula">
+                                $$ \hat{y} = \hat{\beta}_0 + \frac{\hat{\beta}_1}{c}\,x_1^* + \hat{\beta}_2 x_2 $$
+                            </div>
+                            <p>So the new coefficient is \( \hat{\gamma}_1 = \hat{\beta}_1 / c \).</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Effect on the Standard Error</h4>
+                        <p>Recall the general formula:</p>
+                        <div class="math-formula">
+                            $$ se(\hat{\beta}_j) = \frac{\hat{\sigma}}{\sqrt{SST_j(1 - R_j^2)}} $$
+                        </div>
+                        <p>For \(x_1^* = cx_1\), we have \(SST_{x_1^*} = c^2 SST_{x_1}\), so:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ se(\hat{\gamma}_1) = \frac{se(\hat{\beta}_1)}{|c|} $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">t-statistic and p-value</h4>
+                        <p>Because both the estimate and its standard error are divided by the same factor:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ t_{\hat{\gamma}_1} = \frac{\hat{\gamma}_1}{se(\hat{\gamma}_1)} = \frac{\hat{\beta}_1/c}{se(\hat{\beta}_1)/c} = t_{\hat{\beta}_1} $$
+                        </div>
+                        <ul>
+                            <li>t-statistic <strong>unchanged</strong></li>
+                            <li>p-value <strong>unchanged</strong></li>
+                            <li>statistical significance <strong>unchanged</strong></li>
+                        </ul>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>Scale an \(x_j\) variable \(\Rightarrow\) only its own slope and standard error change.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION C — SCALING A DEPENDENT VARIABLE ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-arrow-up"></i> Scaling a Dependent Variable</h3>
+                        <p>Now suppose the dependent variable is multiplied by \(c\). Multiply both sides of the original model by \(c\):</p>
+                        <div class="math-formula">
+                            $$ cy = c\beta_0 + c\beta_1 x_1 + c\beta_2 x_2 + cu $$
+                        </div>
+                        <p>So in the rescaled model:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \gamma_j = c\beta_j \qquad \text{for all } j = 0,1,2 $$
+                        </div>
+                        <p>If the dependent variable is multiplied by \(c\), <strong>all coefficients are multiplied by \(c\)</strong>.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-scale-y')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-scale-y" class="hidden-panel">
+                            <p>Start from \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 \). Multiply by \(c\):</p>
+                            <div class="math-formula">
+                                $$ c\hat{y} = c\hat{\beta}_0 + c\hat{\beta}_1 x_1 + c\hat{\beta}_2 x_2 $$
+                            </div>
+                            <p>Thus every coefficient is multiplied by \(c\): \(\hat{\gamma}_j = c\hat{\beta}_j\). Standard errors also scale by \(|c|\), so t-statistics and p-values remain unchanged.</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Synthesis Table</h4>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Case</th>
+                                        <th>What changes?</th>
+                                        <th>What stays unchanged?</th>
+                                        <th>Key rule</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Scale independent variable</strong></td>
+                                        <td>own slope, own SE</td>
+                                        <td>t-stat, p-value, other slopes</td>
+                                        <td>divide slope by \(c\)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Scale dependent variable</strong></td>
+                                        <td>all coefficients, all SEs</td>
+                                        <td>t-stat, p-value</td>
+                                        <td>multiply all coefficients by \(c\)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION D — SCALING IN LOGARITHMIC MODELS ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-log"></i> Scaling in Logarithmic Models</h3>
+                        <p>Logarithmic models behave differently from level models. When scaling happens inside a logarithm, the change is <strong>absorbed by the intercept</strong>.</p>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Case 1 — Dependent variable in logs</h4>
+                        <div class="math-formula">
+                            $$ \log(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
+                        </div>
+                        <p>If \(y\) is rescaled by \(c\): \(\log(cy) = \log(c) + \log(y)\). Substituting:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \gamma_0 = \beta_0 + \log(c), \qquad \gamma_1 = \beta_1, \qquad \gamma_2 = \beta_2 $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Case 2 — Independent variable in logs</h4>
+                        <div class="math-formula">
+                            $$ \log(y) = \beta_0 + \beta_1 \log(x_1) + \beta_2 x_2 + u $$
+                        </div>
+                        <p>If \(x_1\) is rescaled by \(c\): \(\log(cx_1) = \log(c) + \log(x_1)\), so again only the intercept changes.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('explain-log-rescale')"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
+                        <div id="explain-log-rescale" class="hidden-panel">
+                            <p>In logarithmic models, multiplication becomes addition:</p>
+                            <div class="math-formula">
+                                $$ \log(cz) = \log(c) + \log(z) $$
+                            </div>
+                            <p>That is why scaling a logged variable does not change the slope coefficient. The constant \(\log(c)\) is simply absorbed into the intercept.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-key alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Logic</h4>
+                                <p>Inside logs, scaling becomes a constant shift. That shift goes into the intercept, not into the slopes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION E — MORE ON LOGARITHMIC FORMS ── -->
+                    <div class="grid-card">
+                        <h3><i class="fas fa-table"></i> More on Logarithmic Forms</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Regression Form</th>
+                                        <th>Interpretation of slope \(\beta_1\)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Level-level</strong></td>
+                                        <td>\( y = \beta_0 + \beta_1 x + u \)</td>
+                                        <td>1-unit ↑ in \(x\) changes \(y\) by \(\beta_1\)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Level-log</strong></td>
+                                        <td>\( y = \beta_0 + \beta_1 \log(x) + u \)</td>
+                                        <td>1% ↑ in \(x\) changes \(y\) by \(\beta_1/100\)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Log-level</strong></td>
+                                        <td>\( \log(y) = \beta_0 + \beta_1 x + u \)</td>
+                                        <td>1-unit ↑ in \(x\) changes \(y\) by approx. \(100\beta_1\%\)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Log-log</strong></td>
+                                        <td>\( \log(y) = \beta_0 + \beta_1 \log(x) + u \)</td>
+                                        <td>1% ↑ in \(x\) changes \(y\) by \(\beta_1\%\) (elasticity)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem; margin-top:30px;">Semi-elasticity in a Log-Level Model</h4>
+                        <p>Consider:</p>
+                        <div class="math-formula">
+                            $$ \log(y) = \beta_0 + \beta_1 \log(x_1) + \beta_2 x_2 + u $$
+                        </div>
+                        <p>Here \(\beta_2\) is a <strong>semi-elasticity</strong>. A one-unit increase in \(x_2\) changes \(\log(y)\) by \(\beta_2\). So \(100\beta_2\) is only an <em>approximate</em> percentage change in \(y\). The <strong>exact</strong> percentage change is:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \%\Delta\hat{y} = 100\bigl(\exp(\beta_2 \Delta x_2) - 1\bigr) $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-log-exact')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-log-exact" class="hidden-panel">
+                            <p>If \(x_2\) changes by \(\Delta x_2\), then:</p>
+                            <div class="math-formula">
+                                $$ \Delta\log(\hat{y}) = \beta_2 \Delta x_2 $$
+                            </div>
+                            <p>Exponentiating both sides:</p>
+                            <div class="math-formula">
+                                $$ \frac{\hat{y}_{\text{new}}}{\hat{y}_{\text{old}}} = \exp(\beta_2 \Delta x_2) $$
+                            </div>
+                            <p>So the exact percentage change is:</p>
+                            <div class="math-formula">
+                                $$ 100\left(\frac{\hat{y}_{\text{new}} - \hat{y}_{\text{old}}}{\hat{y}_{\text{old}}}\right) = 100\bigl(\exp(\beta_2 \Delta x_2) - 1\bigr) $$
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>In log-level models, \(100\beta\) is <strong>approximate</strong>, not exact.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION F — QUADRATIC MODELS ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-chart-line"></i> Quadratic Models</h3>
+                        <p>Quadratic models are used when the effect of a regressor is <strong>not constant</strong>. Consider:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1 x + \beta_2 x^2 + u $$
+                        </div>
+                        <p>The marginal effect of \(x\) on \(y\) is:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \frac{\partial y}{\partial x} = \beta_1 + 2\beta_2 x $$
+                        </div>
+                        <p>So the effect of \(x\) <strong>depends on the level of \(x\)</strong>.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-quadratic')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-quadratic" class="hidden-panel">
+                            <p>Differentiate the fitted equation \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x + \hat{\beta}_2 x^2 \) with respect to \(x\):</p>
+                            <div class="math-formula">
+                                $$ \frac{\partial\hat{y}}{\partial x} = \hat{\beta}_1 + 2\hat{\beta}_2 x $$
+                            </div>
+                            <p>This is why the slope is not constant in a quadratic model.</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">Turning Point</h4>
+                        <p>Set the marginal effect equal to zero:</p>
+                        <div class="math-formula">
+                            $$ \beta_1 + 2\beta_2 x = 0 \implies x^* = -\frac{\beta_1}{2\beta_2} $$
+                        </div>
+                        <ul>
+                            <li>if \(\beta_2 < 0\), the function is <strong>concave</strong> → turning point is a <strong>maximum</strong></li>
+                            <li>if \(\beta_2 > 0\), the function is <strong>convex</strong> → turning point is a <strong>minimum</strong></li>
+                        </ul>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>In a quadratic model, do not interpret \(\beta_1\) alone as the effect of \(x\).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION G — QUADRATICS WITH LOGS ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-superscript"></i> Quadratics with Logarithms</h3>
+                        <p>We can combine nonlinearities and logarithms:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \log(y) = \beta_0 + \beta_1 \log(x) + \beta_2[\log(x)]^2 + u $$
+                        </div>
+                        <p><strong>Important:</strong> the square is on \(\log(x)\), not inside the logarithm. The elasticity is now:</p>
+                        <div class="math-formula">
+                            $$ \frac{\partial\log(y)}{\partial\log(x)} = \beta_1 + 2\beta_2\log(x) $$
+                        </div>
+                        <p>So the percentage effect of \(x\) on \(y\) depends on the level of \(x\).</p>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Interpretation</h4>
+                                <p>This model allows <strong>elasticity itself to vary</strong> across observations.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION H — INTERACTION TERMS ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-times-circle"></i> Interaction Terms</h3>
+                        <p>Interaction terms are used when <strong>the effect of one explanatory variable depends on another</strong>. Consider:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + u $$
+                        </div>
+                        <p>The marginal effects are:</p>
+                        <div class="math-formula">
+                            $$ \frac{\partial y}{\partial x_1} = \beta_1 + \beta_3 x_2 \qquad \frac{\partial y}{\partial x_2} = \beta_2 + \beta_3 x_1 $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-interaction')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-interaction" class="hidden-panel">
+                            <p>Differentiate \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \hat{\beta}_3 x_1 x_2 \) with respect to \(x_1\):</p>
+                            <div class="math-formula">
+                                $$ \frac{\partial\hat{y}}{\partial x_1} = \hat{\beta}_1 + \hat{\beta}_3 x_2 $$
+                            </div>
+                            <p>So the slope of \(x_1\) <strong>changes with \(x_2\)</strong>. That is exactly the interaction effect.</p>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>In an interaction model, \(\beta_1\) is <strong>not the universal effect</strong> of \(x_1\). It is the effect only when \(x_2 = 0\).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION I — GOODNESS-OF-FIT ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-percentage"></i> Goodness-of-Fit Measures</h3>
+                        <p>The coefficient of determination is:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ R^2 = 1 - \frac{SSR}{SST} $$
+                        </div>
+                        <p>It measures the fraction of the total variation in \(y\) explained by the model.</p>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-exclamation-triangle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Limitation</h4>
+                                <p>Adding a new regressor <strong>never decreases</strong> \(R^2\). That is why ordinary \(R^2\) is not a reliable tool for variable selection.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION J — ADJUSTED R² ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-sliders-h"></i> Adjusted \(R^2\)</h3>
+                        <p>To penalize unnecessary complexity, we use the <strong>adjusted coefficient of determination</strong>:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \bar{R}^2 = 1 - \frac{SSR/(n-k-1)}{SST/(n-1)} $$
+                        </div>
+                        <p>This can be rewritten as:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \bar{R}^2 = 1 - (1-R^2)\frac{n-1}{n-k-1} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-adj-r2')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-adj-r2" class="hidden-panel">
+                            <p>Start from \( \bar{R}^2 = 1 - \dfrac{SSR/(n-k-1)}{SST/(n-1)} \). Simplify:</p>
+                            <div class="math-formula">
+                                $$ \bar{R}^2 = 1 - \frac{SSR}{SST}\cdot\frac{n-1}{n-k-1} $$
+                            </div>
+                            <p>From \(R^2 = 1 - SSR/SST\) we get \(SSR/SST = 1-R^2\). Substitute:</p>
+                            <div class="math-formula">
+                                $$ \bar{R}^2 = 1 - (1-R^2)\frac{n-1}{n-k-1} $$
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Why \(n-1\) and \(n-k-1\)?</h4>
+                        <ul>
+                            <li>\(n-1\) is the degrees of freedom of \(SST\), because one degree of freedom is lost when estimating \(\bar{y}\)</li>
+                            <li>\(n-k-1\) is the degrees of freedom of \(SSR\), because we estimate \(k+1\) parameters: one intercept and \(k\) slopes</li>
+                        </ul>
+
+                        <button class="action-btn" onclick="toggleDerivation('explain-negative-adjr2')" style="margin-top:20px;"><i class="fas fa-eye"></i> Show/Hide Explanation — Can \(\bar{R}^2\) be negative?</button>
+                        <div id="explain-negative-adjr2" class="hidden-panel">
+                            <p>Adjusted \(R^2\) can be negative if the model fits very poorly. This does not violate any rule. It simply means that, after the degrees-of-freedom correction, the model performs worse than a very naive benchmark.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-brain alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Deep Logic</h4>
+                                <p>Adjusted \(R^2\) balances fit improvement against model complexity.</p>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Two Key Properties</h4>
+                        <ul>
+                            <li>When one variable is added, adjusted \(R^2\) increases iff \(|t| > 1\)</li>
+                            <li>When a group of variables is added, adjusted \(R^2\) increases iff \(F > 1\)</li>
+                        </ul>
+                    </div>
+
+                    <!-- ── SECTION K — NON-NESTED MODEL COMPARISON ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-project-diagram"></i> Non-Nested Model Comparison</h3>
+                        <p>Consider two models:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
+                            $$ y = \gamma_0 + \gamma_1 x_1 + \gamma_2 x_3 + v $$
+                        </div>
+                        <p>These models are <strong>non-nested</strong> because neither one is a special case of the other.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('explain-nonnested')"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
+                        <div id="explain-nonnested" class="hidden-panel">
+                            <p>The standard F-test compares a restricted model to an unrestricted model. That logic only works when one model is <em>contained inside</em> the other. For non-nested models, this nesting structure does not exist, so the usual F-test is <strong>not valid</strong>.</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <ul>
+                            <li>\(R^2\) can only be compared safely if the models have the same number of regressors</li>
+                            <li>adjusted \(R^2\) is often used for comparing alternative specifications</li>
+                            <li>but the <strong>dependent variable must have the same functional form</strong> across the competing models</li>
+                        </ul>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>Do <strong>not</strong> compare adjusted \(R^2\) across models if one uses \(y\) and the other uses \(\log(y)\).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION L — STANDARDIZED BETA COEFFICIENTS ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-balance-scale"></i> Standardized Beta Coefficients</h3>
+                        <p>Sometimes variables are measured in very different units. To compare their <strong>relative importance</strong>, we standardize them. The standardized beta coefficient is:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \hat{b}_j = \hat{\beta}_j \frac{\hat{\sigma}_j}{\hat{\sigma}_y} $$
+                        </div>
+                        <p>where \(\hat{\sigma}_j\) is the sample standard deviation of \(x_j\) and \(\hat{\sigma}_y\) is the sample standard deviation of \(y\).</p>
+                        <p style="margin-top:12px;"><strong>Interpretation:</strong> \(\hat{b}_j\) measures the change in \(y\), in standard deviations, caused by a one-standard-deviation increase in \(x_j\).</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-beta-standardized')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-beta-standardized" class="hidden-panel">
+                            <p>Start from the estimated model, subtract sample means:</p>
+                            <div class="math-formula">
+                                $$ y_i - \bar{y} = \hat{\beta}_1(x_{1i} - \bar{x}_1) + \cdots + \hat{u}_i $$
+                            </div>
+                            <p>Divide both sides by \(\hat{\sigma}_y\):</p>
+                            <div class="math-formula">
+                                $$ \frac{y_i - \bar{y}}{\hat{\sigma}_y} = \hat{\beta}_1 \frac{\hat{\sigma}_1}{\hat{\sigma}_y} \cdot \frac{x_{1i} - \bar{x}_1}{\hat{\sigma}_1} + \cdots $$
+                            </div>
+                            <p>Thus the standardized coefficient is \( \hat{b}_j = \hat{\beta}_j \hat{\sigma}_j / \hat{\sigma}_y \).</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Note</h4>
+                                <p>Standardization changes interpretation, but <strong>not statistical significance</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── FINAL EXAM REFLEX CARD ── -->
+                    <div class="concept-card highlight" style="border:3px solid var(--primary-red);">
+                        <h3><i class="fas fa-star"></i> Final Exam Reflex — What You Must Instantly Recognize</h3>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>1. Scaling a regressor &nbsp; \(x_j^* = cx_j\)</strong>
+                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow \text{divide its slope and SE by } c $$</div>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>2. Scaling the dependent variable &nbsp; \(y^* = cy\)</strong>
+                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow \text{multiply all coefficients and SEs by } c $$</div>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>3. Scaling inside logs</strong>
+                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \log(cz) = \log(c) + \log(z) \Rightarrow \text{only intercept changes} $$</div>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>4. Log-level model &nbsp; \(\log(y) = \beta_0 + \beta_1 x + u\)</strong>
+                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow 100\beta_1 \text{ is approx.},\; \exp(\beta_1)-1 \text{ is exact} $$</div>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>5. Quadratic model &nbsp; \(y = \beta_0 + \beta_1 x + \beta_2 x^2 + u\)</strong>
+                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \frac{\partial y}{\partial x} = \beta_1 + 2\beta_2 x $$</div>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>6. Interaction model &nbsp; \( y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + u \)</strong>
+                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow \text{effect of } x_1 \text{ depends on } x_2 $$</div>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>7. Adjusted \(R^2\)</strong>
+                                <p style="margin-top:8px;">\(\Rightarrow\) better than \(R^2\) for model selection because it <strong>penalizes complexity</strong></p>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
+                                <strong>8. Non-nested comparison</strong>
+                                <p style="margin-top:8px;">\(\Rightarrow\) <strong>no standard F-test</strong></p>
+                            </div>
+
+                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red); grid-column:1/-1;">
+                                <strong>9. Standardized betas</strong>
+                                <p style="margin-top:8px;">\(\Rightarrow\) compare effects in <strong>standard deviation units</strong></p>
+                            </div>
+
+                        </div>
+
+                        <div class="alert-box" style="margin-top:25px; border-color:var(--primary-red); background:#fff5f5;">
+                            <i class="fas fa-exclamation-circle alert-icon" style="color:var(--primary-red);"></i>
+                            <div class="alert-content">
+                                <h4 style="color:var(--primary-red);">Never Read a Coefficient Mechanically</h4>
+                                <p>Always ask:</p>
+                                <ul style="margin-top:8px;">
+                                    <li>What is the <strong>functional form</strong>?</li>
+                                    <li>Is the effect <strong>constant or not</strong>?</li>
+                                    <li>Is the <strong>model comparison valid</strong>?</li>
+                                    <li>What exactly is being <strong>held fixed</strong>?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
 
             </div>
