@@ -3049,49 +3049,41 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                 <section id="section-2-2" class="page-section" style="display:none;">
                     <h1 class="page-title">SELECTION OF EXPLANATORY VARIABLES &amp; PREDICTION &amp; QUALITATIVE INFO</h1>
 
-                    <!-- ── INTRO CARD ── -->
-                    <div class="concept-card highlight">
-                        <h3><i class="fas fa-rocket"></i> Why This Chapter Matters</h3>
-                        <p>This chapter explains how econometricians decide whether a variable belongs in a model, how prediction works in cross-sectional OLS, and how qualitative information can be included using dummy variables.</p>
-                        <p style="margin-top:12px;">The deep logic is that a regression model is not only about estimating coefficients. It is also about <strong>choosing variables carefully</strong>, <strong>predicting responsibly</strong>, and <strong>interpreting qualitative differences correctly</strong>.</p>
-
-                        <div class="alert-box assumption" style="margin-top:20px;">
-                            <i class="fas fa-bullseye alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Key Learning Goals</h4>
-                                <ul style="margin-top:8px;">
-                                    <li>Understand how to select explanatory variables without relying mechanically on goodness-of-fit</li>
-                                    <li>Distinguish prediction of a conditional mean from prediction for a specific individual unit</li>
-                                    <li>Understand how dummy variables represent qualitative information</li>
-                                    <li>Avoid the dummy variable trap and interpret benchmark groups correctly</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="alert-box" style="margin-top:20px;">
-                            <i class="fas fa-radiation-alt alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Important Warning</h4>
-                                <p>A high \(R^2\) does not automatically mean a good model.</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- ── SECTION A — CONTROLLING FOR TOO MANY VARIABLES ── -->
                     <div class="concept-card">
                         <h3><i class="fas fa-filter"></i> Controlling for Too Many Independent Variables</h3>
-                        <p>The search for a high goodness-of-fit can lead to an <strong>overspecified</strong> or <strong>overfitted</strong> model. This means a model with too many independent variables. Such a model may look impressive because it fits the sample well, but it may be unnecessarily complex and economically weak.</p>
-                        <p style="margin-top:15px;">As adjusted \(R^2\) penalizes additional regressors, it can help signal when to stop adding variables. Its construction tells us whether the reduction in error variance is sufficient to justify the inclusion of another regressor.</p>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:20px;">The Problem — Overfitting</h4>
+                        <p>The search for a high goodness-of-fit can lead to an <strong>overspecified</strong> or <strong>overfitted</strong> model: too many independent variables. Such a model may fit the sample well, but it is <strong>unnecessarily complex</strong> and <strong>economically weak</strong>.</p>
+
+                        <div class="alert-box" style="margin-top:15px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Core Issue</h4>
+                                <p>Ordinary \(R^2\) <strong>never decreases</strong> when a variable is added — even if that variable is irrelevant. It rewards complexity too easily.</p>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">The Solution — Adjusted \(R^2\)</h4>
+                        <p>Adjusted \(R^2\) penalizes additional regressors. It asks whether the reduction in error variance is <strong>sufficient to justify</strong> the inclusion of another regressor:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \bar{R}^2 = 1 - \frac{SSR/(n-k-1)}{SST/(n-1)} $$
+                        </div>
 
                         <div class="alert-box assumption" style="margin-top:20px;">
                             <i class="fas fa-lightbulb alert-icon"></i>
                             <div class="alert-content">
                                 <h4>Deep Intuition</h4>
-                                <p>Ordinary \(R^2\) rewards complexity too easily. Adjusted \(R^2\) asks whether the gain in fit is really worth the cost.</p>
+                                <p>Adjusted \(R^2\) asks: <strong>is the gain in fit really worth the cost of one more parameter?</strong></p>
                             </div>
                         </div>
 
-                        <p style="margin-top:15px;"><strong>However</strong>, we should always include independent variables that truly affect \(y\) and are uncorrelated with the other regressors.</p>
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">But Do Not Under-Specify Either</h4>
+                        <p>We should always include independent variables that <strong>truly affect \(y\)</strong> and are uncorrelated with the other regressors. Omitting them creates <strong>omitted variable bias</strong>.</p>
                     </div>
 
                     <!-- ── SECTION B — FOUR CRITERIA ── -->
