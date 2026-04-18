@@ -3470,6 +3470,46 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
 
 
 
+
+
+                    <!-- ── EXAMPLE — BLUE CARD ── -->
+                    <div class="concept-card" style="background:linear-gradient(135deg, #e8f0fe 0%, #f0f4ff 100%); border-left:5px solid #4285f4; border-top:none;">
+                        <h3 style="color:#1a56db;"><i class="fas fa-pencil-alt" style="color:#4285f4;"></i> Worked Example — Multiple Dummies</h3>
+                        <p>Suppose two binary characteristics are observed: employment \(E\) and citizenship \(C\). Consider:</p>
+                        <div class="math-formula" style="background:white;">
+                            $$ income = \beta_0 + \beta_1 E + \beta_2 C + u $$
+                        </div>
+                        <p>Then the expected income in each group is:</p>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:15px;">
+                            <div style="background:white; padding:14px; border-radius:8px; border-left:4px solid #4285f4;">
+                                <strong>Employed citizens</strong>
+                                <div class="math-formula" style="margin:8px 0; background:#f8faff;">$$ \beta_0 + \beta_1 + \beta_2 $$</div>
+                            </div>
+                            <div style="background:white; padding:14px; border-radius:8px; border-left:4px solid #4285f4;">
+                                <strong>Unemployed citizens</strong>
+                                <div class="math-formula" style="margin:8px 0; background:#f8faff;">$$ \beta_0 + \beta_2 $$</div>
+                            </div>
+                            <div style="background:white; padding:14px; border-radius:8px; border-left:4px solid #4285f4;">
+                                <strong>Employed foreigners</strong>
+                                <div class="math-formula" style="margin:8px 0; background:#f8faff;">$$ \beta_0 + \beta_1 $$</div>
+                            </div>
+                            <div style="background:white; padding:14px; border-radius:8px; border-left:4px solid #4285f4;">
+                                <strong>Unemployed foreigners</strong>
+                                <div class="math-formula" style="margin:8px 0; background:#f8faff;">$$ \beta_0 $$</div>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed #4285f4; margin:25px 0;">
+
+                        <h4 style="color:#1a56db; font-size:1.05rem;">Alternative specification</h4>
+                        <p>Define one dummy per group: \(EC\), \(UC\), \(EF\), \(UF\). Omit one as the benchmark:</p>
+                        <div class="math-formula" style="background:white;">
+                            $$ income = \gamma_0 + \gamma_1 UC + \gamma_2 EF + \gamma_3 UF + v $$
+                        </div>
+                        <p>This often makes interpretation and testing more straightforward.</p>
+                    </div>
+
                 </section>
 
             </div>
