@@ -2597,38 +2597,9 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                 <section id="section-2-1" class="page-section" style="display:none;">
                     <h1 class="page-title">DATA SCALING &amp; FUNCTIONAL FORMS &amp; MODEL COMPARISON</h1>
 
-                    <!-- ── INTRO CARD ── -->
-                    <div class="concept-card highlight">
-                        <h3><i class="fas fa-rocket"></i> Why This Chapter Matters</h3>
-                        <p>This chapter explains how econometric results react to changes in units, how to interpret logarithmic and nonlinear models, and how to compare competing specifications correctly.</p>
-                        <p style="margin-top:12px;">The central idea is simple: <strong>coefficients never speak alone</strong>. Their meaning depends on the functional form of the model.</p>
-
-                        <div class="alert-box assumption" style="margin-top:20px;">
-                            <i class="fas fa-bullseye alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Key Learning Goals</h4>
-                                <ul style="margin-top:8px;">
-                                    <li>Understand how scaling affects coefficients, standard errors, t-stats and p-values</li>
-                                    <li>Interpret log-level, level-log and log-log models correctly</li>
-                                    <li>Compute marginal effects in quadratic and interaction models</li>
-                                    <li>Compare models using \(R^2\), adjusted \(R^2\), and valid model comparison logic</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="alert-box" style="margin-top:20px;">
-                            <i class="fas fa-radiation-alt alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Important Warning</h4>
-                                <p>Never interpret a coefficient before checking the functional form of the model.</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- ── SECTION A — DATA SCALING ── -->
                     <div class="concept-card">
                         <h3><i class="fas fa-ruler-combined"></i> Effects of Data Scaling on OLS Statistics</h3>
-                        <p>Rescaling data does not change the underlying economic relationship. It only changes the numerical units used to express variables. For example, income may be measured in euros, thousands of euros, or CZK. The model remains the same economically, but the numerical values of coefficients may change.</p>
                         <div class="math-formula">
                             $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
                         </div>
@@ -2640,14 +2611,6 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li>to work with more intuitive units</li>
                             <li>to make coefficients easier to read and compare</li>
                         </ul>
-
-                        <div class="alert-box assumption" style="margin-top:20px;">
-                            <i class="fas fa-lightbulb alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Deep Intuition</h4>
-                                <p>Scaling changes the ruler, not the relationship.</p>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- ── SECTION B — SCALING AN INDEPENDENT VARIABLE ── -->
@@ -2685,13 +2648,20 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
 
                         <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Effect on the Standard Error</h4>
-                        <p>Recall the general formula:</p>
-                        <div class="math-formula">
-                            $$ se(\hat{\beta}_j) = \frac{\hat{\sigma}}{\sqrt{SST_j(1 - R_j^2)}} $$
-                        </div>
-                        <p>For \(x_1^* = cx_1\), we have \(SST_{x_1^*} = c^2 SST_{x_1}\), so:</p>
                         <div class="math-formula highlight-formula">
                             $$ se(\hat{\gamma}_1) = \frac{se(\hat{\beta}_1)}{|c|} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-se-scale')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-se-scale" class="hidden-panel">
+                            <p>Recall the general formula:</p>
+                            <div class="math-formula">
+                                $$ se(\hat{\beta}_j) = \frac{\hat{\sigma}}{\sqrt{SST_j(1 - R_j^2)}} $$
+                            </div>
+                            <p>For \(x_1^* = cx_1\), we have \(SST_{x_1^*} = c^2 SST_{x_1}\). Plugging in:</p>
+                            <div class="math-formula">
+                                $$ se(\hat{\gamma}_1) = \frac{\hat{\sigma}}{\sqrt{c^2 SST_{x_1}(1 - R_1^2)}} = \frac{1}{|c|} \cdot \frac{\hat{\sigma}}{\sqrt{SST_{x_1}(1 - R_1^2)}} = \frac{se(\hat{\beta}_1)}{|c|} $$
+                            </div>
                         </div>
 
                         <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">t-statistic and p-value</h4>
@@ -2727,13 +2697,19 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                         <p>If the dependent variable is multiplied by \(c\), <strong>all coefficients are multiplied by \(c\)</strong>.</p>
 
+                        <p style="margin-top:15px;">Standard errors also scale by \(|c|\), so <strong>t-statistics and p-values remain unchanged</strong>.</p>
+
                         <button class="action-btn" onclick="toggleDerivation('derive-scale-y')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
                         <div id="derive-scale-y" class="hidden-panel">
                             <p>Start from \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 \). Multiply by \(c\):</p>
                             <div class="math-formula">
                                 $$ c\hat{y} = c\hat{\beta}_0 + c\hat{\beta}_1 x_1 + c\hat{\beta}_2 x_2 $$
                             </div>
-                            <p>Thus every coefficient is multiplied by \(c\): \(\hat{\gamma}_j = c\hat{\beta}_j\). Standard errors also scale by \(|c|\), so t-statistics and p-values remain unchanged.</p>
+                            <p>Thus every coefficient is multiplied by \(c\): \(\hat{\gamma}_j = c\hat{\beta}_j\).</p>
+                            <p>For standard errors: \( se(\hat{\gamma}_j) = |c| \cdot se(\hat{\beta}_j) \). Therefore:</p>
+                            <div class="math-formula">
+                                $$ t_{\hat{\gamma}_j} = \frac{c\hat{\beta}_j}{|c| \cdot se(\hat{\beta}_j)} = \frac{\hat{\beta}_j}{se(\hat{\beta}_j)} = t_{\hat{\beta}_j} $$
+                            </div>
                         </div>
 
                         <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
@@ -2744,9 +2720,9 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                                 <thead>
                                     <tr>
                                         <th>Case</th>
-                                        <th>What changes?</th>
-                                        <th>What stays unchanged?</th>
-                                        <th>Key rule</th>
+                                        <th>Affected</th>
+                                        <th>Unchanged</th>
+                                        <th>Rule</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -2785,15 +2761,20 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         <div class="math-formula">
                             $$ \log(y) = \beta_0 + \beta_1 \log(x_1) + \beta_2 x_2 + u $$
                         </div>
-                        <p>If \(x_1\) is rescaled by \(c\): \(\log(cx_1) = \log(c) + \log(x_1)\), so again only the intercept changes.</p>
-
-                        <button class="action-btn" onclick="toggleDerivation('explain-log-rescale')"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
-                        <div id="explain-log-rescale" class="hidden-panel">
-                            <p>In logarithmic models, multiplication becomes addition:</p>
-                            <div class="math-formula">
-                                $$ \log(cz) = \log(c) + \log(z) $$
-                            </div>
-                            <p>That is why scaling a logged variable does not change the slope coefficient. The constant \(\log(c)\) is simply absorbed into the intercept.</p>
+                        <p>If \(x_1\) is rescaled by \(c\):</p>
+                        <div class="math-formula">
+                            $$ \log(cx_1) = \log(c) + \log(x_1) $$
+                        </div>
+                        <p>Substituting into the model:</p>
+                        <div class="math-formula">
+                            $$ \log(y) = \beta_0 + \beta_1[\log(c) + \log(x_1)] + \beta_2 x_2 + u $$
+                        </div>
+                        <div class="math-formula">
+                            $$ \log(y) = (\beta_0 + \beta_1\log(c)) + \beta_1\log(x_1) + \beta_2 x_2 + u $$
+                        </div>
+                        <p>Therefore:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \gamma_0 = \beta_0 + \beta_1\log(c), \qquad \gamma_1 = \beta_1, \qquad \gamma_2 = \beta_2 $$
                         </div>
 
                         <div class="alert-box assumption" style="margin-top:20px;">
@@ -2805,9 +2786,9 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
-                    <!-- ── SECTION E — MORE ON LOGARITHMIC FORMS ── -->
+                    <!-- ── SECTION E — LOGARITHMIC FORMS ── -->
                     <div class="grid-card">
-                        <h3><i class="fas fa-table"></i> More on Logarithmic Forms</h3>
+                        <h3><i class="fas fa-table"></i> Functional Form Interpretation Table</h3>
                         <div class="table-container">
                             <table>
                                 <thead>
@@ -2890,14 +2871,6 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                         <p>So the effect of \(x\) <strong>depends on the level of \(x\)</strong>.</p>
 
-                        <button class="action-btn" onclick="toggleDerivation('derive-quadratic')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
-                        <div id="derive-quadratic" class="hidden-panel">
-                            <p>Differentiate the fitted equation \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x + \hat{\beta}_2 x^2 \) with respect to \(x\):</p>
-                            <div class="math-formula">
-                                $$ \frac{\partial\hat{y}}{\partial x} = \hat{\beta}_1 + 2\hat{\beta}_2 x $$
-                            </div>
-                            <p>This is why the slope is not constant in a quadratic model.</p>
-                        </div>
 
                         <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
 
@@ -2954,14 +2927,6 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             $$ \frac{\partial y}{\partial x_1} = \beta_1 + \beta_3 x_2 \qquad \frac{\partial y}{\partial x_2} = \beta_2 + \beta_3 x_1 $$
                         </div>
 
-                        <button class="action-btn" onclick="toggleDerivation('derive-interaction')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
-                        <div id="derive-interaction" class="hidden-panel">
-                            <p>Differentiate \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \hat{\beta}_3 x_1 x_2 \) with respect to \(x_1\):</p>
-                            <div class="math-formula">
-                                $$ \frac{\partial\hat{y}}{\partial x_1} = \hat{\beta}_1 + \hat{\beta}_3 x_2 $$
-                            </div>
-                            <p>So the slope of \(x_1\) <strong>changes with \(x_2\)</strong>. That is exactly the interaction effect.</p>
-                        </div>
 
                         <div class="alert-box" style="margin-top:20px;">
                             <i class="fas fa-radiation-alt alert-icon"></i>
@@ -3022,10 +2987,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li>\(n-k-1\) is the degrees of freedom of \(SSR\), because we estimate \(k+1\) parameters: one intercept and \(k\) slopes</li>
                         </ul>
 
-                        <button class="action-btn" onclick="toggleDerivation('explain-negative-adjr2')" style="margin-top:20px;"><i class="fas fa-eye"></i> Show/Hide Explanation — Can \(\bar{R}^2\) be negative?</button>
-                        <div id="explain-negative-adjr2" class="hidden-panel">
-                            <p>Adjusted \(R^2\) can be negative if the model fits very poorly. This does not violate any rule. It simply means that, after the degrees-of-freedom correction, the model performs worse than a very naive benchmark.</p>
-                        </div>
+                        <p style="margin-top:15px;">Adjusted \(R^2\) can be negative if the model fits very poorly. This simply means the model performs worse than a naive benchmark after the degrees-of-freedom correction.</p>
 
                         <div class="alert-box assumption" style="margin-top:20px;">
                             <i class="fas fa-brain alert-icon"></i>
@@ -3039,8 +3001,8 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
 
                         <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Two Key Properties</h4>
                         <ul>
-                            <li>When one variable is added, adjusted \(R^2\) increases iff \(|t| > 1\)</li>
-                            <li>When a group of variables is added, adjusted \(R^2\) increases iff \(F > 1\)</li>
+                            <li>When one variable is added, adjusted \(R^2\) increases if \(|t| > 1\)</li>
+                            <li>When a group of variables is added, adjusted \(R^2\) increases if \(F > 1\)</li>
                         </ul>
                     </div>
 
@@ -3052,28 +3014,15 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             $$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
                             $$ y = \gamma_0 + \gamma_1 x_1 + \gamma_2 x_3 + v $$
                         </div>
-                        <p>These models are <strong>non-nested</strong> because neither one is a special case of the other.</p>
-
-                        <button class="action-btn" onclick="toggleDerivation('explain-nonnested')"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
-                        <div id="explain-nonnested" class="hidden-panel">
-                            <p>The standard F-test compares a restricted model to an unrestricted model. That logic only works when one model is <em>contained inside</em> the other. For non-nested models, this nesting structure does not exist, so the usual F-test is <strong>not valid</strong>.</p>
-                        </div>
+                        <p>These models are <strong>non-nested</strong> because neither one is a special case of the other. The standard F-test compares a restricted model to an unrestricted model — that logic only works when one model is <em>contained inside</em> the other. For non-nested models, the usual F-test is <strong>not valid</strong>.</p>
 
                         <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
 
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">How to compare</h4>
                         <ul>
-                            <li>\(R^2\) can only be compared safely if the models have the same number of regressors</li>
-                            <li>adjusted \(R^2\) is often used for comparing alternative specifications</li>
-                            <li>but the <strong>dependent variable must have the same functional form</strong> across the competing models</li>
+                            <li>\(R^2\): only valid if both models have the <strong>same number of regressors</strong> and the same dependent variable form</li>
+                            <li>\(\bar{R}^2\): preferred for comparing specifications, but the <strong>dependent variable must be in the same form</strong> (do not compare \(y\) vs \(\log(y)\))</li>
                         </ul>
-
-                        <div class="alert-box" style="margin-top:20px;">
-                            <i class="fas fa-radiation-alt alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Important Warning</h4>
-                                <p>Do <strong>not</strong> compare adjusted \(R^2\) across models if one uses \(y\) and the other uses \(\log(y)\).</p>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- ── SECTION L — STANDARDIZED BETA COEFFICIENTS ── -->
@@ -3108,73 +3057,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
-                    <!-- ── FINAL EXAM REFLEX CARD ── -->
-                    <div class="concept-card highlight" style="border:3px solid var(--primary-red);">
-                        <h3><i class="fas fa-star"></i> Final Exam Reflex — What You Must Instantly Recognize</h3>
 
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>1. Scaling a regressor &nbsp; \(x_j^* = cx_j\)</strong>
-                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow \text{divide its slope and SE by } c $$</div>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>2. Scaling the dependent variable &nbsp; \(y^* = cy\)</strong>
-                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow \text{multiply all coefficients and SEs by } c $$</div>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>3. Scaling inside logs</strong>
-                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \log(cz) = \log(c) + \log(z) \Rightarrow \text{only intercept changes} $$</div>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>4. Log-level model &nbsp; \(\log(y) = \beta_0 + \beta_1 x + u\)</strong>
-                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow 100\beta_1 \text{ is approx.},\; \exp(\beta_1)-1 \text{ is exact} $$</div>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>5. Quadratic model &nbsp; \(y = \beta_0 + \beta_1 x + \beta_2 x^2 + u\)</strong>
-                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \frac{\partial y}{\partial x} = \beta_1 + 2\beta_2 x $$</div>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>6. Interaction model &nbsp; \( y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + u \)</strong>
-                                <div class="math-formula" style="background:white; margin:10px 0;">$$ \Rightarrow \text{effect of } x_1 \text{ depends on } x_2 $$</div>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>7. Adjusted \(R^2\)</strong>
-                                <p style="margin-top:8px;">\(\Rightarrow\) better than \(R^2\) for model selection because it <strong>penalizes complexity</strong></p>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red);">
-                                <strong>8. Non-nested comparison</strong>
-                                <p style="margin-top:8px;">\(\Rightarrow\) <strong>no standard F-test</strong></p>
-                            </div>
-
-                            <div style="background:var(--bg-color); padding:20px; border-radius:10px; border-left:4px solid var(--primary-red); grid-column:1/-1;">
-                                <strong>9. Standardized betas</strong>
-                                <p style="margin-top:8px;">\(\Rightarrow\) compare effects in <strong>standard deviation units</strong></p>
-                            </div>
-
-                        </div>
-
-                        <div class="alert-box" style="margin-top:25px; border-color:var(--primary-red); background:#fff5f5;">
-                            <i class="fas fa-exclamation-circle alert-icon" style="color:var(--primary-red);"></i>
-                            <div class="alert-content">
-                                <h4 style="color:var(--primary-red);">Never Read a Coefficient Mechanically</h4>
-                                <p>Always ask:</p>
-                                <ul style="margin-top:8px;">
-                                    <li>What is the <strong>functional form</strong>?</li>
-                                    <li>Is the effect <strong>constant or not</strong>?</li>
-                                    <li>Is the <strong>model comparison valid</strong>?</li>
-                                    <li>What exactly is being <strong>held fixed</strong>?</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
 
                 </section>
 
