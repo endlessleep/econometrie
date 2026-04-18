@@ -70,6 +70,7 @@
                     </button>
                     <div class="accordion-content">
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-1')">2.1 Data Scaling &amp; Functional Forms &amp; Model Comparison</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-2')">2.2 Selection of Explanatory Variables &amp; Prediction &amp; Qualitative Info</a>
                     </div>
                 </div>
             </nav>
@@ -3041,6 +3042,571 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                     </div>
 
 
+
+                </section>
+
+                <!-- ==================== SECTION 2.2 ==================== -->
+                <section id="section-2-2" class="page-section" style="display:none;">
+                    <h1 class="page-title">SELECTION OF EXPLANATORY VARIABLES &amp; PREDICTION &amp; QUALITATIVE INFO</h1>
+
+                    <!-- ── INTRO CARD ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-rocket"></i> Why This Chapter Matters</h3>
+                        <p>This chapter explains how econometricians decide whether a variable belongs in a model, how prediction works in cross-sectional OLS, and how qualitative information can be included using dummy variables.</p>
+                        <p style="margin-top:12px;">The deep logic is that a regression model is not only about estimating coefficients. It is also about <strong>choosing variables carefully</strong>, <strong>predicting responsibly</strong>, and <strong>interpreting qualitative differences correctly</strong>.</p>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-bullseye alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Learning Goals</h4>
+                                <ul style="margin-top:8px;">
+                                    <li>Understand how to select explanatory variables without relying mechanically on goodness-of-fit</li>
+                                    <li>Distinguish prediction of a conditional mean from prediction for a specific individual unit</li>
+                                    <li>Understand how dummy variables represent qualitative information</li>
+                                    <li>Avoid the dummy variable trap and interpret benchmark groups correctly</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>A high \(R^2\) does not automatically mean a good model.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION A — CONTROLLING FOR TOO MANY VARIABLES ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-filter"></i> Controlling for Too Many Independent Variables</h3>
+                        <p>The search for a high goodness-of-fit can lead to an <strong>overspecified</strong> or <strong>overfitted</strong> model. This means a model with too many independent variables. Such a model may look impressive because it fits the sample well, but it may be unnecessarily complex and economically weak.</p>
+                        <p style="margin-top:15px;">As adjusted \(R^2\) penalizes additional regressors, it can help signal when to stop adding variables. Its construction tells us whether the reduction in error variance is sufficient to justify the inclusion of another regressor.</p>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Deep Intuition</h4>
+                                <p>Ordinary \(R^2\) rewards complexity too easily. Adjusted \(R^2\) asks whether the gain in fit is really worth the cost.</p>
+                            </div>
+                        </div>
+
+                        <p style="margin-top:15px;"><strong>However</strong>, we should always include independent variables that truly affect \(y\) and are uncorrelated with the other regressors.</p>
+                    </div>
+
+                    <!-- ── SECTION B — FOUR CRITERIA ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-list-ol"></i> Four Important Variable Selection Criteria</h3>
+                        <p>To decide whether an explanatory variable belongs in the model, we should not rely on one single rule. The lecture gives four main criteria.</p>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">1. Theory</h4>
+                        <p>Does including the variable make theoretical sense? Is the specification economically meaningful and unambiguous? The answer also depends on the purpose of the model:</p>
+                        <ul>
+                            <li>prediction</li>
+                            <li>explanation / causal interpretation</li>
+                            <li>testing a specific theoretical or empirical relationship</li>
+                        </ul>
+                        <div class="alert-box assumption" style="margin-top:15px;">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <p>A variable may help prediction even if its theoretical interpretation is weak. Conversely, a theoretically important variable may deserve inclusion even if its statistical significance is not impressive.</p>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">2. Omitted Variable Bias Reduction</h4>
+                        <p>When a variable is added, do the estimated coefficients of the other regressors change substantially? If they do, this is often a signal that the original model suffered from omitted variable bias.</p>
+                        <p style="margin-top:10px;"><strong>A variable can be important even if it is not highly significant, simply because it protects the model from serious OVB.</strong></p>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">3. Adjusted \(R^2\)</h4>
+                        <p>Does the overall fit improve enough when the variable is added? Adjusted \(R^2\) is preferred to ordinary \(R^2\) because it penalizes unnecessary regressors.</p>
+                        <div class="math-formula">
+                            $$ \bar{R}^2 = 1 - \frac{SSR/(n-k-1)}{SST/(n-1)} $$
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">4. t test and F test</h4>
+                        <p>Is the coefficient statistically significant in the expected direction? The t test is used for individual variables. The F test is useful when considering whether to exclude a group of variables jointly.</p>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>Variable selection is not mechanical. Theory and omitted variable bias often matter more than pure significance.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION C — PREDICTION ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-crosshairs"></i> Prediction in the OLS Cross-Sectional Framework</h3>
+                        <p>Up to now, the focus has been on estimating coefficients, testing hypotheses, and evaluating fit. Now the question is different: what if we estimate a model on \(n\) observations and want to predict the dependent variable for a <strong>new observation \(n+1\)</strong>?</p>
+                        <p style="margin-top:10px;">In a cross-sectional setting, this is referred to as <strong>predicting</strong>, not forecasting.</p>
+                        <div class="math-formula">
+                            $$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \cdots + \hat{\beta}_k x_k $$
+                        </div>
+                        <p>For a new set of explanatory variables \(x_{n+1,1}, \dots, x_{n+1,k}\), the predicted value is:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \hat{y}_{n+1} = \hat{\beta}_0 + \hat{\beta}_1 x_{n+1,1} + \cdots + \hat{\beta}_k x_{n+1,k} $$
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <p>This is only a point estimate. Because the coefficients are estimated, the prediction is subject to sampling uncertainty.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION D — PREDICTED / EXPECTED VALUE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-bullseye"></i> Predicted / Expected Value</h3>
+                        <p>Suppose we want to predict the expected value of \(y\) at specific regressor values \(c_1, \dots, c_k\). Define:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \theta \equiv E(y \mid x_1 = c_1, \dots, x_k = c_k) = \beta_0 + \beta_1 c_1 + \cdots + \beta_k c_k $$
+                        </div>
+                        <p>This is the <strong>true conditional mean</strong> for a subpopulation characterized by those explanatory values.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-theta-rewrite')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-theta-rewrite" class="hidden-panel">
+                            <p>Start from \( \theta = \beta_0 + \beta_1 c_1 + \cdots + \beta_k c_k \). Solve for \(\beta_0\):</p>
+                            <div class="math-formula">
+                                $$ \beta_0 = \theta - \beta_1 c_1 - \cdots - \beta_k c_k $$
+                            </div>
+                            <p>Insert this into the regression model \( y = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k + u \):</p>
+                            <div class="math-formula">
+                                $$ y = \theta + \beta_1(x_1 - c_1) + \cdots + \beta_k(x_k - c_k) + u $$
+                            </div>
+                            <p>So \(\theta\) becomes the <strong>intercept</strong> of a transformed model. That is useful because once the target parameter is written as an intercept, we can estimate it, obtain its standard error, and construct a confidence interval.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-key alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Logic</h4>
+                                <p>Prediction of a conditional mean can be handled by turning the target quantity into an intercept.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION E — CONFIDENCE INTERVALS FOR PREDICTIONS ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-arrows-alt-h"></i> Confidence Intervals for Predictions</h3>
+                        <p>A point prediction is not enough. Because the coefficients are estimated from a sample, the predicted value is random and must be accompanied by a <strong>confidence interval</strong>.</p>
+                        <p style="margin-top:10px;">The confidence interval for \(\theta\) describes uncertainty about the mean outcome for the subpopulation with explanatory variables fixed at \(c_1, \dots, c_k\).</p>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-exclamation-triangle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Distinction</h4>
+                                <p>This confidence interval concerns the conditional mean \( E(y \mid x_1 = c_1, \dots, x_k = c_k) \), <strong>not</strong> the realized outcome of one specific individual unit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION F — MINIMAL VARIANCE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-compress-arrows-alt"></i> Minimal Variance for Predictions</h3>
+                        <p>Prediction is most precise <strong>near the center of the data</strong>. The lecture shows this through the variance of the intercept in a simple regression model.</p>
+                        <p style="margin-top:15px;">Recall:</p>
+                        <div class="math-formula">
+                            $$ \operatorname{Var}(\hat{\beta}_0) = \sigma^2 \frac{\sum x_i^2}{n \sum(x_i - \bar{x})^2} $$
+                        </div>
+                        <p>When estimating \(\theta\), the explanatory variable becomes \(x - c\). The corresponding variance can be written as:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \operatorname{Var}(\hat{\theta}) = \sigma^2 \frac{\sum(x_i - c)^2}{n \sum(x_i - \bar{x})^2} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-min-var-pred')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-min-var-pred" class="hidden-panel">
+                            <p>Differentiate the variance with respect to \(c\):</p>
+                            <div class="math-formula">
+                                $$ \frac{\partial \operatorname{Var}(\hat{\theta})}{\partial c} = -2 \frac{\sigma^2}{n} \frac{\sum(x_i - c)}{\sum(x_i - \bar{x})^2} $$
+                            </div>
+                            <p>Set the derivative equal to zero:</p>
+                            <div class="math-formula">
+                                $$ \sum(x_i - c) = 0 \implies \sum x_i - nc = 0 \implies c = \frac{1}{n} \sum x_i = \bar{x} $$
+                            </div>
+                            <p>Therefore, the variance of the prediction is minimized when the prediction point is located at the <strong>sample mean</strong> of the explanatory variable.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Deep Intuition</h4>
+                                <p>OLS predicts most precisely where the data are most concentrated. This is why extrapolation far from the sample mean is risky.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION G — MEAN VS INDIVIDUAL ── -->
+                    <div class="grid-card">
+                        <h3><i class="fas fa-balance-scale-right"></i> Predicting the Conditional Mean vs Predicting an Individual Outcome</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Predicting \(E(y|x)\)</th>
+                                        <th>Predicting \(y_0\) for a specific unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Object predicted</strong></td>
+                                        <td>average outcome for a subpopulation</td>
+                                        <td>actual outcome for one individual unit</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Contains \(u\)?</strong></td>
+                                        <td>no</td>
+                                        <td>yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Uncertainty</strong></td>
+                                        <td>lower</td>
+                                        <td>higher</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Interval type</strong></td>
+                                        <td>confidence interval</td>
+                                        <td>prediction interval</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p style="margin-top:15px;">The quantity \(\theta\) concerns the <strong>expected value</strong> of \(y\), not the realized value of a particular observation. That is why no individual error term appears in \( \theta = E(y \mid x_1 = c_1, \dots, x_k = c_k) \).</p>
+                    </div>
+
+                    <!-- ── SECTION H — PREDICTING y FOR A SPECIFIC UNIT ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-user"></i> Predicting \(y\) for a Specific Unit</h3>
+                        <p>Let</p>
+                        <div class="math-formula">
+                            $$ y_0 = \beta_0 + \beta_1 x_1^0 + \cdots + \beta_k x_k^0 + u_0 $$
+                        </div>
+                        <p>be the value of the dependent variable for a specific person or firm with explanatory values \(x_1^0, \dots, x_k^0\).</p>
+                        <p style="margin-top:10px;">The prediction error is:</p>
+                        <div class="math-formula">
+                            $$ \hat{e}_0 = y_0 - \hat{y}_0 $$
+                        </div>
+                        <p>Under the OLS assumptions, the prediction is unbiased: \( E(\hat{e}_0) = 0 \).</p>
+                        <p style="margin-top:10px;">As both the individual disturbance \(u_0\) and the fitted value \(\hat{y}_0\) are random:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \operatorname{Var}(\hat{e}_0) = \operatorname{Var}(u_0) + \operatorname{Var}(\hat{y}_0) = \sigma^2 + \operatorname{Var}(\hat{y}_0) $$
+                        </div>
+                        <p>Hence:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ se(\hat{e}_0) = \sqrt{\hat{\sigma}^2 + \operatorname{Var}(\hat{y}_0)} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('explain-prediction-interval')"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
+                        <div id="explain-prediction-interval" class="hidden-panel">
+                            <p>A confidence interval for the conditional mean only reflects uncertainty about the <strong>estimated regression line</strong>.</p>
+                            <p>A prediction interval for an individual unit must also include the <strong>individual disturbance</strong> \(u_0\).</p>
+                            <p>That is why prediction intervals are always <strong>wider</strong> than confidence intervals for the mean.</p>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>Mean prediction interval = uncertainty about the regression line.<br>Individual prediction interval = uncertainty about the regression line + uncertainty about the individual shock.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION I — RESIDUAL ANALYSIS ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-search"></i> A Note on Residual Analysis</h3>
+                        <p>Residuals are not only estimates of the error term. They can also be used for <strong>practical evaluation and interpretation</strong>:</p>
+                        <ul>
+                            <li>investment decisions</li>
+                            <li>identifying overvalued or undervalued firms, stocks, or real estate</li>
+                            <li>assessing whether an observation lies above or below the regression line</li>
+                            <li>legal or discrimination cases</li>
+                        </ul>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:20px;">Interpretation</h4>
+                        <ul>
+                            <li><strong>positive residual</strong>: the observed value is above the regression line</li>
+                            <li><strong>negative residual</strong>: the observed value is below the regression line</li>
+                        </ul>
+                    </div>
+
+                    <!-- ── SECTION J — QUALITATIVE INFORMATION ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-tags"></i> Describing Qualitative Information</h3>
+                        <p>Many important factors are qualitative rather than quantitative. Examples include:</p>
+                        <ul>
+                            <li>employment status</li>
+                            <li>marital status</li>
+                            <li>citizenship</li>
+                            <li>university degree</li>
+                            <li>presence of a small child in the family</li>
+                        </ul>
+                        <p style="margin-top:10px;">Such information is usually represented by <strong>binary variables</strong>, also called dummy variables, zero-one variables, or binary regressors.</p>
+                        <div class="math-formula highlight-formula">
+                            $$ D = \begin{cases} 1 & \text{if the characteristic is present} \\ 0 & \text{otherwise} \end{cases} $$
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION K — SINGLE DUMMY ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-toggle-on"></i> Single Dummy Independent Variable</h3>
+                        <p>Let \(D\) be a dummy variable. A model with one dummy regressor can be written as:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_{k-1} x_{k-1} + \beta_k D + u $$
+                        </div>
+                        <p>This implies two separate equations:</p>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.05rem; margin-top:20px;">If \(D_i = 0\):</h4>
+                        <div class="math-formula">
+                            $$ y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_{k-1} x_{i,k-1} + u_i $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.05rem; margin-top:15px;">If \(D_i = 1\):</h4>
+                        <div class="math-formula">
+                            $$ y_i = (\beta_0 + \beta_k) + \beta_1 x_{i1} + \cdots + \beta_{k-1} x_{i,k-1} + u_i $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('explain-single-dummy')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
+                        <div id="explain-single-dummy" class="hidden-panel">
+                            <p>The dummy variable shifts only the <strong>intercept</strong>. All slope coefficients on the other regressors are the same across the two groups. That is why this specification is called an <strong>intercept dummy</strong>.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-key alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Interpretation</h4>
+                                <p>\(\beta_k\) measures the difference between group \(D=1\) and group \(D=0\), holding all other regressors fixed.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION L — DUMMY VARIABLE TRAP ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-exclamation-circle"></i> Dummy Variable Trap</h3>
+                        <p>Suppose we create two complementary dummies: \(E\) = employed and \(U\) = unemployed. Then:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ E + U = 1 $$
+                        </div>
+                        <p>If the regression already contains an intercept, we also have a column of ones. Therefore one regressor column is a <strong>perfect linear combination</strong> of the others.</p>
+                        <p style="margin-top:10px;">This violates <strong>MLR.3 (no perfect collinearity)</strong>. This is called the <strong>dummy variable trap</strong>.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-dummy-trap')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide Matrix Logic</button>
+                        <div id="derive-dummy-trap" class="hidden-panel">
+                            <p>With the intercept included, the matrix \(X\) already contains a column of ones. If we also include both complementary dummies \(E\) and \(U\), then:</p>
+                            <div class="math-formula">
+                                $$ \mathbf{1} = E + U $$
+                            </div>
+                            <p>So the columns of \(X\) are linearly dependent. That makes \(X'X\) <strong>singular</strong>, so OLS cannot invert it.</p>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>With an intercept, <strong>never</strong> include all mutually exclusive and exhaustive dummy categories.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION M — BASE GROUP ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-flag"></i> A Base / Benchmark Group</h3>
+                        <p>To avoid the dummy variable trap, one category must be <strong>omitted</strong>. That omitted category becomes the <strong>base group</strong> or <strong>benchmark group</strong>. Its effect is absorbed by the intercept.</p>
+                        <p style="margin-top:10px;">This gives the standard interpretation:</p>
+                        <ul>
+                            <li><strong>intercept</strong> = expected outcome for the base group</li>
+                            <li><strong>dummy coefficient</strong> = difference between the included group and the base group</li>
+                        </ul>
+                        <p style="margin-top:15px;"><strong>Dummy coefficients are always interpreted relative to the omitted category.</strong></p>
+                    </div>
+
+                    <!-- ── SECTION N — DUMMY AND LOGS ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-percentage"></i> Dummy Variables and Logarithms</h3>
+                        <p>There is nothing special preventing the use of dummies in models with a logarithmic dependent variable:</p>
+                        <div class="math-formula">
+                            $$ \log(y) = \beta_0 + \beta_1 x_1 + \cdots + \beta_{k-1} x_{k-1} + \beta_k D + u $$
+                        </div>
+                        <p>Here, the dummy coefficient behaves like a <strong>semi-elasticity</strong>. Keeping other factors fixed, the expected dependent variable is approximately \(100\beta_k\%\) higher for group \(D=1\) than for group \(D=0\).</p>
+                        <p style="margin-top:10px;">The <strong>exact</strong> percentage difference is:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ 100\left(e^{\beta_k} - 1\right)\% $$
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>The \(100\beta_k\%\) interpretation is approximate. The exact percentage difference uses \(e^{\beta_k} - 1\).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION O — MULTIPLE CATEGORIES ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-layer-group"></i> Using Dummy Variables for Multiple Categories</h3>
+                        <p>The single-dummy framework extends naturally to multiple categories. A general model can be written as:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_{k-d} x_{k-d} + \beta_{k-d+1} D_1 + \cdots + \beta_k D_d + u $$
+                        </div>
+                        <p>where \(d\) is the number of dummy variables included.</p>
+                        <p style="margin-top:10px;">This gives more flexibility and more opportunities for hypothesis testing, but the <strong>dummy variable trap must still be avoided</strong>.</p>
+                        <p style="margin-top:10px;">Often it is useful to create dummies as combinations of criteria when that leads to a simpler interpretation.</p>
+                    </div>
+
+                    <!-- ── SECTION P — MULTIPLE CATEGORIES EXAMPLE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-users"></i> Multiple Categories — Example</h3>
+                        <p>Suppose two binary characteristics are observed: employment \(E\) and citizenship \(C\). Consider:</p>
+                        <div class="math-formula">
+                            $$ income = \beta_0 + \beta_1 E + \beta_2 C + u $$
+                        </div>
+                        <p>Then the expected income in each group is:</p>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;">
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>Employed citizens</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ \beta_0 + \beta_1 + \beta_2 $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>Unemployed citizens</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ \beta_0 + \beta_2 $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>Employed foreigners</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ \beta_0 + \beta_1 $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>Unemployed foreigners</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ \beta_0 $$</div>
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Alternative specification</h4>
+                        <p>Sometimes testing becomes easier if we define one dummy for each specific group: \(EC\), \(UC\), \(EF\), \(UF\). Then we omit one group as the benchmark and estimate, for example:</p>
+                        <div class="math-formula">
+                            $$ income = \gamma_0 + \gamma_1 UC + \gamma_2 EF + \gamma_3 UF + v $$
+                        </div>
+                        <p>This often makes interpretation and testing more straightforward.</p>
+                    </div>
+
+                    <!-- ── SECTION Q — ORDINAL INFORMATION ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-sort-numeric-down"></i> Ordinal Information</h3>
+                        <p>Binary specification is not always enough. Suppose a qualitative variable \(Q\) takes ordered values \(0, 1, 2, 3\). There are two possible approaches.</p>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">Approach 1: treat \(Q\) as numeric</h4>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_{k-1} x_{k-1} + \beta_k Q + u $$
+                        </div>
+                        <p>This is parsimonious, but it imposes a <strong>linear effect</strong> across categories.</p>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem;">Approach 2: decompose \(Q\) into dummies</h4>
+                        <p>Create \(D_0, D_1, D_2, D_3\) for each value, omit one category, and estimate:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_{k-3} x_{k-3} + \beta_{k-2} D_1 + \beta_{k-1} D_2 + \beta_k D_3 + u $$
+                        </div>
+
+                        <div class="table-container" style="margin-top:20px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Approach</th>
+                                        <th>Advantage</th>
+                                        <th>Limitation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Numeric \(Q\)</strong></td>
+                                        <td>simple and parsimonious</td>
+                                        <td>imposes equal marginal spacing</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dummy decomposition</strong></td>
+                                        <td>fully flexible</td>
+                                        <td>uses more parameters</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>An ordinal variable treated as numeric imposes linearity between categories. Dummy decomposition is more flexible but more costly in degrees of freedom.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── FINAL EXAM REFLEX ── -->
+                    <div class="concept-card highlight" style="border:3px solid var(--primary-red);">
+                        <h3><i class="fas fa-star"></i> Final Exam Reflex — What You Must Instantly Recognize</h3>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px;">
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>1.</strong> Too many regressors can produce an <strong>overfitted model</strong>.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>2.</strong> Variable selection must combine <strong>theory, OVB logic, adjusted \(R^2\), and t/F tests</strong>.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>3.</strong> Prediction of \(E(y|x)\) is <strong>not the same</strong> as prediction for one specific unit.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>4.</strong> Prediction intervals are <strong>wider</strong> because they include individual disturbance uncertainty.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>5.</strong> Residuals are useful for <strong>evaluation</strong>, not only as estimated errors.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>6.</strong> A dummy variable shifts the <strong>intercept</strong> when slopes are common across groups.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>7.</strong> The omitted category is the <strong>benchmark group</strong>.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>8.</strong> Including all complementary dummies with an intercept causes the <strong>dummy variable trap</strong>.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>9.</strong> In log-dependent models, dummy coefficients are <strong>approximate percentage differences</strong>.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>10.</strong> Ordinal variables can be treated <strong>numerically or decomposed</strong> into dummies.
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:25px; border-color:var(--primary-red); background:#fff5f5;">
+                            <i class="fas fa-exclamation-circle alert-icon" style="color:var(--primary-red);"></i>
+                            <div class="alert-content">
+                                <h4 style="color:var(--primary-red);">Never Interpret a Dummy Coefficient in Isolation</h4>
+                                <p>Always ask:</p>
+                                <ul style="margin-top:8px;">
+                                    <li>What is the <strong>base group</strong>?</li>
+                                    <li>Is the dependent variable in <strong>levels or logs</strong>?</li>
+                                    <li>Are the slopes <strong>common across groups</strong>?</li>
+                                    <li>Is the specification vulnerable to the <strong>dummy variable trap</strong>?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
                 </section>
 
