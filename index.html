@@ -2697,8 +2697,6 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                         <p>If the dependent variable is multiplied by \(c\), <strong>all coefficients are multiplied by \(c\)</strong>.</p>
 
-                        <p style="margin-top:15px;">Standard errors also scale by \(|c|\), so <strong>t-statistics and p-values remain unchanged</strong>.</p>
-
                         <button class="action-btn" onclick="toggleDerivation('derive-scale-y')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
                         <div id="derive-scale-y" class="hidden-panel">
                             <p>Start from \( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 \). Multiply by \(c\):</p>
@@ -2706,11 +2704,37 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                                 $$ c\hat{y} = c\hat{\beta}_0 + c\hat{\beta}_1 x_1 + c\hat{\beta}_2 x_2 $$
                             </div>
                             <p>Thus every coefficient is multiplied by \(c\): \(\hat{\gamma}_j = c\hat{\beta}_j\).</p>
-                            <p>For standard errors: \( se(\hat{\gamma}_j) = |c| \cdot se(\hat{\beta}_j) \). Therefore:</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Effect on the Standard Error</h4>
+                        <div class="math-formula highlight-formula">
+                            $$ se(\hat{\gamma}_j) = |c| \cdot se(\hat{\beta}_j) $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-se-scale-y')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-se-scale-y" class="hidden-panel">
+                            <p>In the rescaled model \(y^* = cy\), the new residuals are \(\hat{u}^* = c\hat{u}\), so:</p>
                             <div class="math-formula">
-                                $$ t_{\hat{\gamma}_j} = \frac{c\hat{\beta}_j}{|c| \cdot se(\hat{\beta}_j)} = \frac{\hat{\beta}_j}{se(\hat{\beta}_j)} = t_{\hat{\beta}_j} $$
+                                $$ \hat{\sigma}^* = |c|\,\hat{\sigma} $$
+                            </div>
+                            <p>But the regressors \(x_1, x_2\) are unchanged, so \(SST_j\) and \(R_j^2\) stay the same. Therefore:</p>
+                            <div class="math-formula">
+                                $$ se(\hat{\gamma}_j) = \frac{\hat{\sigma}^*}{\sqrt{SST_j(1-R_j^2)}} = \frac{|c|\,\hat{\sigma}}{\sqrt{SST_j(1-R_j^2)}} = |c| \cdot se(\hat{\beta}_j) $$
                             </div>
                         </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">t-statistic and p-value</h4>
+                        <p>Because both the estimate and its standard error are multiplied by the same factor:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ t_{\hat{\gamma}_j} = \frac{c\hat{\beta}_j}{|c| \cdot se(\hat{\beta}_j)} = \frac{\hat{\beta}_j}{se(\hat{\beta}_j)} = t_{\hat{\beta}_j} $$
+                        </div>
+                        <ul>
+                            <li>t-statistic <strong>unchanged</strong></li>
+                            <li>p-value <strong>unchanged</strong></li>
+                            <li>statistical significance <strong>unchanged</strong></li>
+                        </ul>
 
                         <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
 
@@ -2745,36 +2769,61 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
 
                     <!-- ── SECTION D — SCALING IN LOGARITHMIC MODELS ── -->
                     <div class="concept-card highlight">
-                        <h3><i class="fas fa-log"></i> Scaling in Logarithmic Models</h3>
+                        <h3><i class="fas fa-calculator"></i> Scaling in Logarithmic Models</h3>
                         <p>Logarithmic models behave differently from level models. When scaling happens inside a logarithm, the change is <strong>absorbed by the intercept</strong>.</p>
 
                         <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Case 1 — Dependent variable in logs</h4>
                         <div class="math-formula">
                             $$ \log(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
                         </div>
-                        <p>If \(y\) is rescaled by \(c\): \(\log(cy) = \log(c) + \log(y)\). Substituting:</p>
+                        <p>If \(y\) is rescaled by \(c\), the new dependent variable is \(\log(cy)\). Using the log property:</p>
+                        <div class="math-formula">
+                            $$ \log(cy) = \log(c) + \log(y) $$
+                        </div>
+                        <p>Therefore:</p>
                         <div class="math-formula highlight-formula">
                             $$ \gamma_0 = \beta_0 + \log(c), \qquad \gamma_1 = \beta_1, \qquad \gamma_2 = \beta_2 $$
                         </div>
 
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Case 2 — Independent variable in logs</h4>
+                        <button class="action-btn" onclick="toggleDerivation('derive-log-case1')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-log-case1" class="hidden-panel">
+                            <p>Start from the original model:</p>
+                            <div class="math-formula">
+                                $$ \log(y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
+                            </div>
+                            <p>Replace \(\log(y)\) with \(\log(cy) - \log(c)\):</p>
+                            <div class="math-formula">
+                                $$ \log(cy) - \log(c) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u $$
+                            </div>
+                            <p>Move \(\log(c)\) to the right-hand side:</p>
+                            <div class="math-formula">
+                                $$ \log(cy) = (\beta_0 + \log(c)) + \beta_1 x_1 + \beta_2 x_2 + u $$
+                            </div>
+                            <p>The new intercept is \(\gamma_0 = \beta_0 + \log(c)\). All slopes remain the same.</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Case 2 — Independent variable in logs</h4>
                         <div class="math-formula">
                             $$ \log(y) = \beta_0 + \beta_1 \log(x_1) + \beta_2 x_2 + u $$
                         </div>
-                        <p>If \(x_1\) is rescaled by \(c\):</p>
-                        <div class="math-formula">
-                            $$ \log(cx_1) = \log(c) + \log(x_1) $$
-                        </div>
-                        <p>Substituting into the model:</p>
-                        <div class="math-formula">
-                            $$ \log(y) = \beta_0 + \beta_1[\log(c) + \log(x_1)] + \beta_2 x_2 + u $$
-                        </div>
-                        <div class="math-formula">
-                            $$ \log(y) = (\beta_0 + \beta_1\log(c)) + \beta_1\log(x_1) + \beta_2 x_2 + u $$
-                        </div>
-                        <p>Therefore:</p>
+                        <p>If \(x_1\) is rescaled by \(c\), we get \(\log(cx_1) = \log(c) + \log(x_1)\). Therefore:</p>
                         <div class="math-formula highlight-formula">
                             $$ \gamma_0 = \beta_0 + \beta_1\log(c), \qquad \gamma_1 = \beta_1, \qquad \gamma_2 = \beta_2 $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-log-case2')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-log-case2" class="hidden-panel">
+                            <p>Substitute \(\log(cx_1) = \log(c) + \log(x_1)\) into the model:</p>
+                            <div class="math-formula">
+                                $$ \log(y) = \beta_0 + \beta_1[\log(c) + \log(x_1)] + \beta_2 x_2 + u $$
+                            </div>
+                            <p>Expand:</p>
+                            <div class="math-formula">
+                                $$ \log(y) = (\beta_0 + \beta_1\log(c)) + \beta_1\log(x_1) + \beta_2 x_2 + u $$
+                            </div>
+                            <p>The new intercept is \(\gamma_0 = \beta_0 + \beta_1\log(c)\). Note that the constant \(\beta_1\log(c)\) appears because \(\log(c)\) is multiplied by the slope \(\beta_1\) of the logged variable. All slopes remain the same.</p>
                         </div>
 
                         <div class="alert-box assumption" style="margin-top:20px;">
@@ -2786,75 +2835,6 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
-                    <!-- ── SECTION E — LOGARITHMIC FORMS ── -->
-                    <div class="grid-card">
-                        <h3><i class="fas fa-table"></i> Functional Form Interpretation Table</h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Model</th>
-                                        <th>Regression Form</th>
-                                        <th>Interpretation of slope \(\beta_1\)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Level-level</strong></td>
-                                        <td>\( y = \beta_0 + \beta_1 x + u \)</td>
-                                        <td>1-unit ↑ in \(x\) changes \(y\) by \(\beta_1\)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Level-log</strong></td>
-                                        <td>\( y = \beta_0 + \beta_1 \log(x) + u \)</td>
-                                        <td>1% ↑ in \(x\) changes \(y\) by \(\beta_1/100\)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Log-level</strong></td>
-                                        <td>\( \log(y) = \beta_0 + \beta_1 x + u \)</td>
-                                        <td>1-unit ↑ in \(x\) changes \(y\) by approx. \(100\beta_1\%\)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Log-log</strong></td>
-                                        <td>\( \log(y) = \beta_0 + \beta_1 \log(x) + u \)</td>
-                                        <td>1% ↑ in \(x\) changes \(y\) by \(\beta_1\%\) (elasticity)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h4 style="color:var(--sidebar-bg); font-size:1.15rem; margin-top:30px;">Semi-elasticity in a Log-Level Model</h4>
-                        <p>Consider:</p>
-                        <div class="math-formula">
-                            $$ \log(y) = \beta_0 + \beta_1 \log(x_1) + \beta_2 x_2 + u $$
-                        </div>
-                        <p>Here \(\beta_2\) is a <strong>semi-elasticity</strong>. A one-unit increase in \(x_2\) changes \(\log(y)\) by \(\beta_2\). So \(100\beta_2\) is only an <em>approximate</em> percentage change in \(y\). The <strong>exact</strong> percentage change is:</p>
-                        <div class="math-formula highlight-formula">
-                            $$ \%\Delta\hat{y} = 100\bigl(\exp(\beta_2 \Delta x_2) - 1\bigr) $$
-                        </div>
-
-                        <button class="action-btn" onclick="toggleDerivation('derive-log-exact')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
-                        <div id="derive-log-exact" class="hidden-panel">
-                            <p>If \(x_2\) changes by \(\Delta x_2\), then:</p>
-                            <div class="math-formula">
-                                $$ \Delta\log(\hat{y}) = \beta_2 \Delta x_2 $$
-                            </div>
-                            <p>Exponentiating both sides:</p>
-                            <div class="math-formula">
-                                $$ \frac{\hat{y}_{\text{new}}}{\hat{y}_{\text{old}}} = \exp(\beta_2 \Delta x_2) $$
-                            </div>
-                            <p>So the exact percentage change is:</p>
-                            <div class="math-formula">
-                                $$ 100\left(\frac{\hat{y}_{\text{new}} - \hat{y}_{\text{old}}}{\hat{y}_{\text{old}}}\right) = 100\bigl(\exp(\beta_2 \Delta x_2) - 1\bigr) $$
-                            </div>
-                        </div>
-
-                        <div class="alert-box" style="margin-top:20px;">
-                            <i class="fas fa-radiation-alt alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Important Warning</h4>
-                                <p>In log-level models, \(100\beta\) is <strong>approximate</strong>, not exact.</p>
-                            </div>
                         </div>
                     </div>
 
@@ -2927,6 +2907,12 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             $$ \frac{\partial y}{\partial x_1} = \beta_1 + \beta_3 x_2 \qquad \frac{\partial y}{\partial x_2} = \beta_2 + \beta_3 x_1 $$
                         </div>
 
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:25px;">Testing for Interaction</h4>
+                        <p>To test whether the interaction effect exists, we test:</p>
+                        <div class="math-formula">
+                            $$ H_0: \beta_3 = 0 \qquad H_1: \beta_3 \neq 0 $$
+                        </div>
+                        <p>If we reject \(H_0\), the effect of \(x_1\) on \(y\) genuinely depends on the level of \(x_2\).</p>
 
                         <div class="alert-box" style="margin-top:20px;">
                             <i class="fas fa-radiation-alt alert-icon"></i>
