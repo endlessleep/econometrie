@@ -69,9 +69,9 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="accordion-content">
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-1')">2.1 Data Scaling &amp; Functional Forms &amp; Model Comparison</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-2')">2.2 Selection of Explanatory Variables &amp; Prediction &amp; Qualitative Info</a>
-                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-3')">2.3 QUALITATIVE ANALYSIS &amp; LINEAR PROBABILITY MODEL</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-1')">2.1 Data Scaling &amp; Functional Forms</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-2')">2.2 Prediction &amp; Qualitative Info</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-3')">2.3 Qualitative Analysis &amp; LPM</a>
                     </div>
                 </div>
             </nav>
@@ -3519,10 +3519,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
 
                     <!-- ── INTRO CARD ── -->
                     <div class="concept-card highlight">
-                        <h3><i class="fas fa-rocket"></i> Why this chapter matters</h3>
-                        <p>This chapter deepens qualitative analysis in regression models.<br>It explains how dummy interactions allow us to compare groups more flexibly, how slope dummies create different regression lines across subpopulations, how the Chow test checks whether groups follow the same model, and how the Linear Probability Model turns OLS into a model of binary outcomes.</p>
-
-                        <div class="alert-box assumption" style="margin-top:20px;">
+                        <div class="alert-box assumption" style="margin-top:0;">
                             <i class="fas fa-bullseye alert-icon"></i>
                             <div class="alert-content">
                                 <h4>Key Learning Goals</h4>
@@ -3548,7 +3545,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                     <!-- ── SECTION A — MORE ON BINARY INDEPENDENT VARIABLES ── -->
                     <div class="concept-card">
                         <h3><i class="fas fa-tags"></i> More on Binary Independent Variables</h3>
-                        <p>A binary independent variable can already create differences in intercepts across groups.<br>But lecture 9 goes further: we can also create interactions</p>
+                        <p>A binary independent variable can already create differences in intercepts across groups.<br>We can also create interactions:</p>
                         <ul>
                             <li>between dummy variables,</li>
                             <li>and between dummy variables and quantitative variables.</li>
@@ -3575,7 +3572,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                     </div>
 
                     <!-- ── SECTION B — INTERACTIONS AMONG DUMMY VARIABLES ── -->
-                    <div class="concept-card highlight">
+                    <div class="concept-card" style="background: linear-gradient(135deg, #e0e8f5 0%, #f0f4fa 100%); border-left: 4px solid #4285f4; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
                         <h3><i class="fas fa-project-diagram"></i> Interactions among Dummy Variables</h3>
                         <p>Suppose we have two dummy variables:</p>
                         <ul>
@@ -3583,7 +3580,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li>\( C \): citizenship</li>
                         </ul>
                         <p style="margin-top:15px;">Then we may include not only \( E \) and \( C \), but also their interaction:</p>
-                        <div class="math-formula highlight-formula">
+                        <div class="math-formula highlight-formula" style="background:white; border-left-color:#1a56db;">
                             $$ E \cdot C $$
                         </div>
                         <p>This interaction equals 1 only when both dummies equal 1.<br>So it identifies the subgroup that satisfies both criteria at the same time.</p>
@@ -3611,10 +3608,10 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                     </div>
 
                     <!-- ── SECTION C — DUMMY INTERACTIONS: EXAMPLE ── -->
-                    <div class="concept-card highlight">
+                    <div class="concept-card" style="background: linear-gradient(135deg, #e0e8f5 0%, #f0f4fa 100%); border-left: 4px solid #4285f4; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
                         <h3><i class="fas fa-users"></i> Dummy Interactions — Example</h3>
                         <p>Consider the specification</p>
-                        <div class="math-formula highlight-formula">
+                        <div class="math-formula highlight-formula" style="background:white; border-left-color:#1a56db;">
                             $$ income = \beta_0 + \beta_1 E + \beta_2 C + \beta_3 (E \cdot C) + u $$
                         </div>
                         <p>where:</p>
@@ -3631,20 +3628,20 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         <p>So the base group is an <strong>unemployed foreigner</strong>.</p>
 
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px;">
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>1. Unemployed foreigner</strong>
+                            <div style="background:rgba(255,255,255,0.85); padding:15px; border-radius:8px; border-left:4px solid #4285f4; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                <strong style="color:#1a56db;">1. Unemployed foreigner</strong>
                                 <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + u $$</div>
                             </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>2. Unemployed citizen</strong>
+                            <div style="background:rgba(255,255,255,0.85); padding:15px; border-radius:8px; border-left:4px solid #4285f4; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                <strong style="color:#1a56db;">2. Unemployed citizen</strong>
                                 <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + \beta_2 + u $$</div>
                             </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>3. Employed foreigner</strong>
+                            <div style="background:rgba(255,255,255,0.85); padding:15px; border-radius:8px; border-left:4px solid #4285f4; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                <strong style="color:#1a56db;">3. Employed foreigner</strong>
                                 <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + \beta_1 + u $$</div>
                             </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>4. Employed citizen</strong>
+                            <div style="background:rgba(255,255,255,0.85); padding:15px; border-radius:8px; border-left:4px solid #4285f4; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                <strong style="color:#1a56db;">4. Employed citizen</strong>
                                 <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + \beta_1 + \beta_2 + \beta_3 + u $$</div>
                             </div>
                         </div>
@@ -4096,59 +4093,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
-                    <!-- ── SECTION N — FINAL EXAM REFLEX / SUMMARY MASTER CARD ── -->
-                    <div class="concept-card highlight" style="border:3px solid var(--primary-red);">
-                        <h3><i class="fas fa-star"></i> Final Exam Reflex — What You Must Instantly Recognize</h3>
 
-                        <div style="display:grid; grid-template-columns:1fr; gap:15px; margin-top:20px;">
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>1.</strong> A product of two dummies is itself a dummy for the intersection of two characteristics.
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>2.</strong> In dummy interaction models, the base group is the combination for which all dummies and interaction terms are zero.
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>3.</strong> A slope dummy model
-                                <div class="math-formula" style="margin:5px 0; background:white;">$$ y = \beta_0 + \beta_1 x + \beta_2 D + \beta_3 Dx + u $$</div>
-                                allows both intercept and slope differences across groups.
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>4.</strong> The Chow test checks whether two groups follow the same regression model.
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>5.</strong> A binary dependent variable implies
-                                <div class="math-formula" style="margin:5px 0; background:white;">$$ E(y\mid X) = P(y=1\mid X) $$</div>
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>6.</strong> In the LPM, coefficients are changes in probability points.
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>7.</strong> The LPM may predict probabilities outside \( [0,1] \).
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>8.</strong> The LPM is inherently heteroskedastic because
-                                <div class="math-formula" style="margin:5px 0; background:white;">$$ \operatorname{Var}(u\mid X) = p(X)(1-p(X)) $$</div>
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>9.</strong> OLS in the LPM remains unbiased and consistent under MLR.1–MLR.4.
-                            </div>
-                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
-                                <strong>10.</strong> The LPM is simple and intuitive, but imperfect.
-                            </div>
-                        </div>
-
-                        <div class="alert-box" style="margin-top:25px; border-color:var(--primary-red); background:#fff5f5;">
-                            <i class="fas fa-exclamation-circle alert-icon" style="color:var(--primary-red);"></i>
-                            <div class="alert-content">
-                                <h4 style="color:var(--primary-red);">Never interpret a dummy interaction without first identifying:</h4>
-                                <ul style="margin-top:8px;">
-                                    <li>the base group</li>
-                                    <li>the relevant subgroup equation</li>
-                                    <li>whether the effect is an intercept shift, a slope shift, or both</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
 
                 </section>
 
