@@ -71,6 +71,7 @@
                     <div class="accordion-content">
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-1')">2.1 Data Scaling &amp; Functional Forms &amp; Model Comparison</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-2')">2.2 Selection of Explanatory Variables &amp; Prediction &amp; Qualitative Info</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-3')">2.3 QUALITATIVE ANALYSIS &amp; LINEAR PROBABILITY MODEL</a>
                     </div>
                 </div>
             </nav>
@@ -3508,6 +3509,645 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             $$ income = \gamma_0 + \gamma_1 UC + \gamma_2 EF + \gamma_3 UF + v $$
                         </div>
                         <p>This often makes interpretation and testing more straightforward.</p>
+                    </div>
+
+                </section>
+
+                <!-- ==================== SECTION 2.3 ==================== -->
+                <section id="section-2-3" class="page-section" style="display:none;">
+                    <h1 class="page-title">QUALITATIVE ANALYSIS &amp; LINEAR PROBABILITY MODEL</h1>
+
+                    <!-- ── INTRO CARD ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-rocket"></i> Why this chapter matters</h3>
+                        <p>This chapter deepens qualitative analysis in regression models.<br>It explains how dummy interactions allow us to compare groups more flexibly, how slope dummies create different regression lines across subpopulations, how the Chow test checks whether groups follow the same model, and how the Linear Probability Model turns OLS into a model of binary outcomes.</p>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-bullseye alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Learning Goals</h4>
+                                <ul style="margin-top:8px;">
+                                    <li>understand interactions among dummy variables</li>
+                                    <li>distinguish intercept dummies from slope dummies</li>
+                                    <li>understand the logic and formula of the Chow test</li>
+                                    <li>interpret the Linear Probability Model as a probability model</li>
+                                    <li>know both the strengths and the weaknesses of the LPM</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>When dummy interactions are included, interpretation always depends on the base group.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION A — MORE ON BINARY INDEPENDENT VARIABLES ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-tags"></i> More on Binary Independent Variables</h3>
+                        <p>A binary independent variable can already create differences in intercepts across groups.<br>But lecture 9 goes further: we can also create interactions</p>
+                        <ul>
+                            <li>between dummy variables,</li>
+                            <li>and between dummy variables and quantitative variables.</li>
+                        </ul>
+                        <p style="margin-top:10px;">This allows the model to capture richer group structures.</p>
+
+                        <p style="margin-top:15px;"><strong>Interactions between dummies are effectively another way of creating multi-criterial dummy variables.</strong></p>
+
+                        <div style="margin-top:20px; background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--sidebar-bg);">
+                            <strong>Two equivalent logics:</strong>
+                            <ul style="margin-top:8px;">
+                                <li>multi-criterial dummies are often more convenient when comparing specific groups directly</li>
+                                <li>interacting dummies are often more convenient when testing a general statement about interactions</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Deep Intuition</h4>
+                                <p>A dummy interaction asks whether one group difference itself depends on another group characteristic.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION B — INTERACTIONS AMONG DUMMY VARIABLES ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-project-diagram"></i> Interactions among Dummy Variables</h3>
+                        <p>Suppose we have two dummy variables:</p>
+                        <ul>
+                            <li>\( E \): employment</li>
+                            <li>\( C \): citizenship</li>
+                        </ul>
+                        <p style="margin-top:15px;">Then we may include not only \( E \) and \( C \), but also their interaction:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ E \cdot C $$
+                        </div>
+                        <p>This interaction equals 1 only when both dummies equal 1.<br>So it identifies the subgroup that satisfies both criteria at the same time.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('explain-dummy-interaction')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide Explanation</button>
+                        <div id="explain-dummy-interaction" class="hidden-panel">
+                            <p>If</p>
+                            <div class="math-formula">
+                                $$ E = \begin{cases} 1 & \text{if employed} \\ 0 & \text{otherwise} \end{cases} \qquad C = \begin{cases} 1 & \text{if citizen} \\ 0 & \text{otherwise} \end{cases} $$
+                            </div>
+                            <p>then</p>
+                            <div class="math-formula">
+                                $$ E \cdot C = \begin{cases} 1 & \text{if employed citizen} \\ 0 & \text{otherwise} \end{cases} $$
+                            </div>
+                            <p>So the product of two dummies is itself a dummy for the intersection of the two characteristics.</p>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>Dummy interactions and multi-criterial dummies often encode the same information, but they are not always equally convenient for interpretation and testing.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION C — DUMMY INTERACTIONS: EXAMPLE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-users"></i> Dummy Interactions — Example</h3>
+                        <p>Consider the specification</p>
+                        <div class="math-formula highlight-formula">
+                            $$ income = \beta_0 + \beta_1 E + \beta_2 C + \beta_3 (E \cdot C) + u $$
+                        </div>
+                        <p>where:</p>
+                        <ul>
+                            <li>\( E = 1 \) if employed</li>
+                            <li>\( C = 1 \) if citizen</li>
+                        </ul>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:20px;">Finding the base group</h4>
+                        <p>The base group is the group for which all dummies and interaction terms are equal to zero.<br>Here that requires</p>
+                        <div class="math-formula">
+                            $$ E = 0, \qquad C = 0 $$
+                        </div>
+                        <p>So the base group is an <strong>unemployed foreigner</strong>.</p>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:20px;">
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>1. Unemployed foreigner</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + u $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>2. Unemployed citizen</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + \beta_2 + u $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>3. Employed foreigner</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + \beta_1 + u $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>4. Employed citizen</strong>
+                                <div class="math-formula" style="margin:8px 0; background:white;">$$ income = \beta_0 + \beta_1 + \beta_2 + \beta_3 + u $$</div>
+                            </div>
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-dummy-group-tests')" style="margin-top:20px;"><i class="fas fa-eye"></i> Show/Hide Testing Logic</button>
+                        <div id="derive-dummy-group-tests" class="hidden-panel">
+                            <p>To test the groups against the base group:</p>
+                            <ul>
+                                <li>unemployed citizens: test \( \beta_2 = 0 \)</li>
+                                <li>employed foreigners: test \( \beta_1 = 0 \)</li>
+                                <li>employed citizens: test</li>
+                            </ul>
+                            <div class="math-formula">
+                                $$ \theta \equiv \beta_1 + \beta_2 + \beta_3 = 0 $$
+                            </div>
+                            <p>So as soon as interactions are introduced, some group comparisons require testing <strong>linear combinations</strong> of coefficients rather than single coefficients.</p>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-radiation-alt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Warning</h4>
+                                <p>With dummy interactions, subgroup effects are often sums of coefficients, not single coefficients.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION D — ALLOWING FOR DIFFERENT SLOPES: SLOPE DUMMY ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-chart-line"></i> Allowing for Different Slopes — Slope Dummy</h3>
+                        <p>A separate <strong>intercept dummy</strong> allows different intercepts across groups.<br>An <strong>interaction</strong> between a dummy and a quantitative variable allows different slopes across groups.</p>
+                        <p style="margin-top:15px;">Consider the model:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1 x + \beta_2 D + \beta_3 Dx + u $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:20px;">If \( D_i = 0 \):</h4>
+                        <div class="math-formula">
+                            $$ y_i = \beta_0 + \beta_1 x_i + u_i $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:15px;">If \( D_i = 1 \):</h4>
+                        <div class="math-formula">
+                            $$ y_i = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) x_i + u_i $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-slope-dummy')" style="margin-top:20px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-slope-dummy" class="hidden-panel">
+                            <p>Start from</p>
+                            <div class="math-formula">
+                                $$ y = \beta_0 + \beta_1 x + \beta_2 D + \beta_3 Dx + u $$
+                            </div>
+                            <p>Case \( D=0 \):<br>\( Dx = 0 \)<br>so</p>
+                            <div class="math-formula">
+                                $$ y = \beta_0 + \beta_1 x + u $$
+                            </div>
+                            <p>Case \( D=1 \):<br>\( Dx = x \)<br>so</p>
+                            <div class="math-formula">
+                                $$ y = \beta_0 + \beta_1 x + \beta_2 + \beta_3 x + u $$
+                            </div>
+                            <p>Group terms:</p>
+                            <div class="math-formula">
+                                $$ y = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) x + u $$
+                            </div>
+                            <p>Thus:</p>
+                            <ul>
+                                <li>\( \beta_2 \) is the intercept difference</li>
+                                <li>\( \beta_3 \) is the slope difference</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-key alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Logic</h4>
+                                <p>A slope dummy does not only move the regression line up or down.<br>It changes the tilt of the line.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION E — DIFFERENT INTERCEPTS VS DIFFERENT SLOPES ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-not-equal"></i> Different Intercepts vs Different Slopes</h3>
+                        <p>Consider the wage equation</p>
+                        <div class="math-formula">
+                            $$ wage = \beta_0 + \delta_0 \, female + \beta_1 \, educ + \delta_1 (female \cdot educ) + u $$
+                        </div>
+                        <p>Rewrite it as</p>
+                        <div class="math-formula highlight-formula">
+                            $$ wage = (\beta_0 + \delta_0 \, female) + (\beta_1 + \delta_1 \, female) educ + u $$
+                        </div>
+
+                        <div class="table-container" style="margin-top:20px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>Equation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Male</strong> (\( female = 0 \))</td>
+                                        <td>\( wage = \beta_0 + \beta_1 educ + u \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Female</strong> (\( female = 1 \))</td>
+                                        <td>\( wage = (\beta_0 + \delta_0) + (\beta_1 + \delta_1) educ + u \)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p style="margin-top:15px;">\( \delta_0 \) captures the intercept shift across groups, while \( \delta_1 \) captures the difference in the return to education across groups.</p>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-bolt alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Exam Reflex</h4>
+                                <p>Without the interaction, the model assumes the same slope for both groups.<br>With the interaction, the return to \( x \) becomes group-specific.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION F — TESTING FOR DIFFERENCES BETWEEN GROUPS ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-vial"></i> Testing for Differences Between Groups</h3>
+                        <p>Testing dummy parameters and their interactions allows us to uncover whether groups differ only by intercept, only by slope, or by both.<br>A very common formal tool for this purpose is the Chow test.</p>
+
+                        <p style="margin-top:15px;"><strong>The central question is:<br>do the groups follow the same population regression model, or do their coefficients differ?</strong></p>
+                    </div>
+
+                    <!-- ── SECTION G — CHOW TEST ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-balance-scale"></i> Chow Test</h3>
+                        <p>The Chow test is used to test the stability or equality of regression coefficients across two groups or subsamples.</p>
+                        <p style="margin-top:10px;">Suppose the baseline model is</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x + u $$
+                        </div>
+                        <p>Let</p>
+                        <div class="math-formula">
+                            $$ D_i = \begin{cases} 0 & \text{if observation } i \text{ belongs to group 1} \\ 1 & \text{if observation } i \text{ belongs to group 2} \end{cases} $$
+                        </div>
+                        <p>The extended model is</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y_i = \beta_0 + \delta_0 D_i + \beta_1 x_i + \delta_1 D_i x_i + u_i $$
+                        </div>
+                        <p>or equivalently</p>
+                        <div class="math-formula">
+                            $$ y_i = (\beta_0 + \delta_0 D_i) + (\beta_1 + \delta_1 D_i) x_i + u_i $$
+                        </div>
+
+                        <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red); margin-top:20px;">
+                            <strong>Hypotheses:</strong>
+                            <div class="math-formula" style="margin:10px 0; background:white;">
+                                $$ H_0: \delta_0 = 0 \text{ and } \delta_1 = 0 $$
+                            </div>
+                            <p style="text-align:center; margin:5px 0;">vs.</p>
+                            <div class="math-formula" style="margin:10px 0; background:white;">
+                                $$ H_1: \delta_0 \neq 0 \text{ or } \delta_1 \neq 0 $$
+                            </div>
+                        </div>
+
+                        <p style="margin-top:15px;">Under the null, both groups share the same intercept and slope.<br>Under the alternative, at least one coefficient differs across groups.</p>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">SSR Logic</h4>
+                        <p>If the model is estimated separately over the two groups, we obtain:</p>
+                        <ul>
+                            <li>\( SSR_1 \): residual sum of squares for group 1</li>
+                            <li>\( SSR_2 \): residual sum of squares for group 2</li>
+                        </ul>
+                        <p style="margin-top:10px;">Then the unrestricted residual sum of squares is</p>
+                        <div class="math-formula">
+                            $$ SSR_U = SSR_1 + SSR_2 $$
+                        </div>
+                        <p>The restricted model is the pooled regression estimated on the full sample, giving the pooled residual sum of squares</p>
+                        <div class="math-formula">
+                            $$ SSR_R = SSR_P $$
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:20px;">Chow Statistic Formula</h4>
+                        <div class="math-formula highlight-formula">
+                            $$ F = \frac{SSR_P - (SSR_1 + SSR_2)}{SSR_1 + SSR_2} \cdot \frac{n - 2(k+1)}{k+1} $$
+                        </div>
+                        <p>Standard F-test form:</p>
+                        <div class="math-formula">
+                            $$ F = \frac{(SSR_R - SSR_U)/q}{SSR_U/(n-k-1)} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-chow')" style="margin-top:20px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-chow" class="hidden-panel">
+                            <p>The Chow test is a special case of the standard F test.<br>The unrestricted model corresponds to estimating separate regressions for the two groups, so its RSS is</p>
+                            <div class="math-formula">
+                                $$ SSR_U = SSR_1 + SSR_2 $$
+                            </div>
+                            <p>The restricted model corresponds to pooling the sample and imposing common coefficients, so its RSS is</p>
+                            <div class="math-formula">
+                                $$ SSR_R = SSR_P $$
+                            </div>
+                            <p>If there are \( k+1 \) restrictions (one intercept and \( k \) slopes), the F-statistic becomes</p>
+                            <div class="math-formula">
+                                $$ F = \frac{(SSR_P - (SSR_1 + SSR_2))/(k+1)}{(SSR_1 + SSR_2)/(n - 2(k+1))} $$
+                            </div>
+                            <p>which is algebraically equivalent to the displayed Chow statistic.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Deep Intuition</h4>
+                                <p>The Chow test asks whether fitting two separate lines reduces RSS enough to justify abandoning one common pooled regression.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION H — ALTERNATIVE / LESS STRICT CHOW TEST ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-sliders-h"></i> Alternative / Less Strict Chow Test</h3>
+                        <p>The classical Chow test can be too strict because it does not allow any coefficient to differ between the groups, including the intercept.</p>
+                        <p style="margin-top:10px;">A less strict alternative allows different intercepts but imposes common slopes.</p>
+                        <p style="margin-top:10px;">The restricted model then becomes</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y_i = (\beta_0 + \delta_0 D_i) + \beta_1 x_i + u_i $$
+                        </div>
+                        <p>So one less restriction is imposed.</p>
+
+                        <div class="math-formula" style="margin-top:15px;">
+                            $$ F = \frac{SSR_P^* - (SSR_1 + SSR_2)}{SSR_1 + SSR_2} \cdot \frac{n - 2(k+1)}{k} $$
+                        </div>
+                        <p>where \( SSR_P^* \) is the RSS of the pooled model with different intercepts already allowed.</p>
+
+                        <div class="alert-box" style="margin-top:20px;">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <p>This alternative test asks:<br>are slopes stable across groups, even if intercepts are allowed to differ?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION I — BINARY DEPENDENT VARIABLE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-toggle-on"></i> Binary Dependent Variable</h3>
+                        <p>Up to this point, qualitative variables were used as independent variables.<br>Now the dependent variable itself is binary:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y \in \{0, 1\} $$
+                        </div>
+                        <p>The population model still looks formally the same:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k + u $$
+                        </div>
+                        <p>but the interpretation changes completely because \( y \) is no longer continuous.</p>
+
+                        <ul style="margin-top:15px;">
+                            <li>employed / unemployed</li>
+                            <li>buy / not buy</li>
+                            <li>default / no default</li>
+                            <li>pass / fail</li>
+                        </ul>
+                    </div>
+
+                    <!-- ── SECTION J — EXPECTED VALUE OF A BINARY DEPENDENT VARIABLE ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-dice"></i> Expected Value of a Binary Dependent Variable</h3>
+                        <p>If \( y \) is binary, then conditional on \( X \), it follows a Bernoulli distribution:</p>
+                        <div class="math-formula">
+                            $$ y = \begin{cases} 1 & \text{with probability } P(y=1\mid X) \\ 0 & \text{with probability } 1-P(y=1\mid X) \end{cases} $$
+                        </div>
+                        <p>The conditional expectation is therefore</p>
+                        <div class="math-formula">
+                            $$ E(y\mid X) = 1 \cdot P(y=1\mid X) + 0 \cdot \bigl(1-P(y=1\mid X)\bigr) $$
+                        </div>
+                        <p>so</p>
+                        <div class="math-formula highlight-formula">
+                            $$ E(y\mid X) = P(y=1\mid X) $$
+                        </div>
+
+                        <p style="margin-top:15px;">Under MLR.1–MLR.4, we also have</p>
+                        <div class="math-formula">
+                            $$ E(y\mid X) = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k $$
+                        </div>
+                        <p>Hence</p>
+                        <div class="math-formula highlight-formula" style="border-left-color:var(--sidebar-bg); background:var(--bg-color);">
+                            $$ P(y=1\mid X) = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k $$
+                        </div>
+                        <p>This is the <strong>Linear Probability Model (LPM)</strong>.</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-lpm-mean')" style="margin-top:20px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-lpm-mean" class="hidden-panel">
+                            <p>Because \( y \) only takes the values 0 and 1,</p>
+                            <div class="math-formula">
+                                $$ E(y\mid X) = 1 \cdot P(y=1\mid X) + 0 \cdot P(y=0\mid X) $$
+                            </div>
+                            <p>The second term vanishes, so</p>
+                            <div class="math-formula">
+                                $$ E(y\mid X) = P(y=1\mid X) $$
+                            </div>
+                            <p>Therefore, when we run OLS with a binary dependent variable, the fitted conditional mean is interpreted as a probability.</p>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-key alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Logic</h4>
+                                <p>In the LPM, the regression line is a probability line.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION K — INTERPRETATION OF COEFFICIENTS IN THE LPM ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-glasses"></i> Interpretation of Coefficients in the LPM</h3>
+                        <p>Define the response probability as</p>
+                        <div class="math-formula">
+                            $$ p(X) \equiv P(y=1\mid X) = E(y\mid X) $$
+                        </div>
+                        <p>The LPM is</p>
+                        <div class="math-formula">
+                            $$ p(X) = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k $$
+                        </div>
+                        <p>The marginal effect of \( x_j \) is</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \Delta p(X) = \beta_j \Delta x_j $$
+                        </div>
+                        <p>So \( \beta_j \) measures the change in the probability of success when \( x_j \) increases by one unit.</p>
+
+                        <p style="margin-top:15px; font-weight:bold; color:var(--primary-red);">In the LPM, coefficients are interpreted in probability points, not in percentages.</p>
+
+                        <p style="margin-top:15px;">The fitted value</p>
+                        <div class="math-formula">
+                            $$ \hat y $$
+                        </div>
+                        <p>is the predicted probability of success.</p>
+
+                        <p style="margin-top:15px;">Dummy regressors can also be included in the LPM.<br>Then the dummy coefficient measures the difference in probability between the two groups.</p>
+                    </div>
+
+                    <!-- ── SECTION L — SHORTCOMINGS OF THE LPM ── -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-thumbs-down"></i> Shortcomings of the LPM</h3>
+
+                        <div style="margin-top:20px;">
+                            <h4 style="color:var(--sidebar-bg); font-size:1.1rem; border-bottom:1px solid #ddd; padding-bottom:5px;">1. Predicted probabilities are not bounded by 0 and 1</h4>
+                            <p style="margin-top:10px;">Because the model is linear,</p>
+                            <div class="math-formula">
+                                $$ \hat p(X) = \hat\beta_0 + \hat\beta_1 x_1 + \cdots + \hat\beta_k x_k $$
+                            </div>
+                            <p>may be negative or greater than 1.<br>This is impossible for a true probability.</p>
+                            <div class="alert-box" style="margin-top:10px;">
+                                <i class="fas fa-info-circle alert-icon"></i>
+                                <div class="alert-content">
+                                    <p>Censoring or thresholding can partially fix this mechanically, but both solutions are conceptually problematic.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:25px;">
+                            <h4 style="color:var(--sidebar-bg); font-size:1.1rem; border-bottom:1px solid #ddd; padding-bottom:5px;">2. Constant marginal effect</h4>
+                            <p style="margin-top:10px;">The marginal effect of \( x_j \) is always</p>
+                            <div class="math-formula">
+                                $$ \frac{\partial p(X)}{\partial x_j} = \beta_j $$
+                            </div>
+                            <p>So the probability response is constant across the support of the data.<br>This is often unrealistic.</p>
+                        </div>
+
+                        <div style="margin-top:25px;">
+                            <h4 style="color:var(--sidebar-bg); font-size:1.1rem; border-bottom:1px solid #ddd; padding-bottom:5px;">3. Inherent heteroskedasticity</h4>
+                            <p style="margin-top:10px;">Because</p>
+                            <div class="math-formula">
+                                $$ u = y - E(y\mid X) $$
+                            </div>
+                            <p>we have</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}(u\mid X) = \operatorname{Var}(y\mid X) $$
+                            </div>
+                            <p>Since \( y \) is binary,</p>
+                            <div class="math-formula">
+                                $$ y^2 = y $$
+                            </div>
+                            <p>so</p>
+                            <div class="math-formula">
+                                $$ E(y^2\mid X) = E(y\mid X) = p(X) $$
+                            </div>
+                            <p>Thus</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}(y\mid X) = E(y^2\mid X) - [E(y\mid X)]^2 = p(X) - p(X)^2 = p(X)(1-p(X)) $$
+                            </div>
+                            <p>Therefore</p>
+                            <div class="math-formula highlight-formula" style="border-left-color:var(--primary-red);">
+                                $$ \operatorname{Var}(u\mid X) = p(X)(1-p(X)) $$
+                            </div>
+                            <p>This depends on \( X \), so MLR.5 is violated.</p>
+
+                            <button class="action-btn" onclick="toggleDerivation('derive-lpm-hetero')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                            <div id="derive-lpm-hetero" class="hidden-panel">
+                                <p>The variance of a Bernoulli variable is</p>
+                                <div class="math-formula">
+                                    $$ \operatorname{Var}(y\mid X) = E(y^2\mid X) - [E(y\mid X)]^2 $$
+                                </div>
+                                <p>Since \( y \in \{0, 1\} \), we have \( y^2 = y \), so</p>
+                                <div class="math-formula">
+                                    $$ E(y^2\mid X) = E(y\mid X) = p(X) $$
+                                </div>
+                                <p>Therefore</p>
+                                <div class="math-formula">
+                                    $$ \operatorname{Var}(y\mid X) = p(X) - p(X)^2 = p(X)(1-p(X)) $$
+                                </div>
+                                <p>And because \( u = y - E(y\mid X) \),</p>
+                                <div class="math-formula">
+                                    $$ \operatorname{Var}(u\mid X) = p(X)(1-p(X)) $$
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:25px;">
+                            <h4 style="color:var(--sidebar-bg); font-size:1.1rem; border-bottom:1px solid #ddd; padding-bottom:5px;">4. Error term is not normally distributed</h4>
+                            <p style="margin-top:10px;">Because \( y \) takes only two values, the error term can only take two values for a given \( X \).<br>So the normality assumption is violated.</p>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:20px; border-color:var(--primary-red); background:#fff5f5;">
+                            <i class="fas fa-exclamation-triangle alert-icon" style="color:var(--primary-red);"></i>
+                            <div class="alert-content">
+                                <h4 style="color:var(--primary-red);">Important Warning</h4>
+                                <p>In the LPM, OLS remains unbiased and consistent under MLR.1–MLR.4, but usual inference must be treated carefully because heteroskedasticity is built into the model.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION M — POTENTIAL ADVANTAGES OF THE LPM ── -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-thumbs-up"></i> Potential Advantages of the LPM</h3>
+                        <ol style="margin-top:15px; padding-left:20px;">
+                            <li style="margin-bottom:8px;">Simple to estimate: it is just OLS.</li>
+                            <li style="margin-bottom:8px;">Easy and intuitive interpretation in probability points.</li>
+                            <li style="margin-bottom:8px;">Heteroskedasticity and nonnormality can be handled econometrically.</li>
+                            <li style="margin-bottom:8px;">It often works reasonably well for values of \( x_j \) close to the sample averages.</li>
+                        </ol>
+
+                        <p style="margin-top:15px;">The LPM is therefore often useful as a first approximation, even though it is not theoretically perfect.</p>
+
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-exclamation-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Important Caveat</h4>
+                                <p>For the LPM, \( R^2 \) and adjusted \( R^2 \) are no longer very good measures of goodness-of-fit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── SECTION N — FINAL EXAM REFLEX / SUMMARY MASTER CARD ── -->
+                    <div class="concept-card highlight" style="border:3px solid var(--primary-red);">
+                        <h3><i class="fas fa-star"></i> Final Exam Reflex — What You Must Instantly Recognize</h3>
+
+                        <div style="display:grid; grid-template-columns:1fr; gap:15px; margin-top:20px;">
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>1.</strong> A product of two dummies is itself a dummy for the intersection of two characteristics.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>2.</strong> In dummy interaction models, the base group is the combination for which all dummies and interaction terms are zero.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>3.</strong> A slope dummy model
+                                <div class="math-formula" style="margin:5px 0; background:white;">$$ y = \beta_0 + \beta_1 x + \beta_2 D + \beta_3 Dx + u $$</div>
+                                allows both intercept and slope differences across groups.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>4.</strong> The Chow test checks whether two groups follow the same regression model.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>5.</strong> A binary dependent variable implies
+                                <div class="math-formula" style="margin:5px 0; background:white;">$$ E(y\mid X) = P(y=1\mid X) $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>6.</strong> In the LPM, coefficients are changes in probability points.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>7.</strong> The LPM may predict probabilities outside \( [0,1] \).
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>8.</strong> The LPM is inherently heteroskedastic because
+                                <div class="math-formula" style="margin:5px 0; background:white;">$$ \operatorname{Var}(u\mid X) = p(X)(1-p(X)) $$</div>
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>9.</strong> OLS in the LPM remains unbiased and consistent under MLR.1–MLR.4.
+                            </div>
+                            <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left:4px solid var(--primary-red);">
+                                <strong>10.</strong> The LPM is simple and intuitive, but imperfect.
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top:25px; border-color:var(--primary-red); background:#fff5f5;">
+                            <i class="fas fa-exclamation-circle alert-icon" style="color:var(--primary-red);"></i>
+                            <div class="alert-content">
+                                <h4 style="color:var(--primary-red);">Never interpret a dummy interaction without first identifying:</h4>
+                                <ul style="margin-top:8px;">
+                                    <li>the base group</li>
+                                    <li>the relevant subgroup equation</li>
+                                    <li>whether the effect is an intercept shift, a slope shift, or both</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
                 </section>
