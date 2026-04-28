@@ -4179,6 +4179,50 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
+                    <!-- Simple Regression Intuition -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-search-plus"></i> Simple Regression Intuition</h3>
+                        <p>Consider a simple regression population model:</p>
+                        <div class="math-formula">
+                            $$ y_i = \beta_0 + \beta_1 x_i + u_i $$
+                        </div>
+                        <p>Assume MLR.1 through MLR.4 hold, but \( \operatorname{Var}(u_i \mid x_i) = \sigma_i^2 \), i.e., the variance of \( u_i \) depends on \( x_i \).</p>
+                        
+                        <p style="margin-top:15px;">Using the rewritten OLS estimator:</p>
+                        <div class="math-formula">
+                            $$ \hat{\beta}_1 = \beta_1 + \frac{\displaystyle\sum_{i=1}^{n} u_i(x_i - \bar{x})}{\displaystyle\sum_{i=1}^{n}(x_i - \bar{x})^2} $$
+                        </div>
+                        
+                        <p style="margin-top:15px;">Under MLR.1 through MLR.4, we have the <strong>true variance</strong>:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ \operatorname{Var}(\hat{\beta}_1) = \frac{\displaystyle\sum_{i=1}^{n} \sigma_i^2 (x_i - \bar{x})^2}{\left[\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2\right]^2} = \frac{\displaystyle\sum_{i=1}^{n} \sigma_i^2 (x_i - \bar{x})^2}{\text{SST}_x^2} $$
+                        </div>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-homo-reduce')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide: Reduction under MLR.5</button>
+                        <div id="derive-homo-reduce" class="hidden-panel">
+                            <p>If homoskedasticity (MLR.5) holds, \( \sigma_i^2 = \sigma^2 \) for all \( i \), and this would reduce to the usual OLS variance:</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}(\hat{\beta}_1) = \frac{\sigma^2 \displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2}{\left[\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2\right]^2} = \frac{\sigma^2}{\text{SST}_x} $$
+                            </div>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">White Standard Errors Estimator</h4>
+                        <p>The intuition behind White standard errors is well understandable from their simple regression form, which replaces the unknown \( \sigma_i^2 \) with the squared residuals \( \hat{u}_i^2 \):</p>
+                        <div class="math-formula highlight-formula" style="border-left-color:var(--sidebar-bg); background:var(--bg-color);">
+                            $$ \widehat{\operatorname{Var}}(\hat{\beta}_1) = \frac{\displaystyle\sum_{i=1}^{n} \hat{u}_i^2 (x_i - \bar{x})^2}{\text{SST}_x^2} $$
+                        </div>
+                        
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Intuition</h4>
+                                <p>As we know, little \( x \) sample variation (or multicollinearity in multiple regression) can cause large standard errors. For large samples, the White standard errors are <strong>asymptotically valid for any form of heteroskedasticity</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <!-- Properties -->
                     <div class="concept-card">
