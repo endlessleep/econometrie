@@ -73,6 +73,7 @@
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-2')">2.2 Prediction &amp; Qualitative Info</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-3')">2.3 Qualitative Analysis &amp; LPM</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-4')">2.4 Heteroskedasticity</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'section-2-5')">2.5 Functional Form Misspecification &amp; Data Issues</a>
                     </div>
                 </div>
             </nav>
@@ -4765,6 +4766,297 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
+
+                </section>
+
+                <!-- SECTION 2.5 -->
+                <section id="section-2-5" class="page-section" style="display:none;">
+                    <h1 class="page-title">2.5 Functional Form Misspecification & Data Issues</h1>
+
+                    <!-- Functional form misspecification -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Functional form misspecification</h3>
+                        <p>Functional form misspecification occurs in a situation when we have selected a proper independent variable(s) but an incorrect form of the relationship with the dependent one.</p>
+                        <div class="alert-box assumption">
+                            <i class="fas fa-balance-scale alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Violation of MLR.4</h4>
+                                <p>The OLS estimator becomes biased and inconsistent:</p>
+                                <p>Imagine you estimate \( y = \beta_0 + \beta_1x + u \) instead of:</p>
+                                <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                                    $$ y = \beta_0 + \beta_1x + \beta_2x^2 + u $$
+                                </div>
+                                <p>In effect, you estimate \( y = \beta_0 + \beta_1x + v \), where \( v = \beta_2x^2 + u \).</p>
+                                <p>\( \Rightarrow \) Error \( v \) and \( x \) are not mean independent \( \Rightarrow \) violation of MLR.4.</p>
+                            </div>
+                        </div>
+                        <p>Misspecification is not limited to the independent variables but it can be also caused by an improper functional form of the dependent variable.</p>
+                    </div>
+
+                    <!-- RESET test -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-vial"></i> RESET test</h3>
+                        <p>Ramsey (1969) regression specification error test (RESET) is built on a simple idea that if the original model \( y = \beta_0 + \beta_1x_1 + ... + \beta_kx_k + u \) satisfies MLR.4, then no additional nonlinear functions of the independent variables should be significant when added to the model.</p>
+                        <p>Similarly to the White test for heteroskedasticity, various nonlinear relationships are covered by the quadratic form but here also the cubic form is added into the testing procedure to cover a wider range of possible relationships.</p>
+                        <p>As for the White test, such a construction can lead to many parameters in the equation and thus many df lost.</p>
+                        
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">Testing Procedure</h4>
+                        <ol style="margin-left:20px; line-height:1.6;">
+                            <li>Estimate the original model \( y \rightarrow x_1, ..., x_k \) and obtain the fitted values \( \hat{y} \)</li>
+                            <li>Estimate a new model:
+                                <div class="math-formula highlight-formula">
+                                    $$ y = \beta_0 + \beta_1x_1 + ... + \beta_kx_k + \delta_1\hat{y}^2 + \delta_2\hat{y}^3 + \varepsilon $$
+                                </div>
+                            </li>
+                            <li>Test \( H_0 : \delta_1 = 0, \delta_2 = 0 \) using the F test or the LM test.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Davidson-MacKinnon test -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-balance-scale-right"></i> Davidson-MacKinnon test</h3>
+                        <p>Davidson and MacKinnon (1981) proposed a test for selecting between nonnested models, e.g., choosing between:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + u $$
+                            $$ y = \beta_0 + \beta_1\log(x_1) + \beta_2\log(x_2) + v $$
+                        </div>
+                        <p>The idea behind the test states that if the first one is the true population model, then the fitted values from the second one should not be significant when added to the first one.</p>
+                        
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">Testing Procedure</h4>
+                        <ol style="margin-left:20px; line-height:1.6;">
+                            <li>Let us have two competing models.</li>
+                            <li>Estimate the second one and obtain the fitted values \( \hat{y} \).</li>
+                            <li>Add \( \hat{y} \) into the first model and estimate a new model:
+                                <div class="math-formula highlight-formula">
+                                    $$ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \delta_1\hat{y} + \varepsilon $$
+                                </div>
+                            </li>
+                            <li>Test \( H_0 : \delta_1 = 0 \) using the t test.</li>
+                            <li>Repeat symmetrically for the other model.</li>
+                        </ol>
+
+                        <div class="alert-box">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Complications in empirical practice</h4>
+                                <ul style="margin-left:15px; margin-top:10px;">
+                                    <li>Testing procedure can end up with no clear winner.</li>
+                                    <li>If both models rejected \( \Rightarrow \) we need to look for a better model.</li>
+                                    <li>It can happen that neither model could be rejected \( \Rightarrow \) we can compare them using (adjusted) \( R^2 \).</li>
+                                    <li>Not rejecting one of the models and rejecting the other does not mean that the ‘winner’ is the correct model, i.e., we might be selecting from two wrong/misspecified models.</li>
+                                </ul>
+                                <p style="margin-top:10px;"><strong>Conclusion:</strong> D-M test should be complemented by the RESET test.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proxy variables -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-user-secret"></i> Proxy variables</h3>
+                        <p>There are situations when we construct a model according to an economic theory which is based on unobservable independent variables (e.g., ability and motivation).</p>
+                        <p>If such variable is correlated with the other independent variables, its omission violates MLR.4 and causes OLS to be biased and inconsistent.</p>
+                        <p><strong>Proxy variables</strong> are used to mitigate such bias and inconsistency.</p>
+                        
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">Formal definition</h4>
+                        <p>Assume a model:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_3^* + u $$
+                        </div>
+                        <p>where \( x_3^* \) is an unobservable variable.</p>
+                        
+                        <p>For a <strong>good observable proxy variable \( x_3 \)</strong>, it holds that it is highly correlated with the unobservable variable it should approximate. Let us describe this relationship as:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ x_3^* = \delta_0 + \delta_3x_3 + v_3 $$
+                        </div>
+                        
+                        <p><strong>Conditions for a good proxy:</strong></p>
+                        <ul style="margin-left:20px;">
+                            <li>Error term \( u \) is uncorrelated with \( x_1, x_2, x_3^* \) (usual MLR.4 assumption) as well as \( x_3 \).</li>
+                            <li>Error term \( v_3 \) is uncorrelated with \( x_3 \), but also with \( x_1, x_2 \).</li>
+                        </ul>
+                        <p>Violation of either \( \Rightarrow \) OLS of \( \beta_1, \beta_2 \) biased and inconsistent.</p>
+                        <p><em>Note:</em> It is usually argued that even if the OLS procedure is biased and inconsistent even after including the proxy variable, it is still better than not treating the omitted variable bias at all.</p>
+                    </div>
+
+                    <!-- Lagged dependent variables as proxies -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-history"></i> Lagged dependent variables as proxies</h3>
+                        <p>Occasionally, we have a hard time finding or even thinking of a proper proxy variable.</p>
+                        <p>In such situations, the lagged dependent variable serves as the last resort:</p>
+                        <div class="math-formula highlight-formula">
+                            $$ y = \beta_0 + \beta_1x_1 + ... + \beta_{k-1}x_{k-1} + \beta_ky_{-1} + u $$
+                        </div>
+                        <p><strong>Intuition:</strong> The unobserved variables affect both current and past values of the dependent variable. Lagged dependent variable is thus a good candidate for a proxy variable as it should be highly correlated with the unobserved independent variables.</p>
+                        
+                        <div class="alert-box">
+                            <i class="fas fa-exclamation-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Downsides of this approach</h4>
+                                <ul style="margin-left:15px; margin-top:10px;">
+                                    <li>Much higher data demands.</li>
+                                    <li>The lagged dependent variable might easily be correlated with other independent variables (multicollinearity issue).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Measurement error in the dependent variable -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-ruler"></i> Measurement error in the dependent variable</h3>
+                        <p>Denote \( y^* \) the dependent variable we would like to explain, i.e.:</p>
+                        <div class="math-formula">
+                            $$ y^* = \beta_0 + \beta_1x_1 + ... + \beta_kx_k + u $$
+                        </div>
+                        <p>and let \( y \) be its reported/measured counterpart.</p>
+                        
+                        <p>Measurement error is defined as \( e_0 = y - y^* \) and we assume \( E(e_0) = 0 \).</p>
+                        <button class="action-btn" onclick="toggleDerivation('derive-meas-error-dep')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-meas-error-dep" class="hidden-panel">
+                            <p>Rearranging \( y^* = y - e_0 \), by substitution we get:</p>
+                            <div class="math-formula">
+                                $$ y - e_0 = \beta_0 + \beta_1x_1 + ... + \beta_kx_k + u $$
+                                $$ y = \beta_0 + \beta_1x_1 + ... + \beta_kx_k + u + e_0 $$
+                            </div>
+                            <p>If \( E(u + e_0|x_1,...,x_k) = 0 \), OLS is unbiased and consistent.</p>
+                            <p>Assuming \( e_0 \) and \( u \) are uncorrelated, we have:</p>
+                            <div class="math-formula">
+                                $$ Var(u + e_0) = \sigma^2_u + \sigma^2_{e_0} > \sigma^2_u $$
+                            </div>
+                            <p>i.e., the error variance increases.</p>
+                        </div>
+                    </div>
+
+                    <!-- Measurement error in the independent variable -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-ruler-combined"></i> Measurement error in the independent variable</h3>
+                        <p>Parallel to the previous case, denote \( x_1^* \) the independent variable of interest, i.e.:</p>
+                        <div class="math-formula">
+                            $$ y = \beta_0 + \beta_1x_1^* + u $$
+                        </div>
+                        <p>and let \( x_1 \) be its reported/measured counterpart.</p>
+                        <p>Measurement error is again defined as \( e_1 = x_1 - x_1^* \) and we again assume \( E(e_1) = 0 \).</p>
+                        <p>We always assume \( u \) uncorrelated with both \( x_1^* \) and \( x_1 \).</p>
+                        
+                        <p>Let us now consider two separate cases (assumptions):</p>
+                        <ul style="margin-left:20px;">
+                            <li>\( Cov(x_1, e_1) = 0 \)</li>
+                            <li>\( Cov(x_1^*, e_1) = 0 \) (CEV assumption)</li>
+                        </ul>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">Case 1: Assuming \( Cov(x_1, e_1) = 0 \)</h4>
+                        <button class="action-btn" onclick="toggleDerivation('derive-meas-error-indep-1')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-meas-error-indep-1" class="hidden-panel">
+                            <p>If \( Cov(x_1, e_1) = 0 \), then:</p>
+                            <div class="math-formula">
+                                $$ Cov(x_1^*, e_1) = E(x_1^*e_1) \neq 0 ... $$
+                                $$ = E(x_1 - e_1)e_1 = 0 - E(e_1^2) = -Var(e_1) = -\sigma^2_{e_1} $$
+                            </div>
+                            <p>Rearranging \( x_1^* = x_1 - e_1 \), by substitution we get:</p>
+                            <div class="math-formula highlight-formula">
+                                $$ y = \beta_0 + \beta_1x_1 + u - \beta_1e_1 $$
+                            </div>
+                            <p>New error term \( u - \beta_1e_1 \) has zero mean and it is uncorrelated with \( x_1 \) which makes OLS unbiased and consistent but with higher error variance as:</p>
+                            <div class="math-formula">
+                                $$ Var(u - \beta_1e_1) = \sigma^2_u + \beta_1^2\sigma^2_{e_1} \geq \sigma^2_u $$
+                            </div>
+                            <p>because \( e_1 \) and \( u \) are uncorrelated.</p>
+                        </div>
+
+                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin: 30px 0;">
+
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem;">Case 2: Assuming \( Cov(x_1^*, e_1) = 0 \) (CEV)</h4>
+                        <p>This is the <strong>classical errors-in-variables (CEV) assumption</strong>, which is more problematic but it is also more frequent or more believed to be valid/true (but still strong).</p>
+                        <button class="action-btn" onclick="toggleDerivation('derive-meas-error-indep-2')"><i class="fas fa-eye"></i> Show/Hide Derivation</button>
+                        <div id="derive-meas-error-indep-2" class="hidden-panel">
+                            <p>Similarly:</p>
+                            <div class="math-formula">
+                                $$ Cov(x_1^*, e_1) = 0 \Rightarrow Cov(x_1, e_1) = E(x_1e_1) \neq 0 ... = \sigma^2_{e_1} $$
+                            </div>
+                            <p>As in the previous case, we still have:</p>
+                            <div class="math-formula">
+                                $$ y = \beta_0 + \beta_1x_1 + u - \beta_1e_1 $$
+                            </div>
+                            <p>But here, the correlation between \( x_1 \) and \( e_1 \) causes troubles as MLR.4 is violated, causing OLS to be biased and inconsistent.</p>
+                            <p>Specifically, by substituting \( x_1 = x_1^* + e_1 \), we get:</p>
+                            <div class="math-formula">
+                                $$ Cov(x_1, u - \beta_1e_1) = -\beta_1E(x_1e_1) = -\beta_1E((x_1^* + e_1)e_1) $$
+                                $$ = -\beta_1E(x_1^*e_1) + E(e_1^2) = -\beta_1\sigma^2_{e_1} $$
+                            </div>
+                        </div>
+
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top: 20px;">Attenuation Bias</h4>
+                        <button class="action-btn" onclick="toggleDerivation('derive-attenuation')"><i class="fas fa-eye"></i> Show/Hide Derivation of Bias</button>
+                        <div id="derive-attenuation" class="hidden-panel">
+                            <p>Inconsistency and the magnitude of the bias can be well shown:</p>
+                            <div class="math-formula">
+                                $$ \text{plim}(\hat{\beta}_1) = \beta_1 + \frac{Cov(x_1, u - \beta_1e_1)}{Var(x_1)} $$
+                                $$ = \beta_1 - \frac{\beta_1\sigma^2_{e_1}}{\sigma^2_{x_1}} = \beta_1 \left( 1 - \frac{\sigma^2_{e_1}}{\sigma^2_{x_1}} \right) $$
+                                $$ = \beta_1 \left( \frac{\sigma^2_{x_1} - \sigma^2_{e_1}}{\sigma^2_{x_1}} \right) = \beta_1 \left( \frac{\sigma^2_{x_1^*} + \sigma^2_{e_1} - \sigma^2_{e_1}}{\sigma^2_{x_1^*} + \sigma^2_{e_1}} \right) $$
+                                $$ = \beta_1 \left( \frac{\sigma^2_{x_1^*}}{\sigma^2_{x_1^*} + \sigma^2_{e_1}} \right) $$
+                            </div>
+                        </div>
+                        <p>Therefore, \( \hat{\beta}_1 \) is asymptotically always closer to zero than \( \beta_1 \).</p>
+                        <p>This is called the <strong>attenuation bias</strong> in OLS due to the errors-in-variables (the estimate is being shrunk towards 0).</p>
+                        <p>We thus prefer the situation when \( Cov(x_1, e_1) = 0 \) rather than having \( Cov(x_1^*, e_1) = 0 \).</p>
+                        
+                        <div class="alert-box assumption" style="margin-top:20px;">
+                            <i class="fas fa-info-circle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>CEV for Dependent Variables</h4>
+                                <p>CEV assumption works the same for dependent variables:</p>
+                                <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
+                                    $$ Cov(y^*, e_0) = 0 \Rightarrow Cov(y, e_0) = E(ye_0) \neq 0 $$
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Missing data, nonrandom samples, and outlying observations -->
+                    <div class="grid-card">
+                        <h3><i class="fas fa-database"></i> Missing Data & Sampling Issues</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Issue</th>
+                                        <th>Description & Consequence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Missing data</strong></td>
+                                        <td>
+                                            Observations with missing data points are usually dropped during the estimation procedure. Data sample is thus reduced, so the OLS precision.
+                                            <br><br>
+                                            MLR.2 (random sampling) assumption still needs to be kept. Thus, if the omission of the datapoints is random across the dataset, everything is OK and OLS keeps its properties.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Nonrandom samples</strong></td>
+                                        <td>
+                                            Assumption MLR.2 is violated.
+                                            <br><br>
+                                            Still, if the sample is nonrandom due to selection based on an independent variable (the exogenous sample selection), OLS keeps its desirable properties, provided the other MLR assumptions hold.
+                                            <br><br>
+                                            But if the selection is based on the dependent variable (the endogenous sample selection, e.g., endogenous stratified sampling), OLS is biased and inconsistent.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Outliers and influential observations</strong></td>
+                                        <td>
+                                            Due to a mistake, sampling, a small population, or other reasons, specific observations can be ‘very different’ from the rest of the sample. Such outlying observations can have a serious effect on the OLS estimates.
+                                            <br><br>
+                                            Main reason is the principle of OLS based on squared residuals, which gives more weight to large ones. It is usually needed to switch to robust econometric estimation methods to treat the issue properly.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                 </section>
 
