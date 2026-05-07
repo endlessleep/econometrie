@@ -4523,6 +4523,98 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         </div>
                     </div>
 
+                    <!-- 16. Final Workflow -->
+                    <div class="concept-card highlight" style="background:linear-gradient(135deg, #e0e8f5 0%, #f0f4fa 100%); border-left:5px solid #4285f4;">
+                        <h3 style="color:#1a56db;"><i class="fas fa-sitemap" style="color:#4285f4;"></i> Final Econometric Workflow — What Should I Actually Do?</h3>
+                        
+                        <!-- Step 1 & 2 -->
+                        <div style="background: white; border-radius: 8px; padding: 15px; margin-top: 15px; border-left: 4px solid #4285f4; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <h4 style="color: #1a56db; margin-bottom: 8px;"><i class="fas fa-play-circle"></i> 1. Always begin with OLS</h4>
+                            <p style="margin-bottom: 10px;">All heteroskedasticity procedures start from a standard OLS regression and residual analysis.</p>
+                            <h4 style="color: #1a56db; margin-bottom: 8px;"><i class="fas fa-eye"></i> 2. Check residuals visually</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Fan shape?</li>
+                                <li>Increasing spread?</li>
+                                <li>Changing variance?</li>
+                            </ul>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div style="background: white; border-radius: 8px; padding: 15px; margin-top: 15px; border-left: 4px solid #4285f4; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <h4 style="color: #1a56db; margin-bottom: 8px;"><i class="fas fa-vial"></i> 3. Run Heteroskedasticity Tests</h4>
+                            <ul style="margin-bottom: 10px; padding-left: 20px;">
+                                <li>Breusch-Pagan Test</li>
+                                <li>White Test</li>
+                            </ul>
+                            <div style="background: #f0f4fa; padding: 8px 15px; border-radius: 5px; font-weight: bold; color: #1a56db;">
+                                Reject \( H_0 \) → Heteroskedasticity detected!
+                            </div>
+                        </div>
+
+                        <!-- Main Decision Block -->
+                        <div style="margin-top: 25px;">
+                            <h4 style="color: #1a56db; margin-bottom: 15px;"><i class="fas fa-code-branch"></i> 4. Main Decision</h4>
+                            
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <!-- NO HETEROSKEDASTICITY -->
+                                <div style="flex: 1; min-width: 250px; background: white; border-radius: 8px; padding: 15px; border-top: 4px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                    <strong style="color: #28a745;">✅ IF NO HETEROSKEDASTICITY:</strong>
+                                    <ul style="margin-top: 10px; padding-left: 20px;">
+                                        <li>Usual OLS inference is valid.</li>
+                                        <li>If MLR.1–6 hold → exact <em>t</em> and <em>F</em> tests.</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- YES HETEROSKEDASTICITY -->
+                                <div style="flex: 1; min-width: 250px; background: white; border-radius: 8px; padding: 15px; border-top: 4px solid var(--primary-red); box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                    <strong style="color: var(--primary-red);">⚠️ IF HETEROSKEDASTICITY:</strong>
+                                    <p style="margin-top: 10px; font-weight: bold; color: #1a56db;">Ask: "Do we know the variance form?"</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Yes/No Paths -->
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                            <!-- KNOWN FORM -->
+                            <div style="flex: 1; min-width: 250px; background: white; border-radius: 8px; padding: 15px; border-left: 4px solid #1a56db; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <strong style="color: #1a56db;">Known Variance Form</strong>
+                                <h4 style="margin: 10px 0; color: #333;">→ Use WLS</h4>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li>Divide by \( \sqrt{h_i} \).</li>
+                                    <li>Transformed model becomes homoskedastic.</li>
+                                    <li>WLS is BLUE if \( h_i \) is correct.</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- UNKNOWN FORM -->
+                            <div style="flex: 1; min-width: 250px; background: white; border-radius: 8px; padding: 15px; border-left: 4px solid #1a56db; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <strong style="color: #1a56db;">Unknown Variance Form</strong>
+                                <p style="margin-top: 10px; font-weight: bold;">Two common options:</p>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li><strong>OLS + White Robust SE</strong> (most common practical solution)</li>
+                                    <li><strong>FGLS</strong> for large samples</li>
+                                </ul>
+                                <p style="margin-top: 10px; font-size: 0.9em; color: #555;"><em>Note: White SE fix inference without changing coefficients.</em></p>
+                            </div>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top: 20px; border-color: #ff9800;">
+                            <i class="fas fa-exclamation-triangle alert-icon" style="color: #ff9800;"></i>
+                            <div class="alert-content">
+                                <h4>Final Warning</h4>
+                                <p>Even after WLS or FGLS, robust standard errors are often still used because the variance form may still be misspecified.</p>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top: 20px; border-color: var(--primary-red); background: #fff5f5;">
+                            <i class="fas fa-graduation-cap alert-icon" style="color: var(--primary-red);"></i>
+                            <div class="alert-content">
+                                <h4 style="color: var(--primary-red);">The Ultimate Exam Reflex</h4>
+                                <p style="font-weight: bold; font-size: 1.05rem;">Heteroskedasticity does not bias OLS coefficients under MLR.1–4, but it invalidates the usual standard errors and inference.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
 
                 <!-- SECTION 2.5 -->
