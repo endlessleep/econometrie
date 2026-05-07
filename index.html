@@ -5455,6 +5455,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li>\( k+1 \) restrictions = testing intercept AND all slopes.</li>
                         </ul>
                         <p><em>Less strict Chow:</em> Allows different intercepts but tests for common slopes. Uses \( k \) restrictions instead of \( k+1 \).</p>
+                        <p style="margin-top: 5px; color: var(--primary-red); font-weight: bold;">If the Chow test fails to reject \( H_0 \), the groups do NOT statistically differ. Estimating separate models is inefficient; keep the pooled model!</p>
 
                         <h4 style="color: var(--sidebar-bg); margin-top: 20px;">C. Linear Probability Model (LPM)</h4>
                         <p>When the dependent variable is binary (\( y \in \{0,1\} \)):</p>
@@ -5497,7 +5498,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                                     </tr>
                                     <tr>
                                         <td><strong>What breaks</strong></td>
-                                        <td>OLS is no longer BLUE. Usual SE are biased. t, F, and LM tests are <strong>invalid</strong>.</td>
+                                        <td>Violation of MLR.5 implies violation of MLR.6. OLS is no longer BLUE (inefficient). Usual SE are biased. We cannot easily derive distributional properties, making t, F, and LM tests <strong>invalid</strong>.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -5508,7 +5509,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li><strong>White Robust SE:</strong> Fixes inference without changing coefficients. Valid asymptotically (\( n-k-1 \ge 120 \)).</li>
                             <li><strong>Breusch-Pagan Test:</strong> Regress \( \hat{u}^2 \) on all \( x \). Test joint significance.</li>
                             <li><strong>White Test:</strong> Regress \( \hat{u}^2 \) on \( \hat{y} \) and \( \hat{y}^2 \).</li>
-                            <li><strong>WLS (Known form):</strong> If \( \operatorname{Var}(u_i|X) = \sigma^2 h_i \), divide the model by \( \sqrt{h_i} \).</li>
+                            <li><strong>WLS (Known form):</strong> If \( \operatorname{Var}(u_i|X) = \sigma^2 h_i \), divide the entire model by \( \sqrt{h_i} \). Note that the original intercept becomes the coefficient for \( 1/\sqrt{h_i} \), and the original slope becomes the new intercept.<br><em style="color: var(--primary-red);">Crucial:</em> WLS only remedies MLR.5. If the model suffers from omitted variable bias (violating MLR.4), WLS does not fix it and can even be more biased than OLS.</li>
                             <li><strong>FGLS (Unknown form):</strong> Estimate \( \hat{h}_i \) using a log regression, then run WLS. Requires large samples.</li>
                         </ul>
 
@@ -5520,7 +5521,8 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             </div>
                             <p><strong>WLS Transformation:</strong></p>
                             <div class="math-formula">
-                                $$ \operatorname{Var}\left(rac{u_i}{\sqrt{h_i}}ight) = rac{1}{h_i} \operatorname{Var}(u_i) = rac{1}{h_i}(\sigma^2 h_i) = \sigma^2 $$
+                                $$ \operatorname{Var}\left(rac{u_i}{\sqrt{h_i}}
+ight) = rac{1}{h_i} \operatorname{Var}(u_i) = rac{1}{h_i}(\sigma^2 h_i) = \sigma^2 $$
                             </div>
                             <p>The transformed model is homoskedastic!</p>
                         </div>
