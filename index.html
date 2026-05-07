@@ -61,6 +61,7 @@
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-3')">Confidence Interval</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-f-test')">F-Test (Joint Significance)</a>
                         <a href="#" class="nav-link" onclick="switchSection(event, 'section-method-4')">🎯 Midterm Sheet</a>
+                        <a href="#" class="nav-link" onclick="switchSection(event, 'final-revision-sheet')">🏆 Final Exam Sheet</a>
                     </div>
                 </div>
                 <div class="accordion-item">
@@ -5393,7 +5394,21 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             $$ se(\hat{e}_0) = \sqrt{\hat{\sigma}^2 + \operatorname{Var}(\hat{y}_0)} $$
                         </div>
 
-                        <button class="action-btn" onclick="toggleDerivation('derive-mean-pred')"><i class="fas fa-eye"></i> Show/Hide Derivation for Mean Prediction SE</button>
+                        <button class="action-btn" style="margin-right: 10px;" onclick="toggleDerivation('derive-mean-pred')"><i class="fas fa-eye"></i> Derivation: Mean Prediction</button>
+                        <button class="action-btn" onclick="toggleDerivation('derive-indiv-pred')"><i class="fas fa-eye"></i> Derivation: Indiv. Prediction</button>
+                        
+                        <div id="derive-indiv-pred" class="hidden-panel">
+                            <p>For an individual prediction, the actual future value is \( y_0 = \hat{y}_0 + u_0 \).</p>
+                            <p>The prediction error is the difference between the actual value and our prediction:</p>
+                            <div class="math-formula">
+                                $$ \hat{e}_0 = y_0 - \hat{y}_0 = (\beta_0 + \beta_1 x_{0,1} + \dots + u_0) - \hat{y}_0 $$
+                            </div>
+                            <p>Since the future error \( u_0 \) is independent of the sample used to estimate \( \hat{y}_0 \):</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}(\hat{e}_0) = \operatorname{Var}(u_0) + \operatorname{Var}(\hat{y}_0) = \sigma^2 + \operatorname{Var}(\hat{y}_0) $$
+                            </div>
+                            <p>Thus, the individual prediction interval is wider because it must account for the unobserved shock \( u_0 \).</p>
+                        </div>
                         <div id="derive-mean-pred" class="hidden-panel">
                             <p>To obtain the standard error for a mean prediction \( 	heta = E(y|X=c) \), we can rewrite the model:</p>
                             <div class="math-formula">
@@ -5554,7 +5569,14 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             </div>
                         </div>
 
-                        <h4 style="color: var(--sidebar-bg); margin-top: 15px;">D. Sample Issues</h4>
+                        <h4 style="color: var(--sidebar-bg); margin-top: 15px;">D. Multicollinearity & VIF</h4>
+                        <p>High correlation between independent variables. <strong>Does not cause bias</strong>, but inflates the variance (standard errors) of the coefficients.</p>
+                        <div class="math-formula">
+                            $$ \operatorname{Var}(\hat{\beta}_j) = \frac{\sigma^2}{\text{SST}_j(1 - R_j^2)} \quad \text{where } VIF_j = \frac{1}{1 - R_j^2} $$
+                        </div>
+                        <p>Rule of thumb: \( VIF > 10 \) suggests severe multicollinearity. Solutions: drop a variable (if redundant), combine them, or just ignore it if t-stats are still significant.</p>
+
+                        <h4 style="color: var(--sidebar-bg); margin-top: 15px;">E. Sample Issues</h4>
                         <ul style="margin-bottom: 0;">
                             <li><strong>Missing data:</strong> If random, just lose precision. If systematic, causes bias.</li>
                             <li><strong>Nonrandom samples:</strong> Selection based on \( x \) is okay. Selection based on \( y \) causes bias.</li>
