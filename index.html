@@ -4080,692 +4080,448 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                 <section id="section-2-4" class="page-section" style="display:none;">
                     <h1 class="page-title">2.4 HETEROSKEDASTICITY</h1>
 
-
-                    <!-- ── PART 1: CONSEQUENCES FOR OLS ── -->
-                    <!-- Section header card -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff;">
-                        <h3 style="color:#fff;"><i class="fas fa-exclamation-triangle" style="color:var(--primary-red);"></i> Part I — Consequences for OLS</h3>
-                        <p style="color:#ccc; margin-bottom:0;">What happens when the homoskedasticity assumption <strong style="color:#fff;">MLR.5</strong> is violated?</p>
-                    </div>
-
-                    <!-- MLR.5 Reminder -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-cube"></i> MLR.5 — Homoskedasticity Assumption</h3>
-                        <div class="alert-box assumption">
-                            <i class="fas fa-cube alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>MLR.5 Homoskedasticity</h4>
-                                <p>The error \( u \) has the same variance given any values of the independent variables:</p>
-                                <div class="math-formula" style="background:transparent; border:none; padding:10px 0;">
-                                    $$ \operatorname{Var}(u \mid x_1, \ldots, x_k) = \sigma^2 $$
+                    <!-- 1. Big Picture Card -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-eye"></i> The Big Picture</h3>
+                        <p>Heteroskedasticity occurs when the variance of the error term changes depending on the values of the independent variables.</p>
+                        
+                        <div style="display: flex; gap: 20px; margin-top: 15px;">
+                            <div style="flex: 1; background: var(--bg-color); padding: 15px; border-left: 4px solid #28a745; border-radius: 8px;">
+                                <strong style="color: #28a745;">Homoskedasticity (MLR.5)</strong>
+                                <div class="math-formula" style="background: transparent; border: none; padding: 5px 0;">
+                                    $$ \operatorname{Var}(u|X) = \sigma^2 $$
                                 </div>
-                                <p><strong>Violation of MLR.5 is called heteroskedasticity.</strong></p>
+                                <p style="font-size: 0.9em; margin: 0;">Variance is constant.</p>
+                            </div>
+                            <div style="flex: 1; background: var(--bg-color); padding: 15px; border-left: 4px solid var(--primary-red); border-radius: 8px;">
+                                <strong style="color: var(--primary-red);">Heteroskedasticity</strong>
+                                <div class="math-formula" style="background: transparent; border: none; padding: 5px 0;">
+                                    $$ \operatorname{Var}(u_i|X) = \sigma_i^2 $$
+                                </div>
+                                <p style="font-size: 0.9em; margin: 0;">Variance changes with \( i \).</p>
                             </div>
                         </div>
-                        <p style="margin-top:15px;">In matrix form, MLR.5 requires \( \operatorname{Var}(u \mid X) = \sigma^2 I \). Heteroskedasticity means the diagonal entries of the variance-covariance matrix are not all equal.</p>
+
+                        <p style="margin-top: 15px;"><strong>Main intuition:</strong> some observations are much noisier than others.</p>
+                        
+                        <div class="alert-box assumption">
+                            <i class="fas fa-exclamation-triangle alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Key Warning</h4>
+                                <p>Even with heteroskedasticity, the zero conditional mean assumption (MLR.4) can still hold. This means OLS coefficients can remain <strong>unbiased</strong>!</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Consequences -->
+                    <!-- 2. Visual / Intuition Card -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-chart-scatter"></i> Visual Intuition</h3>
+                        <p>Imagine plotting your data points around the regression line:</p>
+                        <ul style="margin-top: 10px;">
+                            <li><strong>Homoskedasticity:</strong> The points form a consistent, uniform cloud around the line (same spread).</li>
+                            <li><strong>Heteroskedasticity:</strong> The cloud forms a "fan shape" or a funnel, becoming wider (or narrower) as the value of \( x \) increases (changing dispersion).</li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. Consequences for OLS -->
                     <div class="concept-card highlight">
-                        <h3><i class="fas fa-list-ol"></i> Consequences of Heteroskedasticity</h3>
-
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:10px;">1. OLS remains unbiased and consistent (MLR.1–4 still hold)</h4>
-                        <ul style="margin-top:8px;">
-                            <li>Estimated coefficients \( \hat{\beta}_j \) remain unaffected.</li>
-                            <li>Coefficients of determination \( R^2 \) and \( \bar{R}^2 \) remain unaffected.</li>
+                        <h3><i class="fas fa-list-ol"></i> Consequences for OLS</h3>
+                        
+                        <h4 style="color: #28a745; font-size: 1.1rem; margin-top: 10px;"><i class="fas fa-check-circle"></i> A. What remains OK:</h4>
+                        <ul style="margin-top: 8px;">
+                            <li>Coefficients remain <strong>unbiased</strong> and <strong>consistent</strong> (provided MLR.1–4 hold).</li>
+                            <li>\( R^2 \) and Adjusted \( R^2 \) remain unchanged.</li>
                         </ul>
 
-                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:20px 0;">
+                        <hr style="border: 0; border-top: 1px dashed var(--primary-red); margin: 20px 0;">
 
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">2. True variance of the \( \hat{\beta}_{OLS} \) distribution increases</h4>
-                        <ul style="margin-top:8px;">
-                            <li>The heteroskedastic error term explains a larger proportion of fluctuations of the dependent variable.</li>
-                            <li>\( \Rightarrow \) OLS is no longer <strong>BLUE</strong>, and not even asymptotically efficient.</li>
-                            <li>\( \Rightarrow \) OLS is more likely to misestimate the true \( \beta \).</li>
+                        <h4 style="color: #ff9800; font-size: 1.1rem;"><i class="fas fa-exclamation-circle"></i> B. What becomes problematic:</h4>
+                        <ul style="margin-top: 8px;">
+                            <li>OLS is no longer <strong>BLUE</strong> (Best Linear Unbiased Estimator).</li>
+                            <li>It is no longer efficient because OLS treats all observations equally, even the extremely noisy ones.</li>
                         </ul>
 
-                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:20px 0;">
+                        <hr style="border: 0; border-top: 1px dashed var(--primary-red); margin: 20px 0;">
 
-                        <h4 style="color:var(--primary-red); font-size:1.1rem;">3. Estimators of \( \operatorname{Var}(\hat{\beta}_j) \) are biased — usually downward</h4>
-                        <ul style="margin-top:8px;">
-                            <li>This holds as long as there is a <strong>positive correlation</strong> between \( \sigma_i^2 \) and \( (x_{ij} - \bar{x}_j)^2 \).</li>
-                            <li>The increase in the true variance is 'masked' by OLS because OLS assumes a homoskedastic error.</li>
-                            <li>OLS thus attributes the impact of the heteroskedastic error to the independent variables.</li>
+                        <h4 style="color: var(--primary-red); font-size: 1.1rem;"><i class="fas fa-times-circle"></i> C. What becomes invalid:</h4>
+                        <ul style="margin-top: 8px;">
+                            <li>The usual standard errors are biased (often downward).</li>
+                            <li>Therefore, <em>t</em>-tests, confidence intervals, <em>F</em>-tests, and LM tests are all <strong>invalid</strong>.</li>
                         </ul>
 
-                        <div class="alert-box" style="margin-top:20px; border-color:var(--primary-red); background:#fff5f5;">
-                            <i class="fas fa-radiation-alt alert-icon" style="color:var(--primary-red);"></i>
+                        <div class="alert-box" style="margin-top: 20px;">
+                            <i class="fas fa-brain alert-icon"></i>
                             <div class="alert-content">
-                                <h4 style="color:var(--primary-red);">Critical Consequences for Inference</h4>
-                                <ul style="margin-top:5px;">
-                                    <li>Standard errors tend to be <strong>smaller</strong> under heteroskedasticity.</li>
-                                    <li>\( \Rightarrow \) <em>t</em>-statistics and confidence intervals are <strong>invalid</strong> even for large samples.</li>
-                                    <li>\( \Rightarrow \) <em>F</em>-statistics and LM statistics are also <strong>invalid</strong> — no longer asymptotically \( F \) and \( \chi^2 \) distributed.</li>
+                                <h4>Intuitive summary</h4>
+                                <p>OLS coefficients are still centered around the right value, but OLS becomes <strong>overconfident</strong> because it estimates the uncertainty incorrectly.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Variance Derivation Card -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-calculator"></i> The Math: Why Standard Errors Break</h3>
+                        
+                        <button class="action-btn" onclick="toggleDerivation('derive-var-beta')"><i class="fas fa-eye"></i> Show/Hide Derivation of Var(\( \hat{\beta}_1 \))</button>
+                        <div id="derive-var-beta" class="hidden-panel">
+                            <p>Start from the expression of the OLS estimator in simple regression:</p>
+                            <div class="math-formula">
+                                $$ \hat{\beta}_1 = \beta_1 + \frac{\displaystyle\sum u_i(x_i - \bar{x})}{\displaystyle\sum (x_i - \bar{x})^2} $$
+                            </div>
+                            <p>Take the variance conditional on \( X \):</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}(\hat{\beta}_1|X) = \operatorname{Var}\left( \frac{\displaystyle\sum u_i(x_i - \bar{x})}{\text{SST}_x} \right) $$
+                            </div>
+                            <p>Since \( \text{SST}_x \) is constant given \( X \):</p>
+                            <div class="math-formula">
+                                $$ = \frac{1}{\text{SST}_x^2} \operatorname{Var}\left( \displaystyle\sum u_i(x_i - \bar{x}) \right) $$
+                            </div>
+                            <p>Assuming no serial correlation, the variance of the sum is the sum of the variances:</p>
+                            <div class="math-formula">
+                                $$ = \frac{1}{\text{SST}_x^2} \displaystyle\sum \operatorname{Var}(u_i|X) (x_i - \bar{x})^2 $$
+                            </div>
+                            <p>Under heteroskedasticity, \( \operatorname{Var}(u_i|X) = \sigma_i^2 \):</p>
+                            <div class="math-formula highlight-formula">
+                                $$ \operatorname{Var}(\hat{\beta}_1) = \frac{\displaystyle\sum \sigma_i^2 (x_i - \bar{x})^2}{\text{SST}_x^2} $$
+                            </div>
+                            
+                            <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:20px;">Homoskedastic reduction</h4>
+                            <p>If \( \sigma_i^2 = \sigma^2 \) (constant), we can pull it out of the sum:</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}(\hat{\beta}_1) = \frac{\sigma^2 \displaystyle\sum (x_i - \bar{x})^2}{\text{SST}_x^2} = \frac{\sigma^2 \text{SST}_x}{\text{SST}_x^2} = \frac{\sigma^2}{\text{SST}_x} $$
+                            </div>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top: 15px;">
+                            <i class="fas fa-lightbulb alert-icon"></i>
+                            <div class="alert-content">
+                                <h4>Interpretation of the True Variance</h4>
+                                <p>Under heteroskedasticity, observations that are far from \( \bar{x} \) AND have a large error variance (\( \sigma_i^2 \)) strongly increase the uncertainty of our estimate.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. White / Robust Standard Errors -->
+                    <div class="concept-card highlight">
+                        <h3><i class="fas fa-shield-alt"></i> White / Robust Standard Errors</h3>
+                        <p><strong>The Problem:</strong> Usual standard errors rely on the false assumption that \( \sigma^2 \) is constant.</p>
+                        <p><strong>The Solution:</strong> Halbert White proposed to replace the unknown \( \sigma_i^2 \) with the squared residual \( \hat{u}_i^2 \) for each observation.</p>
+
+                        <div class="math-formula highlight-formula">
+                            $$ \widehat{\operatorname{Var}}(\hat{\beta}_1) = \frac{\displaystyle\sum \hat{u}_i^2 (x_i - \bar{x})^2}{\text{SST}_x^2} $$
+                        </div>
+
+                        <div style="background:var(--bg-color); padding: 15px; border-radius:8px; border-left: 4px solid var(--sidebar-bg); margin: 15px 0;">
+                            <p style="margin-bottom: 5px;"><strong>Intuition:</strong></p>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>\( \hat{u}_i^2 \) = how noisy observation \( i \) actually is.</li>
+                                <li>\( (x_i - \bar{x})^2 \) = how influential observation \( i \) is for the slope.</li>
+                            </ul>
+                        </div>
+
+                        <div style="display: flex; gap: 20px; margin-top: 20px;">
+                            <div style="flex: 1;">
+                                <h4 style="color:var(--sidebar-bg); font-size:1.05rem;">What White SE DO NOT change:</h4>
+                                <ul>
+                                    <li>Estimated coefficients</li>
+                                    <li>Fitted values</li>
+                                    <li>\( R^2 \)</li>
+                                </ul>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="color:var(--sidebar-bg); font-size:1.05rem;">What White SE CHANGE:</h4>
+                                <ul>
+                                    <li>Standard Errors</li>
+                                    <li><em>t</em>-statistics &amp; <em>p</em>-values</li>
+                                    <li>Confidence intervals</li>
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="alert-box assumption" style="margin-top:15px;">
-                            <i class="fas fa-lightbulb alert-icon"></i>
+                        <p style="margin-top: 15px; font-style: italic; color: #666;">Note: White standard errors are only valid asymptotically (in large samples). A common rule of thumb is \( n - k - 1 \geq 120 \).</p>
+                    </div>
+
+                    <!-- 6. Robust LM Test -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-vial"></i> Robust LM Test</h3>
+                        <p><strong>Why do we need this?</strong> The usual F and LM tests are invalid under heteroskedasticity because they rely on the wrong standard errors. The robust LM test tests exclusion restrictions while allowing for heteroskedasticity.</p>
+
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">Procedure</h4>
+                        <ol style="margin-left:20px; line-height:1.6;">
+                            <li>Obtain residuals \( \tilde{u} \) from the <strong>restricted model</strong>.</li>
+                            <li>Regress each of the \( q \) <strong>excluded</strong> variables on all included variables. Save the residuals \( \tilde{r}_1, \ldots, \tilde{r}_q \).</li>
+                            <li>Create products: \( \tilde{u}\tilde{r}_1, \ldots, \tilde{u}\tilde{r}_q \).</li>
+                            <li>Run regression of 1 on these products without an intercept. Save \( \text{SSR}_1 \).</li>
+                            <li>Calculate test statistic: \( \text{Robust LM} = n - \text{SSR}_1 \).</li>
+                        </ol>
+
+                        <div class="alert-box assumption" style="margin-top: 15px;">
+                            <i class="fas fa-check-circle alert-icon"></i>
                             <div class="alert-content">
-                                <h4>Good News</h4>
-                                <p>Fortunately, OLS standard errors can be <strong>modified</strong> to be asymptotically valid under MLR.1–4, i.e., without MLR.5.</p>
+                                <h4>Interpretation</h4>
+                                <p>If the Robust LM statistic is large compared to the \( \chi^2_q \) critical value, we <strong>reject the null hypothesis</strong> that the excluded variables have zero coefficients.</p>
                             </div>
                         </div>
                     </div>
 
-
-                    <!-- ── PART 2: WHITE STANDARD ERRORS ── -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff; margin-top:40px;">
-                        <h3 style="color:#fff;"><i class="fas fa-shield-alt" style="color:var(--primary-red);"></i> Part II — White Standard Errors</h3>
-                        <p style="color:#ccc; margin-bottom:0;">Heteroskedasticity-robust inference without assuming MLR.5.</p>
-                    </div>
-
-                    <!-- White SE definition -->
+                    <!-- 7. Testing for Heteroskedasticity -->
                     <div class="concept-card highlight">
-                        <h3><i class="fas fa-user-graduate"></i> Halbert White's Solution (1980s)</h3>
-                        <p>In the 1980s, <strong>Halbert White</strong> (building on ideas by Eicker and Huber from the 1960s) proposed a valid estimator of the OLS variance <em>without</em> assuming MLR.5.</p>
-                        <p style="margin-top:10px;">This leads to the <strong>heteroskedasticity-robust standard error</strong> for \( \hat{\beta}_j \), also called:</p>
-                        <ul style="margin-top:8px;">
-                            <li>White standard errors,</li>
-                            <li>White-Huber-Eicker standard errors,</li>
-                            <li>or simply <em>robust standard errors</em>.</li>
-                        </ul>
-                        <div class="alert-box assumption" style="margin-top:20px;">
-                            <i class="fas fa-info-circle alert-icon"></i>
+                        <h3><i class="fas fa-search"></i> Testing for Heteroskedasticity</h3>
+                        <p>Before blindly applying corrections, we can formally test if the variance is changing.</p>
+
+                        <div class="alert-box">
+                            <i class="fas fa-question-circle alert-icon"></i>
                             <div class="alert-content">
-                                <h4>In Empirical Practice</h4>
-                                <p>Robust standard errors are <strong>usually larger</strong> than normal OLS standard errors. They are provided automatically by most econometric packages.</p>
+                                <h4>The Core Intuition</h4>
+                                <p>Both the Breusch-Pagan and White tests ask the exact same question: <strong>Can the regressors explain the size of the residuals?</strong></p>
+                                <p style="margin-top: 10px;"><em>Why squared residuals?</em> Residuals can be positive or negative, but variance is about magnitude/spread. So, we use \( \hat{u}^2 \) as a proxy for the unobserved error variance.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Simple Regression Intuition -->
+                    <!-- 8. Breusch-Pagan Test -->
                     <div class="concept-card">
-                        <h3><i class="fas fa-search-plus"></i> Simple Regression Intuition</h3>
-                        <p>Consider a simple regression population model:</p>
-                        <div class="math-formula">
-                            $$ y_i = \beta_0 + \beta_1 x_i + u_i $$
-                        </div>
-                        <p>Assume MLR.1 through MLR.4 hold, but \( \operatorname{Var}(u_i \mid x_i) = \sigma_i^2 \), i.e., the variance of \( u_i \) depends on \( x_i \).</p>
+                        <h3><i class="fas fa-microscope"></i> Breusch-Pagan Test</h3>
+                        <p>The Breusch-Pagan test assumes heteroskedasticity is a <strong>linear</strong> function of the regressors.</p>
                         
-                        <p style="margin-top:15px;">Using the rewritten OLS estimator:</p>
-                        <div class="math-formula">
-                            $$ \hat{\beta}_1 = \beta_1 + \frac{\displaystyle\sum_{i=1}^{n} u_i(x_i - \bar{x})}{\displaystyle\sum_{i=1}^{n}(x_i - \bar{x})^2} $$
-                        </div>
-                        
-                        <p style="margin-top:15px;">Under MLR.1 through MLR.4, we have the <strong>true variance</strong>:</p>
-                        <div class="math-formula highlight-formula">
-                            $$ \operatorname{Var}(\hat{\beta}_1) = \frac{\displaystyle\sum_{i=1}^{n} \sigma_i^2 (x_i - \bar{x})^2}{\left[\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2\right]^2} = \frac{\displaystyle\sum_{i=1}^{n} \sigma_i^2 (x_i - \bar{x})^2}{\text{SST}_x^2} $$
-                        </div>
-
-                        <button class="action-btn" onclick="toggleDerivation('derive-homo-reduce')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide: Reduction under MLR.5</button>
-                        <div id="derive-homo-reduce" class="hidden-panel">
-                            <p>If homoskedasticity (MLR.5) holds, \( \sigma_i^2 = \sigma^2 \) for all \( i \), and this would reduce to the usual OLS variance:</p>
-                            <div class="math-formula">
-                                $$ \operatorname{Var}(\hat{\beta}_1) = \frac{\sigma^2 \displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2}{\left[\displaystyle\sum_{i=1}^{n} (x_i - \bar{x})^2\right]^2} = \frac{\sigma^2}{\text{SST}_x} $$
-                            </div>
-                        </div>
-
-                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
-
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">White Standard Errors Estimator</h4>
-                        <p>The intuition behind White standard errors is well understandable from their simple regression form, which replaces the unknown \( \sigma_i^2 \) with the squared residuals \( \hat{u}_i^2 \):</p>
-                        <div class="math-formula highlight-formula" style="border-left-color:var(--sidebar-bg); background:var(--bg-color);">
-                            $$ \widehat{\operatorname{Var}}(\hat{\beta}_1) = \frac{\displaystyle\sum_{i=1}^{n} \hat{u}_i^2 (x_i - \bar{x})^2}{\text{SST}_x^2} $$
-                        </div>
-                        
-                        <div class="alert-box assumption" style="margin-top:20px;">
-                            <i class="fas fa-lightbulb alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Key Intuition</h4>
-                                <p>As we know, little \( x \) sample variation (or multicollinearity in multiple regression) can cause large standard errors. For large samples, the White standard errors are <strong>asymptotically valid for any form of heteroskedasticity</strong>.</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Properties -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-check-circle"></i> Properties of White Standard Errors</h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Property</th>
-                                        <th>Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Asymptotic validity</strong></td>
-                                        <td>Valid for <em>any form</em> of heteroskedasticity, in large samples.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Sample size requirement</strong></td>
-                                        <td>Requires at least 120 degrees of freedom (\( n - k - 1 \geq 120 \)).</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>No bias/consistency guarantee</strong></td>
-                                        <td>Only asymptotically valid — no claim on bias, consistency, or efficiency.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>t / F statistics</strong></td>
-                                        <td>t-statistics and CIs constructed in the same way as usual OLS, justified without MLR.5–6.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="alert-box" style="margin-top:20px;">
-                            <i class="fas fa-bolt alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Why Bother with Usual OLS Standard Errors?</h4>
-                                <p>If MLR.1–6 all hold, OLS <em>t</em>-statistics have an <strong>exact</strong> \( t \)-distribution regardless of sample size. White SEs are only valid asymptotically. So usual SEs are preferred in small samples under full CLM assumptions.</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- ── PART 3: ROBUST LM TEST ── -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff; margin-top:40px;">
-                        <h3 style="color:#fff;"><i class="fas fa-vial" style="color:var(--primary-red);"></i> Part III — Heteroskedasticity-Robust LM Test</h3>
-                        <p style="color:#ccc; margin-bottom:0;">A robust alternative to the F-test for exclusion restrictions.</p>
-                    </div>
-
-                    <div class="concept-card">
-                        <h3><i class="fas fa-tasks"></i> Robust LM Test — Procedure</h3>
-                        <p>The robust LM test is more convenient than the robust F-test (which is complicated and not always provided by econometric packages). It tests exclusion restrictions under heteroskedasticity.</p>
-
-                        <div style="margin-top:20px; counter-reset: step-counter;">
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">1</div>
-                                <div>Obtain residuals \( \tilde{u} \) from the <strong>restricted model</strong>.</div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">2</div>
-                                <div>Regress each of the \( q \) <strong>excluded</strong> independent variables on all included independent variables. Save the \( q \) sets of residuals \( \tilde{r}_1, \tilde{r}_2, \ldots, \tilde{r}_q \).</div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">3</div>
-                                <div>Create \( q \) new variables as the products \( \tilde{u} \tilde{r}_j \), for \( j = 1, \ldots, q \).</div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">4</div>
-                                <div>Run the regression of <strong>1</strong> on \( \tilde{u}\tilde{r}_1, \ldots, \tilde{u}\tilde{r}_q \) <em>without an intercept</em>. Save \( \text{SSR}_1 \).</div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">5</div>
-                                <div>Compute the test statistic:</div>
-                            </div>
-                        </div>
-
-                        <div class="math-formula highlight-formula">
-                            $$ \text{Robust LM} = n - \text{SSR}_1 $$
-                        </div>
-
-                        <div class="alert-box assumption" style="margin-top:15px;">
-                            <i class="fas fa-chart-bar alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Distribution under \( H_0 \)</h4>
-                                <p>Under the null hypothesis (all \( q \) excluded variables have zero coefficients), the robust LM statistic is approximately \( \chi^2_q \) distributed.</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- ── PART 4: TESTING FOR HETEROSKEDASTICITY ── -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff; margin-top:40px;">
-                        <h3 style="color:#fff;"><i class="fas fa-microscope" style="color:var(--primary-red);"></i> Part IV — Testing for Heteroskedasticity</h3>
-                        <p style="color:#ccc; margin-bottom:0;">Before applying corrections, verify that homoskedasticity is actually violated.</p>
-                    </div>
-
-                    <div class="concept-card">
-                        <h3><i class="fas fa-search"></i> Preliminary Remarks</h3>
-                        <p>Before applying White standard errors or switching to GLS, we should <strong>check</strong> whether the homoskedasticity assumption is violated. The two main tests are:</p>
-                        <ul style="margin-top:10px;">
-                            <li><strong>Breusch-Pagan test</strong></li>
-                            <li><strong>White test</strong></li>
-                        </ul>
-                        <p style="margin-top:10px;">Both tests assume MLR.1–4 hold. If MLR.4 is also violated, the tests can serve as a general indicator of <em>functional misspecification</em>.</p>
-                    </div>
-
-                    <!-- Breusch-Pagan Test -->
-                    <div class="concept-card highlight">
-                        <h3><i class="fas fa-vial"></i> Breusch-Pagan Test</h3>
-                        <p>Built on the assumption of <strong>linear dependence</strong> of the error variance on the independent variables.</p>
-
-                        <div style="margin-top:20px;">
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--sidebar-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">1</div>
-                                <div>Estimate the OLS regression and keep the residuals \( \hat{u} \).</div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--sidebar-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">2</div>
-                                <div>
-                                    Run the auxiliary regression:
-                                    <div class="math-formula" style="margin-top:10px;">
-                                        $$ \hat{u}^2 = \delta_0 + \delta_1 x_1 + \cdots + \delta_k x_k + v $$
-                                    </div>
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">Procedure</h4>
+                        <ol style="margin-left:20px; line-height:1.6;">
+                            <li>Estimate OLS and save the residuals \( \hat{u} \).</li>
+                            <li>Regress the squared residuals on all independent variables:
+                                <div class="math-formula">
+                                    $$ \hat{u}^2 = \delta_0 + \delta_1 x_1 + \cdots + \delta_k x_k + v $$
                                 </div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--sidebar-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">3</div>
-                                <div>
-                                    Apply the <em>F</em>-test or LM test with:
-                                    <div class="math-formula" style="margin-top:10px;">
-                                        $$ H_0: \delta_1 = 0, \ldots, \delta_k = 0 $$
-                                    </div>
-                                    (Both statistics have asymptotic justification even though \( \hat{u}^2 \) cannot be normally distributed.)
-                                </div>
-                            </div>
-                        </div>
+                            </li>
+                            <li>Test the joint significance: \( H_0: \delta_1 = \cdots = \delta_k = 0 \) using F or LM test.</li>
+                        </ol>
 
-                        <div class="alert-box assumption" style="margin-top:15px;">
-                            <i class="fas fa-key alert-icon"></i>
+                        <div class="alert-box assumption" style="margin-top: 15px;">
+                            <i class="fas fa-balance-scale alert-icon"></i>
                             <div class="alert-content">
-                                <h4>Key Logic</h4>
-                                <p>If the variance of the error depends linearly on the regressors, squared residuals should be significantly related to them. Rejecting \( H_0 \) signals heteroskedasticity.</p>
+                                <h4>Interpretation</h4>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li><strong>Fail to reject \( H_0 \)</strong> → No evidence of heteroskedasticity.</li>
+                                    <li><strong>Reject \( H_0 \)</strong> → Residual variance depends on \( X \) → Heteroskedasticity!</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
-                    <!-- White Test -->
+                    <!-- 9. White Test -->
                     <div class="concept-card highlight">
                         <h3><i class="fas fa-expand-arrows-alt"></i> White Test</h3>
-                        <p>Assumes a <strong>very general form</strong> of heteroskedasticity: error variance may depend on independent variables, their squares, and pairwise products.</p>
-
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:15px;">Full form (2 variables)</h4>
-                        <div class="math-formula">
+                        <p>The White test is more general because the variance may depend not only on \( x \), but also on \( x^2 \) and interactions between regressors.</p>
+                        
+                        <p><strong>Formula for two regressors:</strong></p>
+                        <div class="math-formula highlight-formula">
                             $$ \hat{u}^2 = \delta_0 + \delta_1 x_1 + \delta_2 x_2 + \delta_3 x_1^2 + \delta_4 x_2^2 + \delta_5 x_1 x_2 + v $$
                         </div>
 
-                        <div class="alert-box" style="margin-top:15px;">
-                            <i class="fas fa-info-circle alert-icon"></i>
-                            <div class="alert-content">
-                                <p>The number of parameters grows rapidly with \( k \). This leads to an <strong>adjusted version</strong> using fitted values:</p>
-                            </div>
-                        </div>
-
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem; margin-top:15px;">Adjusted form (using fitted values \( \hat{y} \))</h4>
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">The Adjusted Version</h4>
+                        <p>Because the original White test adds squares and cross-products for <em>every</em> variable, it can lose many degrees of freedom when \( k \) is large. To fix this, we use the fitted values \( \hat{y} \) instead:</p>
                         <div class="math-formula">
                             $$ \hat{u}^2 = \delta_0 + \delta_1 \hat{y} + \delta_2 \hat{y}^2 + v $$
                         </div>
-                        <p>We then apply the F or LM test with \( H_0: \delta_1 = 0, \delta_2 = 0 \).</p>
+                        <p>Test \( H_0: \delta_1 = 0, \delta_2 = 0 \).</p>
+                    </div>
 
-                        <div class="alert-box assumption" style="margin-top:15px;">
-                            <i class="fas fa-lightbulb alert-icon"></i>
+                    <!-- 10. WLS -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-weight"></i> Weighted Least Squares (WLS)</h3>
+                        <p><strong>Intuition:</strong> OLS treats every observation equally. WLS gives <em>less</em> weight to observations with high variance (the noisy ones).</p>
+                        
+                        <p style="margin-top: 15px;">Assume the heteroskedasticity has a <strong>known form</strong>:</p>
+                        <div class="math-formula">
+                            $$ \operatorname{Var}(u|X) = \sigma^2 h_i $$
+                        </div>
+
+                        <p><strong>The Transformation:</strong> We divide the entire equation by \( \sqrt{h_i} \).</p>
+
+                        <button class="action-btn" onclick="toggleDerivation('derive-wls-homo')"><i class="fas fa-eye"></i> Show/Hide Derivation of Transformed Variance</button>
+                        <div id="derive-wls-homo" class="hidden-panel">
+                            <p>Take the variance of the new transformed error term:</p>
+                            <div class="math-formula">
+                                $$ \operatorname{Var}\left(\frac{u_i}{\sqrt{h_i}}\right) = \frac{1}{(\sqrt{h_i})^2} \operatorname{Var}(u_i) $$
+                            </div>
+                            <div class="math-formula">
+                                $$ = \frac{1}{h_i} (\sigma^2 h_i) = \sigma^2 $$
+                            </div>
+                        </div>
+
+                        <div class="alert-box assumption" style="margin-top: 15px;">
+                            <i class="fas fa-magic alert-icon"></i>
                             <div class="alert-content">
-                                <h4>Relationship to Breusch-Pagan</h4>
-                                <p>The <strong>B-P test is a special case</strong> of the White test: the White test is more general because it also includes squares and cross-products of the regressors.</p>
+                                <h4>Conclusion</h4>
+                                <p>The transformed model is homoskedastic! Therefore, running standard OLS on the transformed variables works perfectly.</p>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top: 15px; border-color: var(--sidebar-bg); background: #f0f4fa;">
+                            <i class="fas fa-info-circle alert-icon" style="color: var(--sidebar-bg);"></i>
+                            <div class="alert-content">
+                                <h4 style="color: var(--sidebar-bg);">Important Note on Weights</h4>
+                                <p>The weights used for the transformed variables are \( 1/\sqrt{h_i} \). This means that observations with a larger variance (\( h_i \)) effectively receive <strong>less weight</strong> in the estimation.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- B-P vs White comparison -->
-                    <div class="grid-card">
-                        <h3><i class="fas fa-balance-scale"></i> Breusch-Pagan vs White Test</h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Feature</th>
-                                        <th>Breusch-Pagan</th>
-                                        <th>White</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Auxiliary regressors</strong></td>
-                                        <td>\( x_1, \ldots, x_k \)</td>
-                                        <td>\( x_j, x_j^2, x_j x_l \) or \( \hat{y}, \hat{y}^2 \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Assumed heteroskedasticity form</strong></td>
-                                        <td>Linear in \( X \)</td>
-                                        <td>Very general</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Parameters</strong></td>
-                                        <td>\( k \)</td>
-                                        <td>Up to \( k(k+3)/2 \) or just 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Degrees of freedom lost</strong></td>
-                                        <td>Lower</td>
-                                        <td>Higher (large \( k \))</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-
-                    <!-- ── PART 5: WLS ── -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff; margin-top:40px;">
-                        <h3 style="color:#fff;"><i class="fas fa-weight" style="color:var(--primary-red);"></i> Part V — Weighted Least Squares (Known Form)</h3>
-                        <p style="color:#ccc; margin-bottom:0;">When the heteroskedasticity form is <strong>known</strong>, WLS is BLUE.</p>
-                    </div>
-
-                    <!-- Why WLS -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-question-circle"></i> Why Another Method?</h3>
-                        <p>WLS is historically older than White standard errors. If we have a <strong>correctly specified</strong> form of heteroskedasticity, WLS:</p>
-                        <ul style="margin-top:10px;">
-                            <li>is <strong>unbiased and more efficient</strong> than OLS,</li>
-                            <li>leads to <strong>exact</strong> \( t \)- and \( F \)-statistic distributions under MLR.1–4 (it is in fact <strong>BLUE</strong>),</li>
-                            <li>outperforms White SEs which are only 'asymptotically valid'.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Model Setup -->
+                    <!-- 11. LPM Revisited -->
                     <div class="concept-card highlight">
-                        <h3><i class="fas fa-cogs"></i> WLS — Model Setup</h3>
-                        <p>Consider the multiple regression model:</p>
+                        <h3><i class="fas fa-redo"></i> LPM Revisited</h3>
+                        <p>In the Linear Probability Model (LPM), \( y \) is binary (0 or 1). Because of this, the variance is automatically:</p>
                         <div class="math-formula">
-                            $$ y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_k x_{ik} + u_i $$
+                            $$ \operatorname{Var}(y|X) = p(X)(1 - p(X)) $$
                         </div>
-                        <p style="margin-top:10px;">Assume:</p>
+                        <p>This creates heteroskedasticity automatically! To apply WLS, we use the estimated probabilities:</p>
                         <div class="math-formula">
-                            $$ \operatorname{Var}(u \mid X) = \sigma^2 h(X) $$
-                        </div>
-                        <p>where \( h(X) \equiv h_i > 0 \) is a known function of the independent variables determining the heteroskedasticity form.</p>
-
-                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
-
-                        <h4 style="color:var(--sidebar-bg); font-size:1.1rem;">Transformed (Weighted) Model</h4>
-                        <p>Dividing the original model by \( \sqrt{h_i} \):</p>
-                        <div class="math-formula">
-                            $$ \frac{y_i}{\sqrt{h_i}} = \frac{\beta_0}{\sqrt{h_i}} + \beta_1 \frac{x_{i1}}{\sqrt{h_i}} + \cdots + \beta_k \frac{x_{ik}}{\sqrt{h_i}} + \frac{u_i}{\sqrt{h_i}} $$
-                        </div>
-                        <p>Written compactly:</p>
-                        <div class="math-formula highlight-formula">
-                            $$ y_i^* = \beta_0 x_{i0}^* + \beta_1 x_{i1}^* + \cdots + \beta_k x_{ik}^* + u_i^* $$
-                        </div>
-                        <p>where \( x_{i0}^* = 1/\sqrt{h_i} \) — note there is <strong>no intercept</strong> in the transformed model.</p>
-
-                        <div class="alert-box assumption" style="margin-top:15px;">
-                            <i class="fas fa-check-circle alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Why the Transformation Works</h4>
-                                <p>The transformed error \( u_i^* = u_i/\sqrt{h_i} \) satisfies MLR.5:</p>
-                                <div class="math-formula" style="background:transparent; border:none; padding:5px 0;">
-                                    $$ \operatorname{Var}\!\left(\frac{u_i}{\sqrt{h_i}}\right) = \frac{\operatorname{Var}(u_i)}{h_i} = \frac{\sigma^2 h_i}{h_i} = \sigma^2 $$
-                                </div>
-                                <p>So the new model is homoskedastic and all OLS 'tools' (\( t \), \( F \) statistics, CIs) work as usual.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- WLS interpretation -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-balance-scale"></i> WLS — Key Interpretation</h3>
-                        <p>We run OLS on the <strong>weighted variables</strong> \( y_i^*, x_{ij}^* \), giving less weight to observations with higher error variance \( (h_i \text{ large}) \).</p>
-                        <p style="margin-top:10px;">Hence the name <strong>Weighted Least Squares</strong> — WLS is a member of the broader <strong>Generalized Least Squares (GLS)</strong> family.</p>
-                        <div class="alert-box" style="margin-top:15px;">
-                            <i class="fas fa-bolt alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Exam Reflex</h4>
-                                <p>Estimates obtained by WLS are interpreted with respect to the <strong>original</strong> regression model \( y_i = \beta_0 + \beta_1 x_{i1} + \cdots \), not the transformed one.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- LPM revisited -->
-                    <div class="concept-card" style="background:linear-gradient(135deg, #e0e8f5 0%, #f0f4fa 100%); border-left: 4px solid #4285f4;">
-                        <h3 style="color:#1a56db;"><i class="fas fa-redo" style="color:#4285f4;"></i> LPM Revisited — A Known Heteroskedasticity Form</h3>
-                        <p>The LPM is a natural example of a model with a <em>known</em> heteroskedasticity form:</p>
-                        <div class="math-formula" style="background:white;">
-                            $$ \operatorname{Var}(u \mid X) = p(X)\left(1 - p(X)\right) $$
-                        </div>
-                        <p>where \( p(X) = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k \). To apply WLS, we estimate:</p>
-                        <div class="math-formula" style="background:white;">
                             $$ \hat{h}_i = \hat{y}_i(1 - \hat{y}_i) $$
                         </div>
 
-                        <button class="action-btn" onclick="toggleDerivation('lpm-wls-catch')" style="margin-top:15px;"><i class="fas fa-eye"></i> Show/Hide: The Catch &amp; Solutions</button>
-                        <div id="lpm-wls-catch" class="hidden-panel">
-                            <p><strong>The catch:</strong> some predicted probabilities \( \hat{y}_i \) may fall outside \( (0,1) \), making \( \hat{h}_i \leq 0 \). Solutions:</p>
-                            <ul>
-                                <li>Drop observations where \( \hat{h}_i \leq 0 \).</li>
-                                <li>Use a non-linear model (Logit/Probit) instead.</li>
-                            </ul>
-                            <p style="margin-top:10px;"><strong>Even after WLS correction:</strong> robust standard errors are recommended because (1) weights are based on estimated probabilities (introducing additional sampling uncertainty), and (2) there may still be other forms of heteroskedasticity due to model misspecification.</p>
-                        </div>
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">The Catch</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>\( \hat{y}_i \) may fall outside the [0,1] range, creating negative variances.</li>
+                            <li>Because the weights are estimated, robust standard errors are still recommended even after WLS.</li>
+                            <li>Often, switching to a Logit/Probit model is a better solution.</li>
+                        </ul>
                     </div>
 
-
-                    <!-- ── PART 6: FGLS ── -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff; margin-top:40px;">
-                        <h3 style="color:#fff;"><i class="fas fa-project-diagram" style="color:var(--primary-red);"></i> Part VI — Feasible GLS (Unknown Form)</h3>
-                        <p style="color:#ccc; margin-bottom:0;">When the heteroskedasticity form must be estimated from the data.</p>
-                    </div>
-
-                    <!-- FGLS intro -->
+                    <!-- 12. FGLS -->
                     <div class="concept-card">
-                        <h3><i class="fas fa-random"></i> Feasible GLS — Motivation</h3>
-                        <p>Most of the time, the form of heteroskedasticity is <strong>unknown</strong> and must be estimated. We therefore need to model \( h_i \) first to obtain \( \hat{h}_i \).</p>
-                        <p style="margin-top:10px;">This leads to the <strong>Feasible GLS (FGLS)</strong> estimator, sometimes called Estimated GLS (EGLS).</p>
-                    </div>
+                        <h3><i class="fas fa-project-diagram"></i> Feasible GLS (FGLS)</h3>
+                        <p>WLS assumes that \( h_i \) is perfectly known. In reality, it rarely is. <strong>FGLS tries to learn which observations are noisy from the data itself by estimating \( h_i \) first.</strong></p>
 
-                    <!-- FGLS procedure -->
-                    <div class="concept-card highlight">
-                        <h3><i class="fas fa-list-ol"></i> FGLS — Estimation Procedure</h3>
-                        <p>Assume the conditional variance has the exponential form:</p>
-                        <div class="math-formula">
-                            $$ \operatorname{Var}(u \mid X) = \sigma^2 h(X) = \sigma^2 \exp(\delta_0 + \delta_1 x_1 + \cdots + \delta_k x_k) $$
-                        </div>
-                        <p style="margin-top:10px;">The exponential form is used to guarantee \( h(X) > 0 \).</p>
+                        <h4 style="color:var(--sidebar-bg); font-size: 1.15rem; margin-top:20px;">Procedure</h4>
+                        <ol style="margin-left:20px; line-height:1.6;">
+                            <li>Run OLS and obtain residuals \( \hat{u}_i \).</li>
+                            <li>Estimate \( \log(\hat{u}_i^2) \) on the \( x \) variables.</li>
+                            <li>Save the fitted values.</li>
+                            <li>Exponentiate the fitted values to obtain \( \hat{h}_i \).</li>
+                            <li>Run WLS using weights \( 1/\sqrt{\hat{h}_i} \).</li>
+                        </ol>
 
-                        <hr style="border:0; border-top:1px dashed var(--primary-red); margin:25px 0;">
-
-                        <div style="margin-top:10px;">
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">1</div>
-                                <div>Estimate the original model by OLS and save the residuals \( \hat{u} \).</div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">2</div>
-                                <div>
-                                    Run the auxiliary log regression:
-                                    <div class="math-formula" style="margin-top:10px;">
-                                        $$ \log(\hat{u}^2) = a_0 + \delta_1 x_1 + \cdots + \delta_k x_k + e $$
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">3</div>
-                                <div>
-                                    Save the fitted values \( \widehat{\log(\hat{u}^2)} \) and transform:
-                                    <div class="math-formula" style="margin-top:10px;">
-                                        $$ \hat{h}_i = \exp\!\left(\widehat{\log(\hat{u}^2_i)}\right) $$
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="display:flex; gap:15px; margin-bottom:18px; align-items:flex-start;">
-                                <div style="min-width:36px; height:36px; background:var(--primary-red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">4</div>
-                                <div>Apply WLS using weights \( 1/\sqrt{\hat{h}_i} \).</div>
-                            </div>
-                        </div>
-
-                        <div class="alert-box" style="margin-top:10px;">
-                            <i class="fas fa-info-circle alert-icon"></i>
+                        <div class="alert-box" style="margin-top: 15px; border-color: var(--primary-red); background: #fff5f5;">
+                            <i class="fas fa-exclamation-triangle alert-icon" style="color: var(--primary-red);"></i>
                             <div class="alert-content">
-                                <p>The functional form inside \( \exp(\cdot) \) can be freely adjusted — just as in the White test.</p>
+                                <h4 style="color: var(--primary-red);">Warning</h4>
+                                <p>FGLS is biased in finite samples but consistent and asymptotically efficient. It strictly requires <strong>large samples</strong> to work properly.</p>
                             </div>
                         </div>
                     </div>
 
-
-                    <!-- WLS vs FGLS -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-not-equal"></i> WLS vs FGLS — Properties Comparison</h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Estimator</th>
-                                        <th>When \( h_i \) correct</th>
-                                        <th>When \( h_i \) wrong</th>
-                                        <th>Sample requirement</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>WLS</strong> (known \( h_i \))</td>
-                                        <td>BLUE ✅</td>
-                                        <td>Consistent, but SEs biased ⚠️</td>
-                                        <td>Works for small samples</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>FGLS</strong> (estimated \( \hat{h}_i \))</td>
-                                        <td>Biased but consistent &amp; asymptotically efficient ✅</td>
-                                        <td>—</td>
-                                        <td>Large samples only ⚠️</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="alert-box assumption" style="margin-top:20px;">
-                            <i class="fas fa-lightbulb alert-icon"></i>
-                            <div class="alert-content">
-                                <h4>Practical Takeaway</h4>
-                                <ul style="margin-top:5px;">
-                                    <li>If \( h_i \) is <strong>wrong</strong> in WLS: combine WLS with robust standard errors.</li>
-                                    <li>FGLS is an attractive alternative to OLS only for <strong>large samples</strong> (you need large \( n \) for \( \hat{h}_i \) estimation anyway).</li>
-                                    <li>You can combine FGLS with robust standard errors for added protection.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- ── PART 7: PRACTICAL GUIDE ── -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); border-left:5px solid var(--primary-red); color:#fff; margin-top:40px;">
-                        <h3 style="color:#fff;"><i class="fas fa-map" style="color:var(--primary-red);"></i> Part VII — Practical Decision Guide</h3>
-                        <p style="color:#ccc; margin-bottom:0;">A short guide for how to approach heteroskedasticity in practice.</p>
-                    </div>
-
+                    <!-- 13. WLS vs FGLS Comparison -->
                     <div class="concept-card highlight">
-                        <h3><i class="fas fa-route"></i> Step-by-Step Guide</h3>
-
-                        <div style="display:flex; gap:15px; margin-bottom:20px; align-items:flex-start;">
-                            <div style="min-width:36px; height:36px; background:var(--sidebar-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">1</div>
-                            <div><strong>Check data visually</strong> — is there a clear pattern? Large disparity in residuals?</div>
-                        </div>
-
-                        <div style="display:flex; gap:15px; margin-bottom:20px; align-items:flex-start;">
-                            <div style="min-width:36px; height:36px; background:var(--sidebar-bg); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1rem;">2</div>
-                            <div><strong>Run OLS and test</strong> for homoskedasticity (B-P / White tests).</div>
-                        </div>
-
-                        <div style="background:var(--bg-color); border-left:4px solid #4caf50; border-radius:8px; padding:15px; margin-bottom:15px;">
-                            <strong style="color:#2e7d32;">✅ Homoskedastic?</strong>
-                            <ul style="margin-top:5px;">
-                                <li>Great — OLS is efficient (MLR.1–4 hold).</li>
-                                <li>If also MLR.6: exact finite-sample inference via \( t \) and \( F \).</li>
-                            </ul>
-                        </div>
-
-                        <div style="background:var(--bg-color); border-left:4px solid var(--primary-red); border-radius:8px; padding:15px; margin-bottom:15px;">
-                            <strong style="color:var(--primary-red);">⚠️ Heteroskedastic?</strong>
-                            <ul style="margin-top:5px;">
-                                <li><strong>Do we know the form?</strong><br>
-                                    &nbsp;&nbsp;→ YES: use <strong>WLS</strong> (BLUE, works for small samples). Run Hausman test to compare OLS and WLS.<br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is the assumed form correct? If not, add robust SEs.<br>
-                                    &nbsp;&nbsp;→ NO: estimate \( h(X) \) and run <strong>FGLS</strong> (consistent + asymptotically efficient). Need large sample. Can combine with robust SEs.
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div style="background:var(--bg-color); border-left:4px solid #ff9800; border-radius:8px; padding:15px;">
-                            <strong style="color:#e65100;">🔶 Somewhere in between?</strong>
-                            <p style="margin-top:5px;">You probably need more observations.</p>
-                        </div>
-                    </div>
-
-                    <!-- Predictions -->
-                    <div class="concept-card">
-                        <h3><i class="fas fa-crystal-ball"></i> Predictions under Heteroskedasticity</h3>
+                        <h3><i class="fas fa-columns"></i> WLS vs FGLS Comparison</h3>
                         <div class="table-container">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Type of prediction</th>
-                                        <th>OLS</th>
-                                        <th>WLS (known form)</th>
-                                        <th>FGLS (unknown form)</th>
+                                        <th>Method</th>
+                                        <th>What do we know?</th>
+                                        <th>What do we do?</th>
+                                        <th>Main result</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><strong>Point prediction</strong></td>
-                                        <td>Unbiased &amp; consistent</td>
-                                        <td>Unbiased &amp; consistent</td>
-                                        <td>Consistent</td>
+                                        <td><strong>OLS + usual SE</strong></td>
+                                        <td>Assume homoskedasticity</td>
+                                        <td>Run normal OLS</td>
+                                        <td>Invalid if heteroskedasticity</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Mean prediction SE</strong></td>
-                                        <td>Biased under hetero.</td>
-                                        <td>WLS-based substitution</td>
-                                        <td>FGLS-based substitution</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Individual prediction SE</strong></td>
-                                        <td>Biased under hetero.</td>
-                                        <td colspan="2">\( se(\hat{e}_0) = \sqrt{\hat{\sigma}^2 h(X_0) + \widehat{\operatorname{Var}}(\hat{y}_0)} \)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Summary card -->
-                    <div class="concept-card" style="background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%); border-left:5px solid var(--sidebar-bg);">
-                        <h3><i class="fas fa-clipboard-check"></i> Chapter Summary — Quick Reference</h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Topic</th>
-                                        <th>Key Takeaway</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Consequences</strong></td>
-                                        <td>OLS unbiased, but variances biased ↓ → invalid \( t \), \( F \), LM tests</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>White SEs</strong></td>
-                                        <td>Asymptotically valid, need \( n-k-1 \geq 120 \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Robust LM</strong></td>
-                                        <td>\( n - \text{SSR}_1 \sim \chi^2_q \) under \( H_0 \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>B-P test</strong></td>
-                                        <td>Linear \( \hat{u}^2 \) on \( X \); F or LM; \( H_0: \delta_1=\cdots=\delta_k=0 \)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>White test</strong></td>
-                                        <td>\( \hat{u}^2 \) on \( \hat{y}, \hat{y}^2 \); more general than B-P</td>
+                                        <td><strong>OLS + White SE</strong></td>
+                                        <td>Do not know heteroskedasticity form</td>
+                                        <td>Keep OLS, correct SE</td>
+                                        <td>Valid inference asymptotically</td>
                                     </tr>
                                     <tr>
                                         <td><strong>WLS</strong></td>
-                                        <td>BLUE when \( h_i \) known; weights \( 1/\sqrt{h_i} \)</td>
+                                        <td>\( h_i \) known</td>
+                                        <td>Transform by \( 1/\sqrt{h_i} \)</td>
+                                        <td>BLUE if \( h_i \) correct</td>
                                     </tr>
                                     <tr>
                                         <td><strong>FGLS</strong></td>
-                                        <td>Estimate \( \hat{h}_i \) via log regression; WLS with \( \hat{h}_i \); large samples</td>
+                                        <td>\( h_i \) unknown</td>
+                                        <td>Estimate \( h_i \), then WLS</td>
+                                        <td>Consistent, asymptotically efficient</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
+                    <!-- 14. Practical Guide -->
+                    <div class="concept-card">
+                        <h3><i class="fas fa-map"></i> Practical Guide</h3>
+                        <p>How to handle heteroskedasticity in an empirical project:</p>
+
+                        <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left: 4px solid var(--sidebar-bg); margin-bottom: 15px;">
+                            <strong>Step 1:</strong> Run OLS.
+                        </div>
+                        <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left: 4px solid var(--sidebar-bg); margin-bottom: 15px;">
+                            <strong>Step 2:</strong> Plot residuals and run Breusch-Pagan / White tests.
+                        </div>
+                        <div style="background:var(--bg-color); padding:15px; border-radius:8px; border-left: 4px solid var(--sidebar-bg);">
+                            <strong>Step 3: Decide what to do</strong>
+                            <ul style="margin-top: 10px; margin-bottom: 0;">
+                                <li>If <strong>no heteroskedasticity</strong> → usual OLS inference is okay.</li>
+                                <li>If heteroskedasticity and <strong>large sample</strong> → OLS + White SE is safe.</li>
+                                <li>If \( h_i \) is <strong>known</strong> → WLS.</li>
+                                <li>If \( h_i \) is <strong>unknown</strong> and large sample → FGLS, preferably with robust SE.</li>
+                                <li>If <strong>unsure</strong> → use robust SE and be cautious.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 15. Final Recap -->
+                    <div class="concept-card highlight" style="background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%); border-left:5px solid var(--sidebar-bg);">
+                        <h3><i class="fas fa-clipboard-check"></i> What should I remember?</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Does heteroskedasticity bias OLS coefficients?</strong></td>
+                                        <td>No, not if MLR.1–4 hold.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>What does it break?</strong></td>
+                                        <td>Standard errors and inference.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Why are usual SE wrong?</strong></td>
+                                        <td>They assume constant variance \( \sigma^2 \).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>What do White SE do?</strong></td>
+                                        <td>Correct SE without changing coefficients.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>What do B-P and White tests do?</strong></td>
+                                        <td>Test whether squared residuals depend on X.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>What does WLS do?</strong></td>
+                                        <td>Gives less weight to noisy observations when \( h_i \) is known.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>What does FGLS do?</strong></td>
+                                        <td>Estimates \( h_i \) first, then applies WLS.</td>
+                                    </tr>
+                                    <tr style="background: rgba(32,201,151,0.1);">
+                                        <td><strong>Most important exam sentence</strong></td>
+                                        <td><strong>Heteroskedasticity affects efficiency and inference, not unbiasedness, provided MLR.1–4 hold.</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                 </section>
 
