@@ -5575,6 +5575,105 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                 <p style="font-size: 1.1rem; margin: 0;">🌟 <strong>"Large Sample" Exception:</strong> With \(n > 30\), CLT saves you from MLR.6. t-test becomes Asymptotically Valid even without normality.</p>
             </div>
         </div>
+
+        <!-- GAUSS-MARKOV + OLS BLUE -->
+        <div class="formula-card" style="border: 3px solid #a29bfe; padding: 40px; border-radius: 20px; margin-bottom: 40px; background: white;">
+            <h4 style="color: #a29bfe; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-trophy"></i> 🏆 Gauss-Markov Theorem &amp; BLUE</h4>
+            <p style="font-size: 1.15rem; line-height: 1.8;">Under <strong>MLR.1–MLR.5</strong> (no normality needed!), the OLS estimator is <strong>BLUE</strong>:</p>
+            <div style="text-align: center; background: rgba(162,155,254,0.1); border: 3px solid #a29bfe; border-radius: 15px; padding: 20px; margin: 15px 0;">
+                <p style="font-size: 1.8rem; font-weight: 900; color: #a29bfe; margin: 0;"><strong>B</strong>est &nbsp;&nbsp; <strong>L</strong>inear &nbsp;&nbsp; <strong>U</strong>nbiased &nbsp;&nbsp; <strong>E</strong>stimator</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div style="background: rgba(32,201,151,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                    <p style="font-weight: 800; color: #157a5b; margin-bottom: 5px;">BEST</p>
+                    <p style="font-size: 0.95rem; margin: 0;">Minimum variance among all linear unbiased estimators</p>
+                </div>
+                <div style="background: rgba(32,201,151,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                    <p style="font-weight: 800; color: #157a5b; margin-bottom: 5px;">LINEAR</p>
+                    <p style="font-size: 0.95rem; margin: 0;">\(\hat\beta_j = \sum_i w_i y_i\) for weights \(w_i\) depending only on \(X\)</p>
+                </div>
+                <div style="background: rgba(32,201,151,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                    <p style="font-weight: 800; color: #157a5b; margin-bottom: 5px;">UNBIASED</p>
+                    <p style="font-size: 0.95rem; margin: 0;">\(E[\hat\beta_j] = \beta_j\) under MLR.1–MLR.4</p>
+                </div>
+            </div>
+            <div style="background: rgba(255,71,87,0.06); padding: 15px; border-radius: 10px; border: 1px dashed #ff4757; margin-top: 15px;">
+                <p style="font-size: 1rem; margin: 0;"><strong style="color:#ff4757;">⚠️ Critical:</strong> MLR.5 violated → OLS still unbiased but <strong>no longer BLUE</strong>. WLS becomes BLUE. MLR.4 violated → OLS <strong>biased</strong>. Gauss-Markov doesn't apply.</p>
+            </div>
+        </div>
+
+        <!-- OLS IS LINEAR -->
+        <div class="formula-card" style="border: 3px solid #a29bfe; padding: 40px; border-radius: 20px; margin-bottom: 40px; background: white;">
+            <h4 style="color: #a29bfe; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-link"></i> 💡 OLS is a Linear Estimator — Proof</h4>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px;">\(\hat\beta_1\) can be written as a <strong>linear combination of the \(y_i\)</strong>:</p>
+            <div class="math-formula highlight-formula" style="border-color: #a29bfe; background: rgba(162,155,254,0.05); font-size: 1.3rem;">
+                $$\hat\beta_1 = \sum_{i=1}^n w_i y_i \qquad \text{where} \qquad w_i = \frac{x_i - \bar x}{SST_x}$$
+            </div>
+            <p style="font-size: 1rem; margin-top: 10px;">The weights \(w_i\) depend <strong>only on the \(x_i\)</strong> (treated as fixed) → \(\hat\beta_1\) is linear in \(y\). This satisfies the "L" in BLUE. ✅</p>
+            <button class="action-btn" onclick="toggleDerivation('derive-linear-final')" style="margin-top: 10px;"><i class="fas fa-eye"></i> Show Full Proof</button>
+            <div id="derive-linear-final" class="hidden-panel" style="margin-top: 15px; padding: 20px; background: rgba(162,155,254,0.05); border-radius: 10px; border-left: 4px solid #a29bfe;">
+                <p style="font-size: 1rem; line-height: 1.8;">Start: \(\hat\beta_1 = \frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2}\)</p>
+                <p style="font-size: 1rem; line-height: 1.8;">Expand numerator: \(\sum(x_i-\bar x)(y_i-\bar y) = \sum(x_i-\bar x)y_i - \bar y\underbrace{\sum(x_i-\bar x)}_{=0} = \sum(x_i-\bar x)y_i\)</p>
+                <div class="math-formula" style="margin: 10px 0;">$$\hat\beta_1 = \frac{\sum(x_i-\bar x)y_i}{SST_x} = \sum_i \underbrace{\frac{x_i-\bar x}{SST_x}}_{w_i} y_i$$</div>
+                <p style="font-size: 1rem; line-height: 1.8;">Key properties of \(w_i\):<br>1. \(\sum_i w_i = 0\) (since \(\sum(x_i-\bar x)=0\))<br>2. \(\sum_i w_i x_i = 1\)<br>3. \(\sum_i w_i^2 = \frac{1}{SST_x}\)</p>
+            </div>
+        </div>
+
+        <!-- FULL ALGEBRAIC PROOFS -->
+        <div class="formula-card" style="border: 3px solid #fd7e14; padding: 40px; border-radius: 20px; margin-bottom: 40px; background: white;">
+            <h4 style="color: #fd7e14; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-list-ol"></i> 💡 Algebraic Properties — Full Proofs</h4>
+            <p style="font-size: 1rem; margin-bottom: 20px; color: #555;">These are the exact derivations for Problem 4 of the exam. Each follows from the OLS first-order conditions.</p>
+
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">P1: \(\sum \hat u_i = 0\)</h5>
+                <p style="font-size: 1rem; margin: 0;">From FOC 1: \(\sum(y_i - \hat\beta_0 - \hat\beta_1 x_i)=0 \equiv \sum\hat u_i = 0\). Consequence: \(\bar{\hat u}=0\). ✅</p>
+            </div>
+
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">P2: \(\bar y = \bar{\hat y}\)</h5>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop2f')" style="background:#fd7e14; color:white; margin-bottom: 10px;"><i class="fas fa-eye"></i> Full Proof</button>
+                <div id="derive-prop2f" class="hidden-panel" style="padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;">Since \(y_i = \hat y_i + \hat u_i\), summing: \(\sum y_i = \sum\hat y_i + \underbrace{\sum\hat u_i}_{=0}\)<br>
+                    Therefore \(\sum y_i = \sum\hat y_i\), so dividing by \(n\): \(\bar y = \bar{\hat y}\). ✅</p>
+                </div>
+            </div>
+
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">P3: The point \((\bar x, \bar y)\) lies on the OLS line</h5>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop3f')" style="background:#fd7e14; color:white; margin-bottom: 10px;"><i class="fas fa-eye"></i> Full Proof</button>
+                <div id="derive-prop3f" class="hidden-panel" style="padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;">The OLS intercept: \(\hat\beta_0 = \bar y - \hat\beta_1 \bar x\)<br>
+                    Substitute \(x=\bar x\) into the regression line:<br>
+                    \(\hat y = \hat\beta_0 + \hat\beta_1\bar x = (\bar y - \hat\beta_1\bar x) + \hat\beta_1\bar x = \bar y\)<br>
+                    When \(x=\bar x\) we get \(\hat y = \bar y\). The point \((\bar x, \bar y)\) always lies on the line. ✅</p>
+                </div>
+            </div>
+
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 8px;">P4: \(SST = SSE + SSR\) ⭐ (Most important proof!)</h5>
+                <div style="background: rgba(253,126,20,0.08); padding: 10px; border-radius: 8px; margin: 8px 0;">
+                    <p style="font-size: 0.95rem; margin: 0;">\(SST = \sum(y_i-\bar y)^2\) | \(SSE = \sum(\hat y_i-\bar y)^2\) | \(SSR = \sum\hat u_i^2\)</p>
+                </div>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop4f')" style="background:#fd7e14; color:white; margin-bottom: 10px;"><i class="fas fa-eye"></i> Full Step-by-Step Proof</button>
+                <div id="derive-prop4f" class="hidden-panel" style="padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Step 1.</strong> Write: \(y_i - \bar y = (\hat y_i - \bar y) + \hat u_i\)</p>
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Step 2.</strong> Square and sum:</p>
+                    <div class="math-formula" style="padding: 8px; font-size: 1rem;">$$\sum(y_i-\bar y)^2 = \sum(\hat y_i-\bar y)^2 + 2\sum(\hat y_i-\bar y)\hat u_i + \sum\hat u_i^2$$</div>
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Step 3.</strong> Show the cross-term = 0:<br>
+                    \(\sum(\hat y_i-\bar y)\hat u_i = \sum\hat y_i\hat u_i - \bar y\sum\hat u_i\)<br>
+                    \(\sum\hat u_i = 0\) (P1) → second term = 0.<br>
+                    \(\hat y_i = \hat\beta_0 + \hat\beta_1 x_i\) → \(\sum\hat y_i\hat u_i = \hat\beta_0\underbrace{\sum\hat u_i}_{=0} + \hat\beta_1\underbrace{\sum x_i\hat u_i}_{=0}\) (FOC 2) = 0.</p>
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Conclusion:</strong></p>
+                    <div class="math-formula" style="border-color: #fd7e14; padding: 10px;">$$SST = SSE + SSR \quad \checkmark$$</div>
+                    <p style="font-size: 0.95rem;">Key: the cross-term vanishes using the two OLS FOCs. ✅</p>
+                </div>
+            </div>
+
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 8px;">P5: \(\sum x_i\hat u_i = 0\) (Zero correlation X–residuals)</h5>
+                <p style="font-size: 1rem; margin: 0; background: rgba(253,126,20,0.05); padding: 10px; border-radius: 6px;">Follows directly from FOC 2. In MLR: \(\sum x_{ij}\hat u_i = 0\) for every regressor \(j\). Sample analogue of exogeneity \(E[u|X]=0\). ✅</p>
+            </div>
+        </div>
     </div>
 
     <!-- MODULE 4: FINAL EXAM NEW TOPICS -->
@@ -5738,6 +5837,88 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
             </div>
         </div>
 
+                <!-- FGLS FULL PROCEDURE -->
+        <div class="formula-card" style="border: 4px solid #e17055; padding: 45px; border-radius: 20px; margin-bottom: 40px; background: white; box-shadow: 0 10px 30px rgba(225,112,85,0.15);">
+            <h4 style="color: #e17055; font-size: 1.9rem; margin-bottom: 25px;"><i class="fas fa-cogs"></i> 🔴 FGLS — Feasible Generalized Least Squares (Full Procedure)</h4>
+
+            <div style="background: rgba(225,112,85,0.08); padding: 20px; border-radius: 12px; border-left: 5px solid #e17055; margin-bottom: 25px;">
+                <h5 style="color: #e17055; margin-bottom: 10px;">When do we use FGLS?</h5>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin: 0;">We use FGLS when there is <strong>heteroskedasticity of an unknown form</strong> — i.e., we know \(\text{Var}(u_i|X)\) varies with \(X\), but we don't know the exact function \(h_i\). We use the data to <em>estimate</em> \(h_i\), then apply WLS with the estimated weights.</p>
+            </div>
+
+            <h5 style="color: #e17055; font-size: 1.3rem; margin-bottom: 15px;"><i class="fas fa-list-ol"></i> Complete Step-by-Step Procedure:</h5>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 15px;">
+                <div style="display: flex; gap: 15px; align-items: flex-start; padding: 20px; background: rgba(225,112,85,0.04); border-radius: 12px; border: 1px solid rgba(225,112,85,0.2);">
+                    <div style="background: #e17055; color: white; border-radius: 50%; width: 35px; height: 35px; min-width: 35px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">1</div>
+                    <div>
+                        <p style="font-weight: 800; margin-bottom: 5px; font-size: 1.1rem;">Run initial OLS on the original model</p>
+                        <p style="font-size: 1rem; margin: 0;">\(y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_k x_{ik} + u_i\). Save the OLS residuals \(\hat u_i\).</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 15px; align-items: flex-start; padding: 20px; background: rgba(225,112,85,0.04); border-radius: 12px; border: 1px solid rgba(225,112,85,0.2);">
+                    <div style="background: #e17055; color: white; border-radius: 50%; width: 35px; height: 35px; min-width: 35px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">2</div>
+                    <div>
+                        <p style="font-weight: 800; margin-bottom: 5px; font-size: 1.1rem;">Run a log regression to estimate \(h_i\)</p>
+                        <p style="font-size: 1rem; margin: 0;">Assume \(\text{Var}(u_i|X) = \sigma^2 \exp(\delta_0 + \delta_1 x_{i1} + \cdots + \delta_k x_{ik})\). Regress \(\ln(\hat u_i^2)\) on all the \(x\)'s:</p>
+                        <div class="math-formula" style="padding: 8px; margin: 8px 0; font-size: 1rem;">\(\ln(\hat u_i^2) = \delta_0 + \delta_1 x_{i1} + \cdots + \delta_k x_{ik} + \varepsilon_i\)</div>
+                        <p style="font-size: 1rem; margin: 0;">Save fitted values \(\hat g_i\). Then \(\hat h_i = \exp(\hat g_i)\).</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 15px; align-items: flex-start; padding: 20px; background: rgba(225,112,85,0.04); border-radius: 12px; border: 1px solid rgba(225,112,85,0.2);">
+                    <div style="background: #e17055; color: white; border-radius: 50%; width: 35px; height: 35px; min-width: 35px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">3</div>
+                    <div>
+                        <p style="font-weight: 800; margin-bottom: 5px; font-size: 1.1rem;">Apply WLS using \(\hat h_i\) as the estimated variance function</p>
+                        <p style="font-size: 1rem; margin: 0;">Divide the entire model by \(\sqrt{\hat h_i}\) to get a homoskedastic transformed model. Run WLS (i.e., OLS on the transformed model) using weights \(1/\hat h_i\).</p>
+                        <div class="math-formula" style="padding: 8px; margin: 8px 0; font-size: 1rem;">$$\frac{y_i}{\sqrt{\hat h_i}} = \frac{\beta_0}{\sqrt{\hat h_i}} + \beta_1\frac{x_{i1}}{\sqrt{\hat h_i}} + \cdots + \frac{u_i}{\sqrt{\hat h_i}}$$</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 15px; align-items: flex-start; padding: 20px; background: rgba(225,112,85,0.08); border-radius: 12px; border: 2px solid #e17055;">
+                    <div style="background: #e17055; color: white; border-radius: 50%; width: 35px; height: 35px; min-width: 35px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">✅</div>
+                    <div>
+                        <p style="font-weight: 800; margin-bottom: 5px; font-size: 1.1rem; color: #e17055;">Result: The FGLS estimator</p>
+                        <p style="font-size: 1rem; margin: 0;">The FGLS estimator is the OLS estimator applied to the \(\hat h_i\)-transformed model. Since \(\hat h_i\) is estimated (not exact), FGLS is not exactly BLUE, but it is <strong>asymptotically efficient</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px;">
+                <div>
+                    <h5 style="color: #e17055; margin-bottom: 10px;">FGLS vs OLS comparison (under MLR.1–MLR.4):</h5>
+                    <div class="table-container">
+                        <table style="font-size: 0.95rem;">
+                            <thead>
+                                <tr style="background: rgba(225,112,85,0.15);">
+                                    <th>Property</th><th>OLS</th><th>FGLS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Bias</strong></td><td>Unbiased ✅</td><td>Biased in small samples ⚠️<br><small>(because \(\hat h_i\) is estimated)</small></td></tr>
+                                <tr><td><strong>Consistency</strong></td><td>Consistent ✅</td><td>Consistent ✅<br><small>(as \(n\to\infty\), \(\hat h_i \to h_i\))</small></td></tr>
+                                <tr><td><strong>Efficiency</strong></td><td>Not efficient (not BLUE under hetero)</td><td>Asymptotically more efficient ✅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="background: rgba(225,112,85,0.06); padding: 20px; border-radius: 12px; border: 1px dashed #e17055;">
+                    <h5 style="color: #e17055; margin-bottom: 10px;">Is sample size important?</h5>
+                    <p style="font-size: 1rem; line-height: 1.7; margin: 0;"><strong>Yes, crucially.</strong> FGLS requires estimating the variance function \(h_i\) in step 2. This is an auxiliary regression that itself requires sufficient data to be reliable.<br><br>
+                    In small samples, \(\hat h_i\) may be a poor estimate of \(h_i\), making FGLS <strong>potentially worse than OLS</strong>. FGLS is only recommended for <strong>large samples</strong> where the estimation of \(h_i\) is reliable.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; background: #fff5f0; padding: 18px; border-radius: 12px; border: 2px solid #e17055;">
+                <p style="font-size: 1.1rem; font-weight: 800; color: #e17055; margin-bottom: 8px;">⚡ Exam Reflex on FGLS:</p>
+                <ul style="font-size: 1rem; line-height: 1.8; margin: 0;">
+                    <li><strong>Use when:</strong> Heteroskedasticity exists but form is unknown (unlike WLS where form IS known)</li>
+                    <li><strong>FGLS ≠ WLS:</strong> WLS uses the true \(h_i\); FGLS estimates \(\hat h_i\) from the data</li>
+                    <li><strong>Big n needed:</strong> For \(\hat h_i\) to be a reliable estimate of the true \(h_i\)</li>
+                    <li><strong>Asymptotic BLUE:</strong> Not exactly BLUE in finite samples, but approaches BLUE as \(n\to\infty\)</li>
+                </ul>
+            </div>
+        </div>
+
+
         <!-- 4.6 Misspecification -->
         <div class="formula-card" style="border: 2px solid rgba(66,133,244,0.3); padding: 35px; margin-bottom: 40px;">
             <h4 style="color: #4285f4; font-size: 1.5rem; margin-bottom: 20px;"><i class="fas fa-bug"></i> 4.6 Misspecification, Proxies &amp; Measurement Error</h4>
@@ -5823,4 +6004,134 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
     <script src="script.js"></script>
 </body>
 
-</html>
+</html        <!-- GAUSS-MARKOV + OLS BLUE -->
+        <div class="formula-card" style="border: 3px solid #a29bfe; padding: 40px; border-radius: 20px; margin-bottom: 40px; background: white;">
+            <h4 style="color: #a29bfe; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-trophy"></i> 🏆 Gauss-Markov Theorem &amp; BLUE</h4>
+            <p style="font-size: 1.15rem; line-height: 1.8;">Under <strong>MLR.1–MLR.5</strong> (no normality needed!), the OLS estimator is <strong>BLUE</strong>:</p>
+            <div style="text-align: center; background: rgba(162,155,254,0.1); border: 3px solid #a29bfe; border-radius: 15px; padding: 20px; margin: 15px 0;">
+                <p style="font-size: 1.8rem; font-weight: 900; color: #a29bfe; margin: 0;"><strong>B</strong>est &nbsp;&nbsp; <strong>L</strong>inear &nbsp;&nbsp; <strong>U</strong>nbiased &nbsp;&nbsp; <strong>E</strong>stimator</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div style="background: rgba(32,201,151,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                    <p style="font-weight: 800; color: #157a5b; margin-bottom: 5px;">BEST</p>
+                    <p style="font-size: 0.95rem; margin: 0;">Minimum variance among all linear unbiased estimators</p>
+                </div>
+                <div style="background: rgba(32,201,151,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                    <p style="font-weight: 800; color: #157a5b; margin-bottom: 5px;">LINEAR</p>
+                    <p style="font-size: 0.95rem; margin: 0;">\(\hat\beta_j = \sum_i w_i y_i\) for some weights \(w_i\) depending only on \(X\)</p>
+                </div>
+                <div style="background: rgba(32,201,151,0.08); padding: 15px; border-radius: 10px; text-align: center;">
+                    <p style="font-weight: 800; color: #157a5b; margin-bottom: 5px;">UNBIASED</p>
+                    <p style="font-size: 0.95rem; margin: 0;">\(E[\hat\beta_j] = \beta_j\) under MLR.1–MLR.4</p>
+                </div>
+            </div>
+            <div style="background: rgba(255,71,87,0.06); padding: 15px; border-radius: 10px; border: 1px dashed #ff4757; margin-top: 15px;">
+                <p style="font-size: 1rem; margin: 0;"><strong style="color:#ff4757;">⚠️ Critical:</strong> If <strong>MLR.5 is violated</strong> (heteroskedasticity) → OLS is still unbiased but <strong>no longer BLUE</strong>. WLS becomes the new BLUE. If <strong>MLR.4 is violated</strong> (OVB) → OLS is <strong>biased and NOT unbiased</strong>. Gauss-Markov doesn't apply at all.</p>
+            </div>
+        </div>
+
+        <!-- OLS IS LINEAR -->
+        <div class="formula-card" style="border: 3px solid #a29bfe; padding: 40px; border-radius: 20px; margin-bottom: 40px; background: white;">
+            <h4 style="color: #a29bfe; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-link"></i> 💡 OLS is a Linear Estimator</h4>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px;">The OLS estimator \(\hat\beta_1\) can be written as a <strong>linear combination of the \(y_i\)</strong>:</p>
+            <div class="math-formula highlight-formula" style="border-color: #a29bfe; background: rgba(162,155,254,0.05); font-size: 1.3rem;">
+                $$\hat\beta_1 = \sum_{i=1}^n w_i y_i \qquad \text{where} \qquad w_i = \frac{x_i - \bar x}{\sum_j (x_j - \bar x)^2} = \frac{x_i - \bar x}{SST_x}$$
+            </div>
+            <p style="font-size: 1rem; margin-top: 10px;">The weights \(w_i\) depend <strong>only on the \(x_i\)</strong>, not on the \(y_i\) — so \(\hat\beta_1\) is linear in \(y\).</p>
+            <button class="action-btn" onclick="toggleDerivation('derive-linear-final')" style="margin-top: 10px;"><i class="fas fa-eye"></i> Show Full Proof</button>
+            <div id="derive-linear-final" class="hidden-panel" style="margin-top: 15px; padding: 20px; background: rgba(162,155,254,0.05); border-radius: 10px; border-left: 4px solid #a29bfe;">
+                <p style="font-size: 1rem; line-height: 1.8;">
+                    Start from: \(\hat\beta_1 = \frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2}\)
+                </p>
+                <p style="font-size: 1rem; line-height: 1.8;">
+                    Expand the numerator: \(\sum(x_i-\bar x)(y_i - \bar y) = \sum(x_i-\bar x)y_i - \bar y\underbrace{\sum(x_i-\bar x)}_{=0} = \sum(x_i-\bar x)y_i\)
+                </p>
+                <div class="math-formula" style="margin: 10px 0;">$$\hat\beta_1 = \frac{\sum(x_i-\bar x)y_i}{\sum(x_i-\bar x)^2} = \sum_i \underbrace{\frac{x_i-\bar x}{SST_x}}_{w_i} y_i$$</div>
+                <p style="font-size: 1rem; line-height: 1.8;">Useful properties of the weights:<br>
+                1. \(\sum_i w_i = 0\) (since \(\sum(x_i-\bar x)=0\))<br>
+                2. \(\sum_i w_i x_i = 1\) (can be verified)<br>
+                3. \(\sum_i w_i^2 = \frac{1}{SST_x}\)
+                </p>
+                <p style="font-size: 1rem; line-height: 1.8;">Since the \(w_i\) depend only on the \(x_i\) (which are treated as fixed/non-random), \(\hat\beta_1\) is a <strong>linear function of the \(y_i\)</strong>. This satisfies the "L" in BLUE. ✅</p>
+            </div>
+        </div>
+
+        <!-- FULL ALGEBRAIC PROPERTIES WITH PROOFS -->
+        <div class="formula-card" style="border: 3px solid #fd7e14; padding: 40px; border-radius: 20px; margin-bottom: 40px; background: white;">
+            <h4 style="color: #fd7e14; font-size: 1.7rem; margin-bottom: 20px;"><i class="fas fa-list-ol"></i> 💡 Algebraic Properties — Full Proofs</h4>
+            <p style="font-size: 1rem; margin-bottom: 20px; color: #555;">These are the exact derivations for Problem 4. Each property follows directly from the OLS first-order conditions.</p>
+
+            <!-- Property 1: sum of residuals = 0 -->
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">Property 1: \(\sum_{i=1}^n \hat u_i = 0\) (Residuals sum to zero)</h5>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop1')" style="background: #fd7e14; color: white;"><i class="fas fa-eye"></i> Proof</button>
+                <div id="derive-prop1" class="hidden-panel" style="margin-top: 15px; padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;">From FOC 1 (Method of Moments): \(\sum(y_i - \hat\beta_0 - \hat\beta_1 x_i) = 0\)<br>
+                    This is exactly \(\sum \hat u_i = 0\). ✅<br><br>
+                    <strong>Consequence:</strong> \(\bar{\hat u} = 0\), i.e., the average residual is always zero.</p>
+                </div>
+            </div>
+
+            <!-- Property 2: ybar = yhat bar -->
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">Property 2: \(\bar y = \bar{\hat y}\) (Mean of observed = Mean of fitted values)</h5>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop2')" style="background: #fd7e14; color: white;"><i class="fas fa-eye"></i> Full Proof</button>
+                <div id="derive-prop2" class="hidden-panel" style="margin-top: 15px; padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;">
+                    We know that \(y_i = \hat y_i + \hat u_i\), so summing over all observations:<br><br>
+                    \(\sum_{i=1}^n y_i = \sum_{i=1}^n \hat y_i + \sum_{i=1}^n \hat u_i\)<br><br>
+                    From Property 1, \(\sum \hat u_i = 0\), therefore:<br>
+                    </p>
+                    <div class="math-formula" style="padding: 10px;">$$\sum_{i=1}^n y_i = \sum_{i=1}^n \hat y_i \implies \bar y = \bar{\hat y} \quad \checkmark$$</div>
+                    <p style="font-size: 1rem;">This directly follows from the first FOC and the fact that residuals average to zero. ✅</p>
+                </div>
+            </div>
+
+            <!-- Property 3: Point (xbar, ybar) on OLS line -->
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">Property 3: The point \((\bar x, \bar y)\) always lies on the OLS regression line</h5>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop3')" style="background: #fd7e14; color: white;"><i class="fas fa-eye"></i> Full Proof</button>
+                <div id="derive-prop3" class="hidden-panel" style="margin-top: 15px; padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;">
+                    From the OLS estimator, the intercept is defined as:<br>
+                    \(\hat\beta_0 = \bar y - \hat\beta_1 \bar x\)<br><br>
+                    Now substitute \(x = \bar x\) into the fitted regression line:<br>
+                    \(\hat y = \hat\beta_0 + \hat\beta_1 \bar x = (\bar y - \hat\beta_1\bar x) + \hat\beta_1\bar x = \bar y\)<br><br>
+                    So when \(x = \bar x\), we get \(\hat y = \bar y\). The point \((\bar x, \bar y)\) always lies on the regression line. ✅
+                    </p>
+                </div>
+            </div>
+
+            <!-- Property 4: SST = SSE + SSR decomposition -->
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">Property 4: \(SST = SSE + SSR\) — Variance Decomposition ⭐</h5>
+                <div style="background: rgba(253,126,20,0.08); padding: 12px; border-radius: 8px; margin: 10px 0;">
+                    <p style="font-size: 1rem; margin: 0;">
+                        \(SST = \sum(y_i-\bar y)^2\) &nbsp;|&nbsp; \(SSE = \sum(\hat y_i-\bar y)^2\) &nbsp;|&nbsp; \(SSR = \sum \hat u_i^2\)
+                    </p>
+                </div>
+                <button class="action-btn" onclick="toggleDerivation('derive-prop4')" style="background: #fd7e14; color: white;"><i class="fas fa-eye"></i> Full Proof (Step-by-Step)</button>
+                <div id="derive-prop4" class="hidden-panel" style="margin-top: 15px; padding: 15px; background: rgba(253,126,20,0.05); border-radius: 8px;">
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Start:</strong> Write \(y_i - \bar y = (\hat y_i - \bar y) + \hat u_i\) since \(y_i = \hat y_i + \hat u_i\)</p>
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Square both sides and sum:</strong></p>
+                    <div class="math-formula" style="padding: 10px;">$$\sum(y_i-\bar y)^2 = \sum[(\hat y_i-\bar y)+\hat u_i]^2 = \sum(\hat y_i-\bar y)^2 + 2\sum(\hat y_i-\bar y)\hat u_i + \sum\hat u_i^2$$</div>
+                    <p style="font-size: 1rem; line-height: 1.8;"><strong>Show the cross-term = 0:</strong><br>
+                    \(\sum(\hat y_i - \bar y)\hat u_i = \sum\hat y_i \hat u_i - \bar y\sum\hat u_i\)<br>
+                    We know \(\sum\hat u_i = 0\) (Property 1), so the second term is 0.<br>
+                    Also \(\hat y_i = \hat\beta_0 + \hat\beta_1 x_i\), so:<br>
+                    \(\sum\hat y_i \hat u_i = \hat\beta_0\underbrace{\sum\hat u_i}_{=0} + \hat\beta_1\underbrace{\sum x_i\hat u_i}_{=0} = 0\) (from FOC 2)<br><br>
+                    Therefore the cross-term \(2\sum(\hat y_i-\bar y)\hat u_i = 0\), giving:</p>
+                    <div class="math-formula" style="padding: 10px; border-color: #fd7e14;">$$\underbrace{\sum(y_i-\bar y)^2}_{SST} = \underbrace{\sum(\hat y_i-\bar y)^2}_{SSE} + \underbrace{\sum\hat u_i^2}_{SSR} \quad \checkmark$$</div>
+                    <p style="font-size: 1rem;">The key step is showing the cross-product equals zero using the two OLS first-order conditions. ✅</p>
+                </div>
+            </div>
+
+            <!-- Property 5: zero correlation -->
+            <div style="border: 2px solid rgba(253,126,20,0.3); border-radius: 12px; padding: 25px;">
+                <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 10px;">Property 5: \(\sum_{i=1}^n x_i \hat u_i = 0\) (Zero correlation between X and residuals)</h5>
+                <p style="font-size: 1rem; margin: 0; background: rgba(253,126,20,0.05); padding: 12px; border-radius: 8px;">This follows directly from FOC 2 of the OLS minimization. In MLR, this extends to ALL regressors: \(\sum x_{ij}\hat u_i = 0\) for every \(j\). This is the sample analogue of the exogeneity assumption \(E[u|X]=0\).</p>
+            </div>
+        </div>
+
+
+>
