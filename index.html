@@ -5936,45 +5936,109 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
 
 
         <!-- MISSPECIFICATION -->
+                <!-- MISSPECIFICATION -->
         <div class="formula-card" style="border: 3px solid #4285f4; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
             <h4 style="color: #4285f4; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-bug"></i> Misspecification, Proxies &amp; Measurement Error</h4>
 
-            <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 15px;">A. Functional Form Misspecification</h5>
-            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 15px;">You have the correct variable but the <strong>wrong mathematical form</strong>. The unmodeled non-linear part is pushed into the error term \(u\), making it correlated with \(x\) → violates MLR.4.</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
-                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(66,133,244,0.2);">
-                    <h5 style="color: #4285f4; margin-bottom: 8px;">RESET Test</h5>
-                    <ol style="font-size: 1rem; line-height: 1.7;"><li>Run OLS, get fitted values \(\hat{y}\)</li><li>Add \(\hat{y}^2\) and \(\hat{y}^3\) to the model</li><li>F-test their joint significance</li></ol>
-                    <p style="font-size: 0.95rem; margin-top: 8px; color: var(--primary-red);">Reject \(H_0\) → misspecification likely. But it doesn't tell you HOW to fix it!</p>
+            <!-- A. FUNCTIONAL FORM MISSPECIFICATION -->
+            <h5 style="color: #4285f4; font-size: 1.5rem; margin-bottom: 15px;">A. Functional Form Misspecification</h5>
+            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 15px;">This occurs when you have the <strong>correct variable</strong>, but you use the <strong>wrong mathematical form</strong> (e.g., using a linear term instead of a quadratic). By forcing a straight line onto curved data, the unmodeled non-linear part is pushed into the error term \(u\), making it correlated with \(x\). This violates MLR.4 and causes biased and inconsistent estimates.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 35px;">
+                <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid rgba(66,133,244,0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h5 style="color: #1a56db; font-size: 1.35rem; margin-bottom: 15px;"><i class="fas fa-vial"></i> RESET Test</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;"><strong>Goal:</strong> Detect general functional form misspecification (omitted non-linearities).</p>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;"><strong>Intuition:</strong> If the linear model is perfect, adding non-linear combinations of the predicted values shouldn't help explain \(y\). We use powers of \(\hat{y}\) to save degrees of freedom rather than adding \(x_k^2\) for every single variable.</p>
+                    <h5 style="color: #4285f4; font-size: 1.15rem; margin-bottom: 8px;">Procedure:</h5>
+                    <ol style="font-size: 1.05rem; line-height: 1.7;">
+                        <li>Run the original OLS model, save fitted values \(\hat{y}\).</li>
+                        <li>Run a new expanded model: <div class="math-formula" style="font-size: 0.9rem; padding: 5px;">$$y = \beta_0 + \beta_1x_1 + \dots + \delta_1\hat{y}^2 + \delta_2\hat{y}^3 + v$$</div></li>
+                        <li>F-test joint significance: \(H_0: \delta_1 = \delta_2 = 0\).</li>
+                    </ol>
+                    <div style="margin-top: 10px; background: rgba(225,112,85,0.05); padding: 12px; border-radius: 8px; border-left: 4px solid #ff4757;">
+                        <p style="font-size: 1rem; margin: 0; color: #ff4757;"><strong>Reject \(H_0\)</strong> → Misspecification likely! (But it doesn't tell you HOW to fix it).</p>
+                    </div>
                 </div>
-                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(66,133,244,0.2);">
-                    <h5 style="color: #4285f4; margin-bottom: 8px;">Davidson-MacKinnon Test</h5>
-                    <p style="font-size: 1rem; line-height: 1.7;">For non-nested models A vs B:<br>Add \(\hat{y}_B\) to model A. If significant → A is missing info captured by B.<br>Does NOT prove B is the "true" model.</p>
+
+                <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid rgba(66,133,244,0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h5 style="color: #1a56db; font-size: 1.35rem; margin-bottom: 15px;"><i class="fas fa-balance-scale-right"></i> Davidson-MacKinnon Test</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;"><strong>Goal:</strong> Select between two <em>non-nested</em> models (e.g., \(y\) vs \(x\) AND \(y\) vs \(\ln(x)\)). You cannot use an F-test for this!</p>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;"><strong>Intuition:</strong> If Model A is the "true" model, the predictions generated from Model B should not add any useful information to Model A.</p>
+                    <h5 style="color: #4285f4; font-size: 1.15rem; margin-bottom: 8px;">Procedure:</h5>
+                    <ol style="font-size: 1.05rem; line-height: 1.7;">
+                        <li>Estimate Model B, save its fitted values \(\hat{y}_B\).</li>
+                        <li>Add \(\hat{y}_B\) into Model A: <div class="math-formula" style="font-size: 0.9rem; padding: 5px;">$$y = \text{Model A terms} + \theta_1\hat{y}_B + e$$</div></li>
+                        <li>Test \(H_0: \theta_1 = 0\) using a t-test.</li>
+                        <li>Repeat symmetrically (add \(\hat{y}_A\) into Model B).</li>
+                    </ol>
+                    <div style="margin-top: 10px; background: rgba(66,133,244,0.05); padding: 12px; border-radius: 8px; border-left: 4px solid #4285f4;">
+                        <p style="font-size: 1rem; margin: 0;">If \(H_0\) is rejected for A but not B → Model B is preferred. <em>Note: does not prove B is the "true" model.</em></p>
+                    </div>
                 </div>
             </div>
 
-            <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 10px;">B. Proxy Variables</h5>
-            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 20px;">If \(x_3^*\) is unobservable (e.g., "ability"), use a proxy \(x_3\) (e.g., IQ score). A good proxy is highly correlated with \(x_3^*\) and uncorrelated with the error. It reduces OVB but may not eliminate it completely.</p>
+            <!-- B. PROXY VARIABLES -->
+            <h5 style="color: #4285f4; font-size: 1.5rem; margin-bottom: 15px;">B. Proxy Variables</h5>
+            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 15px;">When a relevant variable \(x_3^*\) (e.g., ability) is unobservable, omitting it causes OVB. A proxy \(x_3\) (e.g., IQ) is used to approximate it: \(x_3^* = \delta_0 + \delta_3x_3 + v_3\).</p>
+            <div style="background: rgba(66,133,244,0.05); padding: 20px; border-radius: 12px; border-left: 5px solid #4285f4; margin-bottom: 20px;">
+                <h5 style="color: #4285f4; font-size: 1.2rem; margin-bottom: 8px;">Conditions for a valid proxy</h5>
+                <ol style="font-size: 1.05rem; line-height: 1.6; margin: 0;">
+                    <li>Must be strongly correlated with the unobserved variable (\(\delta_3 \neq 0\)).</li>
+                    <li>The proxy error \(v_3\) must be uncorrelated with the other \(x\) variables.</li>
+                    <li>Must not introduce new endogeneity (uncorrelated with the main error \(u\)).</li>
+                </ol>
+            </div>
+            <div style="background: rgba(32,201,151,0.05); padding: 20px; border-radius: 12px; border-left: 5px solid #20c997; margin-bottom: 35px;">
+                <h5 style="color: #157a5b; font-size: 1.2rem; margin-bottom: 8px;">The Lagged Dependent Variable</h5>
+                <p style="font-size: 1.05rem; margin: 0;">If no proxy exists, use the past value \(y_{t-1}\). <strong>Intuition:</strong> Unobserved historical factors affect both \(y_t\) and \(y_{t-1}\). By including \(y_{t-1}\), you implicitly control for these unobservables. <em>Warning: this often creates multicollinearity with other regressors.</em></p>
+            </div>
 
-            <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 10px;">C. Measurement Error (CEV)</h5>
+            <!-- C. MEASUREMENT ERROR -->
+            <h5 style="color: #4285f4; font-size: 1.5rem; margin-bottom: 15px;">C. Measurement Error</h5>
+            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 20px;">What happens if our data is recorded with errors? It depends entirely on <strong>which</strong> variable has the error.</p>
+            
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-                <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #20c997;">
-                    <h5 style="color: #157a5b; margin-bottom: 8px;">Error in \(y\) (random)</h5>
-                    <p style="font-size: 1.05rem;">OLS is <strong>unbiased and consistent</strong>. Only loses precision (larger variance).</p>
+                <!-- Error in Y -->
+                <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border-top: 4px solid #20c997; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h5 style="color: #157a5b; font-size: 1.35rem; margin-bottom: 10px;">1. Error in \(Y\) (Random)</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;">\(y = y^* + e_0\). Substitute into the model: the measurement error simply merges into the regression error term: \(v = u + e_0\).</p>
+                    <h5 style="color: #157a5b; font-size: 1.15rem; margin-bottom: 8px;">Consequences:</h5>
+                    <ul style="font-size: 1.05rem; line-height: 1.6;">
+                        <li>OLS remains <strong>unbiased and consistent</strong>.</li>
+                        <li>The only damage is a larger overall error variance (\(\sigma^2_u + \sigma^2_{e_0}\)).</li>
+                        <li>Estimates are simply less precise (larger SEs), but not systematically wrong.</li>
+                    </ul>
                 </div>
-                <div style="background: rgba(255,71,87,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #ff4757;">
-                    <h5 style="color: #ff4757; margin-bottom: 8px;">Error in \(x\) (CEV) → Attenuation Bias</h5>
-                    <div class="math-formula" style="padding: 8px; font-size: 1rem; margin: 8px 0;">$$\text{plim}(\hat\beta_1) = \beta_1 \cdot \frac{\sigma^2_{x^*}}{\sigma^2_{x^*} + \sigma^2_e}$$</div>
-                    <p style="font-size: 1rem;">The fraction is always between 0 and 1. The coefficient <strong>shrinks toward zero</strong>. MLR.4 is violated because the observed \(x\) includes noise correlated with the composite error.</p>
+                
+                <!-- Error in X -->
+                <div style="background: rgba(255,71,87,0.05); padding: 25px; border-radius: 12px; border-top: 4px solid #ff4757; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h5 style="color: #ff4757; font-size: 1.35rem; margin-bottom: 10px;">2. Error in \(X\) (CEV)</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;">\(x_1 = x_1^* + e_1\). The regressor itself is contaminated. The new error term becomes \(v = u - \beta_1 e_1\). We must check \(Cov(x_1, v)\).</p>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #ff4757;">
+                        <h5 style="color: #ff4757; font-size: 1.1rem; margin-bottom: 5px;">Classical Errors-in-Variables (CEV)</h5>
+                        <p style="font-size: 1rem; margin: 0;">Assume the error \(e_1\) is random and uncorrelated with the <em>true</em> \(x_1^*\). This means \(Cov(x_1, e_1) = \sigma^2_{e_1} \neq 0\).</p>
+                    </div>
+                    
+                    <h5 style="color: #ff4757; font-size: 1.15rem; margin-bottom: 8px;">Consequences (Attenuation Bias):</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 10px;">Because \(x_1\) is correlated with the error term \(v\), MLR.4 is violated! OLS is biased and inconsistent.</p>
+                    <div class="math-formula" style="font-size: 1.1rem; padding: 8px; margin: 8px 0; border-color: #ff4757;">$$\text{plim}(\hat\beta_1) = \beta_1 \cdot \left( \frac{\sigma^2_{x^*}}{\sigma^2_{x^*} + \sigma^2_{e_1}} \right)$$</div>
+                    <p style="font-size: 1rem; margin: 0; font-weight: bold; color: #ff4757;">The fraction is always between 0 and 1. The coefficient is artificially shrunk toward zero (Attenuation Bias).</p>
+                </div>
                 </div>
             </div>
 
-            <h5 style="color: #4285f4; font-size: 1.3rem; margin-top: 25px; margin-bottom: 10px;">D. Data Issues</h5>
-            <ul style="font-size: 1.1rem; line-height: 1.8;"><li><strong>Missing data:</strong> If random → lose precision only. If systematic → bias.</li><li><strong>Nonrandom samples:</strong> Selection based on \(x\) → OK. Selection based on \(y\) → bias.</li><li><strong>Outliers:</strong> OLS minimizes squared residuals → extreme values can dominate the estimation.</li></ul>
+            <!-- D. DATA ISSUES -->
+            <h5 style="color: #4285f4; font-size: 1.5rem; margin-top: 35px; margin-bottom: 15px;">D. Data Issues</h5>
+            <ul style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 0;">
+                <li><strong>Missing data:</strong> If data is missing completely at random → lose precision only (smaller \(n\)). If missing systematically (e.g., high earners refuse to answer) → Sample selection bias.</li>
+                <li><strong>Nonrandom samples:</strong> Selection based on \(x\) (exogenous) is OK. Selection based on \(y\) (endogenous) causes bias.</li>
+                <li><strong>Outliers:</strong> Since OLS minimizes <em>squared</em> residuals, extreme values have a disproportionate influence and can severely drag the regression line.</li>
+            </ul>
         </div>
-    </div>
 
-    </section>
+        
+</section>
 
         </main>
     </div>
