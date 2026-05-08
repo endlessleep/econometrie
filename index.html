@@ -5497,6 +5497,341 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
         </div>
     </div>
 
+    <!-- MODULE 3: MLR DEEP REASONING -->
+    <div class="concept-card highlight" style="border-left: 10px solid #a29bfe; padding: 50px; margin-bottom: 60px; border-radius: 20px; background: white; box-shadow: var(--shadow-soft);">
+        <h2 style="color: #a29bfe; font-size: 2.2rem; margin-bottom: 30px; border-bottom: 3px solid rgba(162,155,254,0.1); padding-bottom: 15px;"><i class="fas fa-brain"></i> MODULE 3: MLR Assumptions &amp; Properties</h2>
+
+        <!-- MLR 1-4 -->
+        <h3 style="color: #a29bfe; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-shield-alt"></i> 🔵 Why OLS is Unbiased: MLR.1 to MLR.4</h3>
+        <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 30px;"><strong>Unbiasedness</strong> (\(E[\hat\beta]=\beta\)) means that on average, your estimator captures the True Population Parameter. To achieve this, you need 4 core assumptions. If even one is missing, your result is <span style="color:#ff4757; font-weight:800;">BIASED</span>.</p>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 30px; margin-bottom: 40px;">
+            <div class="formula-card" style="margin: 0; border: 2px solid rgba(162,155,254,0.4); padding: 30px; border-radius: 15px;"><h4 style="color: #a29bfe; font-size: 1.4rem;"><i class="fas fa-pen-nib"></i> MLR.1: Linear in Parameters</h4><p style="font-size: 1.1rem; line-height: 1.8;">Model MUST be linear in \(\beta\). You can have \(x^2\) or \(\ln(x)\), but never \(\beta^2\).</p></div>
+            <div class="formula-card" style="margin: 0; border: 2px solid rgba(162,155,254,0.4); padding: 30px; border-radius: 15px;"><h4 style="color: #a29bfe; font-size: 1.4rem;"><i class="fas fa-random"></i> MLR.2: Random Sampling</h4><p style="font-size: 1.1rem; line-height: 1.8;">Sample must faithfully represent the population. Using logs drops zeros/negatives non-randomly → Selection Bias.</p></div>
+            <div class="formula-card" style="margin: 0; border: 2px solid rgba(162,155,254,0.4); padding: 30px; border-radius: 15px;"><h4 style="color: #a29bfe; font-size: 1.4rem;"><i class="fas fa-ban"></i> MLR.3: No Perfect Collinearity</h4><p style="font-size: 1.1rem; line-height: 1.8;">No variable is a perfect linear combination of others. If they are, the matrix is non-invertible and OLS fails.</p></div>
+            <div class="formula-card" style="margin: 0; border: 2px solid rgba(162,155,254,0.4); padding: 30px; border-radius: 15px;"><h4 style="color: #a29bfe; font-size: 1.4rem;"><i class="fas fa-bullseye"></i> MLR.4: Zero Conditional Mean (Exogeneity) ⭐</h4><p style="font-size: 1.1rem; line-height: 1.8;">\(E[u \mid X] = 0\). Factors in the error term must NOT be correlated with your \(X\). If you omit a variable affecting \(Y\) AND linked to \(X\), your coefficient "steals" that effect → <span style="color:#ff4757; font-weight:800;">OVB</span>.</p></div>
+        </div>
+
+        <!-- MLR 5-6 -->
+        <h3 style="color: #a29bfe; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-layer-group"></i> 🔵 Precision &amp; Inference: MLR.5 and MLR.6</h3>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 30px; margin-bottom: 40px;">
+            <div class="formula-card" style="margin: 0; border: 2px solid rgba(162,155,254,0.4); padding: 30px; border-radius: 15px;">
+                <h4 style="color: #a29bfe; font-size: 1.5rem;"><i class="fas fa-wave-square"></i> MLR.5: Homoskedasticity</h4>
+                <p style="font-size: 1.1rem; line-height: 1.8;">\(\text{Var}(u \mid X) = \sigma^2\) (constant). Needed for OLS to be <strong>BLUE</strong>.</p>
+                <div style="background: rgba(255,71,87,0.05); padding: 20px; border-radius: 10px; border: 1px solid #ff4757; margin-top: 10px;">
+                    <h5 style="color: #ff4757;">🔴 When MLR.5 is Violated:</h5>
+                    <ul style="font-size: 1.05rem; line-height: 1.7;"><li>✅ Coefficients still Unbiased</li><li>❌ OLS no longer BLUE (no longer the best)</li><li>❌ Standard Errors are WRONG → t and F tests invalid</li></ul>
+                </div>
+            </div>
+            <div class="formula-card" style="margin: 0; border: 2px solid rgba(162,155,254,0.4); padding: 30px; border-radius: 15px;">
+                <h4 style="color: #a29bfe; font-size: 1.5rem;"><i class="fas fa-bell"></i> MLR.6: Normality</h4>
+                <p style="font-size: 1.1rem; line-height: 1.8;">Essential for exact t and F tests in small samples.</p>
+                <div style="background: rgba(32,201,151,0.05); padding: 20px; border-radius: 10px; border: 1px solid #20c997; margin-top: 10px;">
+                    <h5 style="color: #157a5b;">🌟 The "Save": Asymptotic Validity (CLT)</h5>
+                    <p style="font-size: 1.05rem;">In large samples (\(n > 30\)), we don't need normality. The CLT ensures \(\hat\beta\) converges to Normal. Tests become <strong>Asymptotically Valid</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gauss-Markov -->
+        <div class="formula-card" style="border: 3px solid #a29bfe; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #a29bfe; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-trophy"></i> 🏆 Gauss-Markov Theorem &amp; BLUE</h4>
+            <p style="font-size: 1.2rem; line-height: 1.8;">Under <strong>MLR.1–MLR.5</strong> (no normality needed!), the OLS estimator is <strong>BLUE</strong>:</p>
+            <div style="text-align: center; background: rgba(162,155,254,0.1); border: 3px solid #a29bfe; border-radius: 15px; padding: 25px; margin: 20px 0;">
+                <p style="font-size: 1.8rem; font-weight: 900; color: #a29bfe; margin: 0;"><strong>B</strong>est &nbsp;&nbsp; <strong>L</strong>inear &nbsp;&nbsp; <strong>U</strong>nbiased &nbsp;&nbsp; <strong>E</strong>stimator</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 20px;">
+                <div style="background: rgba(32,201,151,0.08); padding: 20px; border-radius: 10px; text-align: center;"><p style="font-weight: 800; color: #157a5b;">BEST</p><p style="font-size: 0.95rem;">Minimum variance among all linear unbiased estimators</p></div>
+                <div style="background: rgba(32,201,151,0.08); padding: 20px; border-radius: 10px; text-align: center;"><p style="font-weight: 800; color: #157a5b;">LINEAR</p><p style="font-size: 0.95rem;">\(\hat\beta = \sum w_i y_i\) (weights depend only on \(X\))</p></div>
+                <div style="background: rgba(32,201,151,0.08); padding: 20px; border-radius: 10px; text-align: center;"><p style="font-weight: 800; color: #157a5b;">UNBIASED</p><p style="font-size: 0.95rem;">\(E[\hat\beta] = \beta\) under MLR.1–4</p></div>
+            </div>
+            <div style="background: rgba(255,71,87,0.06); padding: 20px; border-radius: 10px; border: 1px dashed #ff4757; margin-top: 20px;">
+                <p style="font-size: 1.05rem;"><strong style="color:#ff4757;">⚠️ Critical:</strong> MLR.5 violated → still unbiased but <strong>no longer BLUE</strong> (WLS becomes more efficient). MLR.4 violated → <strong>biased</strong>. Gauss-Markov doesn't apply at all.</p>
+            </div>
+        </div>
+
+        <!-- Consistency -->
+        <div class="formula-card" style="background: rgba(162,155,254,0.05); border: 3px solid #a29bfe; padding: 45px; border-radius: 20px; margin-bottom: 50px;">
+            <h4 style="color: #a29bfe; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-infinity"></i> 🔵 Consistency &amp; plim</h4>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 25px;"><strong>What is Consistency?</strong> It means that as the sample size grows to infinity, the estimator converges to the true parameter value. Consistency requires a <strong>weaker</strong> condition than unbiasedness: we only need \(\text{Cov}(X, u) = 0\) (zero correlation), not the full \(E[u \mid X] = 0\) (zero conditional mean).</p>
+            <div style="background: white; padding: 30px; border-radius: 15px; border: 2px solid #a29bfe; margin-bottom: 25px;">
+                <h5 style="color: #a29bfe; margin-bottom: 15px;"><i class="fas fa-book"></i> plim and the Law of Large Numbers (LLN)</h5>
+                <div class="math-formula highlight-formula" style="border-color: #a29bfe; background: rgba(162,155,254,0.05);">$$\text{plim}(\bar{X}) = E(X) \qquad \text{(Law of Large Numbers)}$$</div>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">In words: when the sample size is large enough, the sample mean converges to the expected value.</p>
+                <div style="margin-top: 20px; padding: 20px; background: rgba(162,155,254,0.05); border-radius: 10px;">
+                    <h6 style="font-weight: 800; color: #a29bfe; font-size: 1.1rem;">Properties of plim (Probability Limits):</h6>
+                    <ul style="font-size: 1.05rem; line-height: 1.6;"><li>plim of a sum/difference = sum/difference of plims</li><li>plim of a product = product of plims</li><li>plim of a ratio = ratio of plims (if denominator ≠ 0)</li></ul>
+                </div>
+            </div>
+            <button class="action-btn" onclick="toggleDerivation('derive-plim-f')" style="background: #a29bfe; color: white;"><i class="fas fa-eye"></i> Show plim Derivation of \(\hat\beta_0\)</button>
+            <div id="derive-plim-f" class="hidden-panel" style="margin-top: 15px; padding: 20px; background: white; border-radius: 10px; border-left: 4px solid #a29bfe;">
+                <p style="font-size: 1rem; line-height: 1.8;">We have: \(\hat\beta_0 = \bar y - \hat\beta_1 \bar x\)<br>Take plim:<br>\(\text{plim}(\hat\beta_0) = \text{plim}(\bar y) - \text{plim}(\hat\beta_1) \cdot \text{plim}(\bar x)\)<br>By LLN: \(\text{plim}(\bar y) = E(y)\), \(\text{plim}(\bar x) = E(x)\)<br>If consistent: \(\text{plim}(\hat\beta_1) = \beta_1\)<br>So: \(\text{plim}(\hat\beta_0) = E(y) - \beta_1 E(x)\)<br>Since \(E(y) = \beta_0 + \beta_1 E(x)\):<br>\(\text{plim}(\hat\beta_0) = \beta_0 + \beta_1 E(x) - \beta_1 E(x) = \beta_0\) ✅</p>
+            </div>
+            <div style="margin-top: 30px; border-left: 5px solid #ff4757; background: #fff5f6; padding: 25px; border-radius: 10px;">
+                <h6 style="color: #ff4757; font-weight: 800; font-size: 1.2rem; margin-bottom: 15px;">🔹 Key Rules</h6>
+                <ul style="font-size: 1.1rem; line-height: 1.7;"><li>A <strong>sample mean</strong> → becomes an <strong>expectation</strong></li><li>A <strong>consistent estimator</strong> → becomes the <strong>true parameter</strong></li><li><strong>Always replace before simplifying.</strong></li></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 4 -->
+    <div class="concept-card highlight" style="border-left: 10px solid #4285f4; padding: 50px; margin-bottom: 60px;">
+        <h2 style="color: #4285f4; font-size: 2.2rem; margin-bottom: 30px; border-bottom: 3px solid rgba(66,133,244,0.1); padding-bottom: 15px;"><i class="fas fa-trophy"></i> MODULE 4: Advanced Topics</h2>
+
+        <!-- F-Test & LM Test -->
+        <div class="formula-card" style="border: 3px solid #4285f4; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #4285f4; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-balance-scale"></i> Hypothesis Testing: F-Test &amp; LM Test</h4>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 25px;">Both tests compare a <strong>Restricted</strong> model (where \(H_0\) is imposed) vs an <strong>Unrestricted</strong> model. The restricted model always has a higher \(SSR\) (more residual error). We test whether the increase in error is statistically significant.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px;">
+                <div style="background: white; padding: 25px; border-radius: 15px; border-top: 5px solid #4285f4; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <h5 style="color: #4285f4; margin-bottom: 15px;">The F-Test</h5>
+                    <div class="math-formula highlight-formula">$$F = \frac{(SSR_R - SSR_{UR})/q}{SSR_{UR}/(n-k-1)}$$</div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Distribution: \(F \sim F_{q, n-k-1}\). <span class="fluo">Reject \(H_0\) if \(F > c\)</span>.<br>Works for any sample size (exact under MLR.1–6).<br>Needs to estimate BOTH models.</p>
+                </div>
+                <div style="background: white; padding: 25px; border-radius: 15px; border-top: 5px solid #e17055; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <h5 style="color: #e17055; margin-bottom: 15px;">The LM Test</h5>
+                    <div class="math-formula highlight-formula" style="border-color: #e17055;">$$LM = nR^2_{\tilde{u}} \sim \chi^2_q$$</div>
+                    <p style="font-size: 1rem; margin-top: 10px;"><strong>Procedure:</strong><br>1. Estimate the restricted model, save residuals \(\tilde{u}\).<br>2. Regress \(\tilde{u}\) on ALL independent variables.<br>3. Compute \(nR^2\) from step 2.<br>Only needs the restricted model. Valid <strong>asymptotically</strong> (large \(n\)).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- R² and Adjusted R² -->
+        <div class="formula-card" style="border: 3px solid #4285f4; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #4285f4; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-trophy"></i> Goodness of Fit: \(R^2\) and \(\bar{R}^2\)</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px;">
+                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(66,133,244,0.2);">
+                    <h5 style="color: #4285f4; margin-bottom: 10px;">\(R^2\) (Coefficient of Determination)</h5>
+                    <div class="math-formula">$$R^2 = 1 - \frac{SSR}{SST} = \frac{SSE}{SST}$$</div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Proportion of total variation in \(y\) explained by the model. Always between 0 and 1. <strong>Never decreases</strong> when adding variables (even useless ones).</p>
+                </div>
+                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(66,133,244,0.2);">
+                    <h5 style="color: #4285f4; margin-bottom: 10px;">\(\bar{R}^2\) (Adjusted \(R^2\))</h5>
+                    <div class="math-formula">$$\bar{R}^2 = 1 - (1 - R^2) \frac{n-1}{n-k-1}$$</div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Penalizes for adding variables. <strong>Can decrease</strong> if the added variable is useless. Can even be negative. Always \(\le R^2\).</p>
+                </div>
+            </div>
+            <div style="background: rgba(66,133,244,0.08); padding: 25px; border-radius: 15px; border-left: 5px solid #4285f4;">
+                <h5 style="color: #4285f4; margin-bottom: 10px;">Key Decision Rules</h5>
+                <ul style="font-size: 1.1rem; line-height: 1.8;">
+                    <li>Adding <strong>one variable</strong> increases \(\bar{R}^2\) if and only if its \(|t| > 1\) (not the usual 1.96 threshold — just greater than 1!).</li>
+                    <li>Adding a <strong>group of variables</strong> increases \(\bar{R}^2\) if and only if their joint \(F > 1\).</li>
+                </ul>
+            </div>
+            <div style="margin-top: 25px; padding: 25px; border: 2px dashed #4285f4; border-radius: 15px; background: white;">
+                <h5 style="color: #4285f4; margin-bottom: 10px;">Comparing Non-Nested Models</h5>
+                <p style="font-size: 1.1rem; line-height: 1.7;">The F-test <strong>cannot</strong> compare non-nested models. You can compare \(\bar{R}^2\), but <strong>ONLY IF</strong>:<br>1. The dependent variable has the <strong>exact same form</strong> (cannot compare \(y\) vs \(\ln(y)\)).<br>2. The models are estimated on the <strong>same sample</strong> (same \(n\) and same observations).<br>Otherwise, use the <strong>Davidson-MacKinnon test</strong> (see Misspecification section).</p>
+            </div>
+        </div>
+
+        <!-- Variable Selection -->
+        <div class="formula-card" style="border: 2px solid rgba(66,133,244,0.3); padding: 35px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #4285f4; font-size: 1.5rem; margin-bottom: 20px;"><i class="fas fa-filter"></i> Variable Selection</h4>
+            <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #4285f4;">
+                <p style="font-weight: 800; font-size: 1.2rem; margin-bottom: 10px;">4 Criteria for including/excluding a variable:</p>
+                <ol style="font-size: 1.1rem; line-height: 1.8;"><li><strong>Economic Theory:</strong> Is the variable theoretically relevant?</li><li><strong>OVB reduction:</strong> Does including it reduce omitted variable bias?</li><li><strong>Adjusted \(R^2\):</strong> Does it improve the model fit after penalization?</li><li><strong>Significance tests:</strong> Is it individually (t-test) or jointly (F-test) significant?</li></ol>
+            </div>
+            <p style="font-size: 1.1rem; margin-top: 15px; color: var(--primary-red); font-weight: bold;">⚠️ Never select variables mechanically based only on p-values! Always start from economic theory.</p>
+        </div>
+
+        <!-- PREDICTION (COMPLETELY REDONE) -->
+        <div class="formula-card" style="border: 3px solid #4285f4; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #4285f4; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-crosshairs"></i> Prediction in OLS</h4>
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 25px;">Once we have estimated our model, we can predict the value of \(y\) for a new individual with characteristics \(x_{n+1}\):</p>
+            <div class="math-formula highlight-formula" style="font-size: 1.3rem; margin-bottom: 30px;">$$\hat{y}_{n+1} = \hat{\beta}_0 + \hat{\beta}_1 x_{n+1,1} + \dots + \hat{\beta}_k x_{n+1,k}$$</div>
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 30px;">But how <strong>precise</strong> is this prediction? That depends on <em>what</em> we are predicting.</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                <div style="background: rgba(66,133,244,0.05); padding: 30px; border-radius: 15px; border: 2px solid rgba(66,133,244,0.3);">
+                    <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 15px;">📊 Mean Prediction (Confidence Interval)</h5>
+                    <p style="font-size: 1.1rem; line-height: 1.7;"><strong>What:</strong> We predict the <em>average</em> value of \(y\) for the entire subgroup of people who share the same \(X = c\).<br><br><strong>Notation:</strong> \(\theta = E(y \mid X = c)\)<br><br><strong>Uncertainty:</strong> Only comes from the imprecision of our estimated coefficients (\(\hat{\beta}\)).<br><br><strong>Interval:</strong> Confidence Interval → relatively narrow.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-meanpred')" style="margin-top: 10px;"><i class="fas fa-eye"></i> Show Method</button>
+                    <div id="derive-meanpred" class="hidden-panel" style="margin-top: 10px; padding: 15px; background: rgba(66,133,244,0.05); border-radius: 8px;">
+                        <p style="font-size: 1rem; line-height: 1.7;">Rewrite the model as: \(y = \theta + \beta_1(x_1 - c_1) + \dots + \beta_k(x_k - c_k) + u\)<br>By transforming the variables to \((x_j - c_j)\), the new intercept is exactly \(\theta\). The OLS standard error of this new intercept gives us \(se(\hat\theta)\).</p>
+                    </div>
+                </div>
+                <div style="background: rgba(225,112,85,0.05); padding: 30px; border-radius: 15px; border: 2px solid rgba(225,112,85,0.3);">
+                    <h5 style="color: #e17055; font-size: 1.3rem; margin-bottom: 15px;">👤 Individual Prediction (Prediction Interval)</h5>
+                    <p style="font-size: 1.1rem; line-height: 1.7;"><strong>What:</strong> We predict the value of \(y\) for <em>one specific</em> new individual.<br><br><strong>Notation:</strong> \(y_0 = \hat{y}_0 + u_0\)<br><br><strong>Uncertainty:</strong> Comes from (1) imprecision of \(\hat\beta\) AND (2) the unobserved individual shock \(u_0\).<br><br><strong>Interval:</strong> Prediction Interval → <span class="fluo">ALWAYS wider</span> than confidence interval.</p>
+                    <button class="action-btn" onclick="toggleDerivation('derive-indpred')" style="margin-top: 10px;"><i class="fas fa-eye"></i> Show Derivation</button>
+                    <div id="derive-indpred" class="hidden-panel" style="margin-top: 10px; padding: 15px; background: rgba(225,112,85,0.05); border-radius: 8px;">
+                        <p style="font-size: 1rem; line-height: 1.7;">Prediction error: \(\hat{e}_0 = y_0 - \hat{y}_0\)<br>Since \(u_0\) is independent of the sample:<br>\(\text{Var}(\hat{e}_0) = \text{Var}(u_0) + \text{Var}(\hat{y}_0) = \sigma^2 + \text{Var}(\hat{y}_0)\)</p>
+                        <div class="math-formula">$$se(\hat{e}_0) = \sqrt{\hat\sigma^2 + \text{Var}(\hat{y}_0)}$$</div>
+                    </div>
+                </div>
+            </div>
+            <div style="background: rgba(66,133,244,0.08); padding: 25px; border-radius: 15px; border-left: 5px solid #4285f4;">
+                <p style="font-size: 1.15rem; margin: 0;"><strong>Minimal variance:</strong> Prediction is always most precise (smallest variance) when the predicted values are close to the sample means (\(c = \bar{x}\)). The further away from the mean, the wider the interval.</p>
+            </div>
+        </div>
+
+        <!-- DUMMIES, CHOW, LPM (COMPLETELY REDONE) -->
+        <div class="formula-card" style="border: 3px solid #4285f4; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #4285f4; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-users"></i> Qualitative Information, Chow Test &amp; LPM</h4>
+
+            <h5 style="color: #4285f4; font-size: 1.4rem; margin-bottom: 15px;">A. Dummy Variables</h5>
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px;">A <strong>dummy variable</strong> is a binary variable (\(D \in \{0, 1\}\)) that captures qualitative/categorical information (e.g., gender, region, treated/untreated).</p>
+            <ul style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+                <li><strong>Dummy Trap:</strong> For \(m\) categories, include \(m - 1\) dummies. Including all \(m\) plus an intercept causes <strong>perfect collinearity</strong> (violates MLR.3).</li>
+                <li><strong>Interpretation:</strong> \(\hat\beta_D\) = difference in the intercept between the group where \(D=1\) and the <strong>base group</strong> (\(D=0\)).</li>
+                <li><strong>In a \(\ln(y)\) model:</strong> The approximate effect of \(D\) is \(100 \hat\beta_D \%\).</li>
+            </ul>
+            <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #4285f4; margin-bottom: 25px;">
+                <h6 style="color: #4285f4; font-size: 1.2rem; margin-bottom: 10px;">Slope Dummy (Interaction with Dummy)</h6>
+                <div class="math-formula">$$y = \beta_0 + \beta_1 x + \beta_2 D + \beta_3 (D \cdot x) + u$$</div>
+                <ul style="font-size: 1.05rem; line-height: 1.7; margin-top: 10px;"><li>\(\beta_2\) = <strong>intercept difference</strong> between groups</li><li>\(\beta_3\) = <strong>slope difference</strong> between groups</li><li>Base group (\(D=0\)): \(y = \beta_0 + \beta_1 x\)</li><li>Other group (\(D=1\)): \(y = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) x\)</li></ul>
+            </div>
+
+            <h5 style="color: #4285f4; font-size: 1.4rem; margin-top: 30px; margin-bottom: 15px;">B. The Chow Test</h5>
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px;"><strong>Question:</strong> "Can two groups (e.g., men vs women) share one common regression, or do they need completely separate regressions?"</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px;">
+                <div style="background: rgba(66,133,244,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(66,133,244,0.2);">
+                    <h6 style="color: #4285f4; margin-bottom: 8px;">Restricted Model (Pooled)</h6>
+                    <p style="font-size: 1rem;">One single regression for both groups combined. This imposes the restriction that all coefficients are equal. Gives \(SSR_P\).</p>
+                </div>
+                <div style="background: rgba(66,133,244,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(66,133,244,0.2);">
+                    <h6 style="color: #4285f4; margin-bottom: 8px;">Unrestricted Model</h6>
+                    <p style="font-size: 1rem;">Two <strong>separate</strong> regressions, one per group. Each has its own intercept AND slopes. Gives \(SSR_1 + SSR_2\).</p>
+                </div>
+            </div>
+            <div class="math-formula highlight-formula" style="font-size: 1.2rem; margin: 20px 0;">$$F = \frac{[SSR_P - (SSR_1 + SSR_2)] / (k+1)}{(SSR_1 + SSR_2) / [n - 2(k+1)]} \sim F_{k+1, \; n-2(k+1)}$$</div>
+            <ul style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px;">
+                <li>\(SSR_P\) = residuals from the pooled model (one regression for everyone)</li>
+                <li>\(SSR_1 + SSR_2\) = residuals from the two separate regressions</li>
+                <li>\(k+1\) restrictions = testing that intercept AND all \(k\) slopes are equal</li>
+            </ul>
+            <div style="background: rgba(255,71,87,0.05); padding: 20px; border-radius: 10px; border-left: 5px solid #ff4757; margin-bottom: 20px;">
+                <p style="font-size: 1.1rem; margin: 0;"><strong style="color: #ff4757;">Interpretation:</strong> If we <strong>fail to reject</strong> \(H_0\) → the groups do NOT statistically differ. Estimating separate models is inefficient; <strong>keep the pooled model</strong>.</p>
+            </div>
+            <div style="background: rgba(66,133,244,0.05); padding: 20px; border-radius: 10px; border-left: 5px solid #4285f4;">
+                <p style="font-size: 1.05rem; margin: 0;"><strong>Less strict Chow:</strong> Allows different intercepts but tests for common slopes only. Uses \(k\) restrictions instead of \(k+1\).</p>
+            </div>
+
+            <h5 style="color: #4285f4; font-size: 1.4rem; margin-top: 30px; margin-bottom: 15px;">C. Linear Probability Model (LPM)</h5>
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 15px;">When the dependent variable is binary (\(y \in \{0, 1\}\)), the conditional expectation becomes a probability:</p>
+            <div class="math-formula highlight-formula" style="font-size: 1.2rem;">$$E(y \mid X) = P(y = 1 \mid X) = \beta_0 + \beta_1 x_1 + \dots + \beta_k x_k$$</div>
+            <p style="font-size: 1.15rem; margin-top: 15px;"><strong>Interpretation:</strong> \(\hat\beta_j\) = the change in the <strong>probability</strong> of \(y=1\) for a 1-unit increase in \(x_j\), in <strong>percentage points</strong>.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px;">
+                <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #20c997;">
+                    <h6 style="color: #157a5b; margin-bottom: 10px;">✅ Advantages</h6>
+                    <ul style="font-size: 1.05rem; line-height: 1.6;"><li>Simple OLS estimation</li><li>Intuitive interpretation (percentage points)</li><li>Unbiased and consistent under MLR.1–4</li></ul>
+                </div>
+                <div style="background: rgba(255,71,87,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #ff4757;">
+                    <h6 style="color: #ff4757; margin-bottom: 10px;">❌ Shortcomings</h6>
+                    <ul style="font-size: 1.05rem; line-height: 1.6;"><li>Predicted probabilities can be &lt; 0 or &gt; 1</li><li>Constant marginal effects (unrealistic)</li><li><strong>Automatic Heteroskedasticity:</strong><br>\(\text{Var}(u \mid X) = p(X)(1 - p(X))\)</li></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- HETEROSKEDASTICITY FULL -->
+        <div class="formula-card" style="border: 3px solid #e17055; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #e17055; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-chart-bar"></i> Heteroskedasticity — Detection &amp; Solutions</h4>
+
+            <h5 style="color: #e17055; font-size: 1.3rem; margin-bottom: 15px;">Detection Tests</h5>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
+                <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid rgba(225,112,85,0.3);">
+                    <h6 style="color: #e17055; margin-bottom: 10px;">Breusch-Pagan Test</h6>
+                    <ol style="font-size: 1rem; line-height: 1.7;"><li>Run OLS, save residuals \(\hat{u}_i\)</li><li>Regress \(\hat{u}_i^2\) on all \(x\) variables</li><li>Statistic: \(LM = nR^2 \sim \chi^2_k\)</li></ol>
+                    <p style="font-size: 0.95rem; margin-top: 5px;">\(H_0\): Homoskedasticity. Reject → heteroskedasticity detected.</p>
+                </div>
+                <div style="background: white; padding: 25px; border-radius: 15px; border: 2px solid rgba(225,112,85,0.3);">
+                    <h6 style="color: #e17055; margin-bottom: 10px;">White Test (More General)</h6>
+                    <ol style="font-size: 1rem; line-height: 1.7;"><li>Run OLS, save residuals \(\hat{u}_i\)</li><li>Regress \(\hat{u}_i^2\) on \(\hat{y}\) and \(\hat{y}^2\)</li><li>Statistic: \(LM = nR^2 \sim \chi^2_2\)</li></ol>
+                    <p style="font-size: 0.95rem; margin-top: 5px;">Detects more general forms of heteroskedasticity.</p>
+                </div>
+            </div>
+
+            <h5 style="color: #e17055; font-size: 1.3rem; margin-bottom: 15px;">Solutions</h5>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                <div style="background: rgba(225,112,85,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #e17055;">
+                    <h6 style="color: #e17055; font-size: 1.15rem; margin-bottom: 10px;">1. White Robust Standard Errors</h6>
+                    <p style="font-size: 1.05rem;">Fixes inference <strong>without changing coefficients</strong>. Valid asymptotically (\(n - k - 1 \ge 120\)). The simplest solution when you just need correct t-stats and p-values.</p>
+                </div>
+                <div style="background: rgba(225,112,85,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #e17055;">
+                    <h6 style="color: #e17055; font-size: 1.15rem; margin-bottom: 10px;">2. WLS (Weighted Least Squares) — Known Form</h6>
+                    <p style="font-size: 1.05rem;">If \(\text{Var}(u_i \mid X) = \sigma^2 h_i\) and \(h_i\) is <strong>known</strong>, divide the entire model by \(\sqrt{h_i}\):</p>
+                    <div class="math-formula" style="margin: 10px 0; padding: 10px;">$$\frac{y_i}{\sqrt{h_i}} = \frac{\beta_0}{\sqrt{h_i}} + \beta_1 \frac{x_i}{\sqrt{h_i}} + \frac{u_i}{\sqrt{h_i}}$$</div>
+                    <p style="font-size: 1rem;">The transformed error has constant variance \(\sigma^2\). Note: the original intercept becomes the coefficient for \(1/\sqrt{h_i}\), and the original slope coefficient becomes the new "intercept".</p>
+                    <p style="font-size: 1rem; color: var(--primary-red); font-weight: bold; margin-top: 10px;">⚠️ WLS only fixes MLR.5. If OVB exists (MLR.4 violated), WLS does NOT fix it and can even worsen the bias!</p>
+                </div>
+                <div style="background: rgba(225,112,85,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #e17055;">
+                    <h6 style="color: #e17055; font-size: 1.15rem; margin-bottom: 10px;">3. FGLS (Feasible GLS) — Unknown Form</h6>
+                    <p style="font-size: 1.05rem; font-weight: 800; margin-bottom: 10px;">When to use: heteroskedasticity exists but we don't know the exact function \(h_i\).</p>
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 15px;">
+                        <div style="background: #e17055; color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800;">1</div><div><p style="margin: 0; font-size: 1rem;">Run OLS on the original model, save residuals \(\hat{u}_i\).</p></div>
+                        <div style="background: #e17055; color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800;">2</div><div><p style="margin: 0; font-size: 1rem;">Regress \(\ln(\hat{u}_i^2)\) on all the \(x\) variables. Save the fitted values \(\hat{g}_i\). Then \(\hat{h}_i = \exp(\hat{g}_i)\).</p></div>
+                        <div style="background: #e17055; color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800;">3</div><div><p style="margin: 0; font-size: 1rem;">Run WLS using \(1/\hat{h}_i\) as weights (divide the entire model by \(\sqrt{\hat{h}_i}\)).</p></div>
+                    </div>
+                    <div style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid rgba(225,112,85,0.3);"><strong>Bias:</strong> Biased in small samples (because \(\hat{h}_i\) is estimated)</div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid rgba(225,112,85,0.3);"><strong>Consistency:</strong> Yes ✅ (as \(n \to \infty\), \(\hat{h}_i \to h_i\))</div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid rgba(225,112,85,0.3);"><strong>Efficiency:</strong> Asymptotically more efficient than OLS ✅</div>
+                        <div style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #ff4757;"><strong>Sample size:</strong> Requires <strong>large \(n\)</strong>. In small samples, FGLS can be worse than OLS!</div>
+                    </div>
+                </div>
+            </div>
+            <div style="background: rgba(225,112,85,0.08); padding: 20px; border-radius: 12px; border-left: 5px solid #e17055; margin-top: 25px;">
+                <p style="font-size: 1.1rem; font-weight: 800; margin: 0;"><strong>Workflow:</strong> OLS → Plot residuals → B-P/White test → No hetero: keep OLS → Hetero + unknown form: White SE → Hetero + known form: WLS → Hetero + unknown form + large n: FGLS</p>
+            </div>
+        </div>
+
+        <!-- MISSPECIFICATION -->
+        <div class="formula-card" style="border: 3px solid #4285f4; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #4285f4; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-bug"></i> Misspecification, Proxies &amp; Measurement Error</h4>
+
+            <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 15px;">A. Functional Form Misspecification</h5>
+            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 15px;">You have the correct variable but the <strong>wrong mathematical form</strong>. The unmodeled non-linear part is pushed into the error term \(u\), making it correlated with \(x\) → violates MLR.4.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
+                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(66,133,244,0.2);">
+                    <h6 style="color: #4285f4; margin-bottom: 8px;">RESET Test</h6>
+                    <ol style="font-size: 1rem; line-height: 1.7;"><li>Run OLS, get fitted values \(\hat{y}\)</li><li>Add \(\hat{y}^2\) and \(\hat{y}^3\) to the model</li><li>F-test their joint significance</li></ol>
+                    <p style="font-size: 0.95rem; margin-top: 8px; color: var(--primary-red);">Reject \(H_0\) → misspecification likely. But it doesn't tell you HOW to fix it!</p>
+                </div>
+                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(66,133,244,0.2);">
+                    <h6 style="color: #4285f4; margin-bottom: 8px;">Davidson-MacKinnon Test</h6>
+                    <p style="font-size: 1rem; line-height: 1.7;">For non-nested models A vs B:<br>Add \(\hat{y}_B\) to model A. If significant → A is missing info captured by B.<br>Does NOT prove B is the "true" model.</p>
+                </div>
+            </div>
+
+            <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 10px;">B. Proxy Variables</h5>
+            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 20px;">If \(x_3^*\) is unobservable (e.g., "ability"), use a proxy \(x_3\) (e.g., IQ score). A good proxy is highly correlated with \(x_3^*\) and uncorrelated with the error. It reduces OVB but may not eliminate it completely.</p>
+
+            <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 10px;">C. Measurement Error (CEV)</h5>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #20c997;">
+                    <h6 style="color: #157a5b; margin-bottom: 8px;">Error in \(y\) (random)</h6>
+                    <p style="font-size: 1.05rem;">OLS is <strong>unbiased and consistent</strong>. Only loses precision (larger variance).</p>
+                </div>
+                <div style="background: rgba(255,71,87,0.05); padding: 25px; border-radius: 12px; border-left: 5px solid #ff4757;">
+                    <h6 style="color: #ff4757; margin-bottom: 8px;">Error in \(x\) (CEV) → Attenuation Bias</h6>
+                    <div class="math-formula" style="padding: 8px; font-size: 1rem; margin: 8px 0;">$$\text{plim}(\hat\beta_1) = \beta_1 \cdot \frac{\sigma^2_{x^*}}{\sigma^2_{x^*} + \sigma^2_e}$$</div>
+                    <p style="font-size: 1rem;">The fraction is always between 0 and 1. The coefficient <strong>shrinks toward zero</strong>. MLR.4 is violated because the observed \(x\) includes noise correlated with the composite error.</p>
+                </div>
+            </div>
+
+            <h5 style="color: #4285f4; font-size: 1.3rem; margin-top: 25px; margin-bottom: 10px;">D. Data Issues</h5>
+            <ul style="font-size: 1.1rem; line-height: 1.8;"><li><strong>Missing data:</strong> If random → lose precision only. If systematic → bias.</li><li><strong>Nonrandom samples:</strong> Selection based on \(x\) → OK. Selection based on \(y\) → bias.</li><li><strong>Outliers:</strong> OLS minimizes squared residuals → extreme values can dominate the estimation.</li></ul>
+        </div>
+    </div>
+
+    <!-- FINAL REFLEX CARD -->
+    <div class="concept-card highlight" style="background: white; border-left: 10px solid var(--primary-red); padding: 40px; margin-bottom: 40px;">
+        <h2 style="color: var(--primary-red); font-size: 2rem; margin-bottom: 25px;"><i class="fas fa-graduation-cap"></i> 🎓 Final Reflex Card</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="background: white; padding: 20px; border-radius: 12px; border-left: 5px solid var(--primary-red); box-shadow: 0 2px 8px rgba(0,0,0,0.05);"><h5 style="color: var(--primary-red);">MLR.4 violated (OVB)</h5><p style="font-size: 1rem;">→ Coefficients BIASED. All tests meaningless. ❌</p></div>
+            <div style="background: white; padding: 20px; border-radius: 12px; border-left: 5px solid #fd7e14; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"><h5 style="color: #fd7e14;">MLR.5 violated (Hetero)</h5><p style="font-size: 1rem;">→ Coefficients unbiased. SE wrong, t/F invalid. Fix: White SE or WLS. ⚠️</p></div>
+            <div style="background: white; padding: 20px; border-radius: 12px; border-left: 5px solid #20c997; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"><h5 style="color: #20c997;">Multicollinearity</h5><p style="font-size: 1rem;">→ No bias. But large SEs, low t-stats. ⚠️</p></div>
+            <div style="background: white; padding: 20px; border-radius: 12px; border-left: 5px solid #a29bfe; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"><h5 style="color: #a29bfe;">MLR.6 violated</h5><p style="font-size: 1rem;">→ Invalid in small samples. CLT saves with n &gt; 30. ⚠️</p></div>
+        </div>
+        <div style="margin-top: 25px; background: rgba(255,71,87,0.08); padding: 20px; border-radius: 12px; border: 2px solid var(--primary-red); text-align: center;">
+            <p style="font-size: 1.25rem; font-weight: 800; color: var(--primary-red); margin: 0;">"MLR.4 → Bias. MLR.5 → Inference. Know the difference!"</p>
+        </div>
+    </div>
+
+</section>
+
+
+</section>
+
         </main>
     </div>
 
