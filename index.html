@@ -5868,31 +5868,87 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                 </ul>
             </div>
 
-            <h5 style="color: #4285f4; font-size: 1.4rem; margin-top: 35px; margin-bottom: 15px;">B. The Chow Test</h5>
-            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px;"><strong>Question:</strong> "Can two groups share one common regression, or do they need completely separate regressions?" In other words: are the intercept AND slopes the same across groups?</p>
+            <h5 style="color: #4285f4; font-size: 1.4rem; margin-top: 35px; margin-bottom: 15px;">B. The Chow Test — Complete Framework</h5>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px;">
-                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(66,133,244,0.2);">
-                    <h5 style="color: #4285f4; font-size: 1.2rem; margin-bottom: 8px;">Restricted Model (Pooled)</h5>
-                    <p style="font-size: 1.05rem;">One single regression for both groups combined. Imposes \(H_0\): all coefficients are equal across groups. Gives \(SSR_P\) (pooled residuals).</p>
+            <!-- Core Question -->
+            <div style="background: rgba(66,133,244,0.08); padding: 22px; border-radius: 12px; border-left: 6px solid #4285f4; margin-bottom: 25px;">
+                <p style="font-size: 1.15rem; font-weight: 800; margin-bottom: 6px;">🎯 The Core Question</p>
+                <p style="font-size: 1.1rem; margin: 0;">Do two groups (e.g., male/female, pre/post policy) share the <strong>same intercept AND same slope(s)</strong>, or are they structurally different? We test whether one pooled regression is sufficient, or if we need separate regressions for each group.</p>
+            </div>
+
+            <!-- Hypotheses -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                <div style="background: rgba(32,201,151,0.05); padding: 22px; border-radius: 12px; border: 2px solid rgba(32,201,151,0.3);">
+                    <h5 style="color: #157a5b; font-size: 1.2rem; margin-bottom: 10px;">✅ H₀ — Structural Stability</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 8px;">All parameters are the <strong>same</strong> across the two groups:</p>
+                    <div class="math-formula" style="padding:6px; font-size:0.95rem;">$$H_0: \delta_0 = 0 \text{ and } \delta_1 = 0$$</div>
+                    <p style="font-size: 1rem; margin: 0; color: #157a5b;">→ One pooled regression is sufficient. The two groups behave identically.</p>
                 </div>
-                <div style="background: rgba(66,133,244,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(66,133,244,0.2);">
-                    <h5 style="color: #4285f4; font-size: 1.2rem; margin-bottom: 8px;">Unrestricted Model</h5>
-                    <p style="font-size: 1.05rem;">Two <strong>separate</strong> regressions, one per group. Each has its own intercept AND slopes. Gives \(SSR_1 + SSR_2\).</p>
+                <div style="background: rgba(255,71,87,0.05); padding: 22px; border-radius: 12px; border: 2px solid rgba(255,71,87,0.3);">
+                    <h5 style="color: #ff4757; font-size: 1.2rem; margin-bottom: 10px;">❌ H₁ — Structural Break</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 8px;">At least one parameter differs across groups:</p>
+                    <div class="math-formula" style="padding:6px; font-size:0.95rem;">$$H_1: \delta_0 \neq 0 \text{ and/or } \delta_1 \neq 0$$</div>
+                    <p style="font-size: 1rem; margin: 0; color: #ff4757;">→ Two groups are structurally different. Need separate regressions or dummy interactions.</p>
                 </div>
             </div>
 
-            <div class="math-formula highlight-formula" style="font-size: 1.2rem; margin: 20px 0;">$$F = \frac{[SSR_P - (SSR_1 + SSR_2)] / (k+1)}{(SSR_1 + SSR_2) / [n - 2(k+1)]} \sim F_{k+1, \; n-2(k+1)}$$</div>
-            <ul style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px;">
-                <li>\(SSR_P\) = Sum of Squared Residuals from the pooled model</li>
-                <li>\(SSR_1 + SSR_2\) = sum of residuals from the two separate regressions</li>
-                <li>\(k+1\) restrictions = testing that intercept AND all \(k\) slopes are equal across groups</li>
-            </ul>
+            <!-- The Extended Model -->
+            <div style="background: white; padding: 28px; border-radius: 15px; border: 3px solid #4285f4; margin-bottom: 25px;">
+                <h5 style="color: #4285f4; font-size: 1.3rem; margin-bottom: 15px;"><i class="fas fa-puzzle-piece"></i> The Extended (Unrestricted) Model with Dummy Interactions</h5>
+                <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 12px;">Let \(D_i \in \{0, 1\}\) be the group indicator. We estimate a <strong>single model</strong> that allows both the intercept and the slope to differ between groups:</p>
+                <div class="math-formula highlight-formula" style="font-size: 1.15rem;">$$y_i = \beta_0 + \delta_0 D_i + \beta_1 x_i + \delta_1 (D_i \cdot x_i) + u_i$$</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px;">
+                    <div style="background: rgba(66,133,244,0.05); padding: 16px; border-radius: 10px; border-left: 4px solid #4285f4;">
+                        <p style="font-size: 1rem; font-weight: 800; color: #4285f4; margin-bottom: 6px;">Group D = 0 (base group):</p>
+                        <div class="math-formula" style="padding:5px; font-size:0.95rem; background:transparent; border:none;">$$y_i = \beta_0 + \beta_1 x_i + u_i$$</div>
+                        <p style="font-size: 0.95rem; margin:0;">Intercept: \(\beta_0\) &nbsp;|&nbsp; Slope: \(\beta_1\)</p>
+                    </div>
+                    <div style="background: rgba(255,71,87,0.05); padding: 16px; border-radius: 10px; border-left: 4px solid #ff4757;">
+                        <p style="font-size: 1rem; font-weight: 800; color: #ff4757; margin-bottom: 6px;">Group D = 1 (comparison group):</p>
+                        <div class="math-formula" style="padding:5px; font-size:0.95rem; background:transparent; border:none;">$$y_i = (\beta_0 + \delta_0) + (\beta_1 + \delta_1) x_i + u_i$$</div>
+                        <p style="font-size: 0.95rem; margin:0;">Intercept: \(\beta_0 + \delta_0\) &nbsp;|&nbsp; Slope: \(\beta_1 + \delta_1\)</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 14px; background: rgba(66,133,244,0.08); border-radius: 8px;">
+                    <p style="font-size: 1.05rem; margin: 0;"><strong>\(\delta_0\)</strong> = difference in <em>intercept</em> between D=1 and D=0 &nbsp;|&nbsp; <strong>\(\delta_1\)</strong> = difference in <em>slope</em> between D=1 and D=0</p>
+                </div>
+            </div>
+
+            <!-- Two equivalent methods -->
+            <h5 style="color: #4285f4; font-size: 1.2rem; margin-bottom: 15px;">⚙️ Two Equivalent Implementation Methods</h5>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                <!-- Method 1 -->
+                <div style="background: white; padding: 22px; border-radius: 12px; border: 2px solid rgba(66,133,244,0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <h5 style="color: #4285f4; font-size: 1.15rem; margin-bottom: 12px;">📋 Method 1 — SSR Comparison</h5>
+                    <ol style="font-size: 1rem; line-height: 1.7; padding-left: 18px;">
+                        <li>Run the <strong>pooled</strong> model (same coefficients for all). Save \(SSR_P\).</li>
+                        <li>Run <strong>two separate</strong> regressions (one per group). Compute \(SSR_1 + SSR_2\).</li>
+                        <li>Compute the F-statistic.</li>
+                    </ol>
+                    <div class="math-formula" style="padding:8px; font-size:0.95rem; margin-top:10px;">$$F = \frac{[SSR_P - (SSR_1 + SSR_2)]/(k+1)}{(SSR_1+SSR_2)/[n-2(k+1)]}$$</div>
+                    <p style="font-size: 0.95rem; margin-top: 8px; color: #555;">Distribution: \(F \sim F_{k+1,\; n-2(k+1)}\). Here \(k+1\) = number of restrictions (intercept + k slopes).</p>
+                </div>
+                <!-- Method 2 -->
+                <div style="background: white; padding: 22px; border-radius: 12px; border: 2px solid rgba(66,133,244,0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <h5 style="color: #4285f4; font-size: 1.15rem; margin-bottom: 12px;">📋 Method 2 — Extended Model + F-test</h5>
+                    <ol style="font-size: 1rem; line-height: 1.7; padding-left: 18px;">
+                        <li>Estimate the extended model: \(y = \beta_0 + \delta_0 D + \beta_1 x + \delta_1(Dx) + u\)</li>
+                        <li>Run the joint F-test on all dummy terms:</li>
+                    </ol>
+                    <div class="math-formula" style="padding:8px; font-size:0.95rem; margin-top:10px;">$$H_0: \delta_0 = 0,\; \delta_1 = 0$$</div>
+                    <p style="font-size: 0.95rem; margin-top: 8px; color: #555;">Both methods are <strong>mathematically equivalent</strong> — they produce the exact same F-statistic. Method 2 is easier in practice (one regression, standard F-test output).</p>
+                </div>
+            </div>
+
+            <!-- Interpretation -->
             <div style="background: rgba(255,71,87,0.05); padding: 20px; border-radius: 10px; border-left: 5px solid #ff4757; margin-bottom: 20px;">
-                <p style="font-size: 1.1rem; margin: 0;"><strong style="color: #ff4757;">Interpretation:</strong> Fail to reject \(H_0\) → groups do NOT statistically differ. Keep the pooled model (more efficient). Reject \(H_0\) → groups are structurally different, use separate models or include dummies.</p>
+                <p style="font-size: 1.1rem; margin: 0;"><strong style="color: #ff4757;">Decision:</strong> Fail to reject \(H_0\) → pool the data, one regression suffices. Reject \(H_0\) → structural break exists; use separate regressions or keep the extended model with all dummy interaction terms.</p>
             </div>
-            <div style="background: rgba(66,133,244,0.05); padding: 20px; border-radius: 10px; border-left: 5px solid #4285f4;">
-                <p style="font-size: 1.05rem; margin: 0;"><strong>Less strict Chow:</strong> Allows different intercepts but tests for common slopes only. Uses \(k\) restrictions instead of \(k+1\). Same logic but the null hypothesis is weaker.</p>
+
+            <!-- Weaker Chow -->
+            <div style="background: rgba(66,133,244,0.05); padding: 20px; border-radius: 10px; border-left: 5px solid #4285f4; margin-bottom: 5px;">
+                <h5 style="color: #4285f4; font-size: 1.1rem; margin-bottom: 8px;">Weaker Version of the Chow Test</h5>
+                <p style="font-size: 1.05rem; margin: 0;">If you already know or accept that intercepts differ (e.g., from prior theory), you can test only for <strong>common slopes</strong>. This sets \(H_0: \delta_1 = 0\) only (not \(\delta_0\)). It uses \(k\) restrictions instead of \(k+1\), and the F-statistic has distribution \(F_{k,\; n-2k-2}\).</p>
             </div>
 
             <h5 style="color: #4285f4; font-size: 1.4rem; margin-top: 35px; margin-bottom: 15px;">C. Linear Probability Model (LPM)</h5>
