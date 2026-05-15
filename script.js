@@ -24,6 +24,29 @@ document.addEventListener("DOMContentLoaded", () => {
             item.classList.toggle("active");
         });
     });
+
+    // Handle initial section load from hash
+    const initialHash = window.location.hash;
+    if (initialHash) {
+        const sectionId = initialHash.replace('#', '');
+        switchSection(null, sectionId);
+    } else {
+        // Default to section 1.1 if no hash (or final revision sheet if you prefer)
+        // Check which section is currently visible or default to one
+        const activeLink = document.querySelector('.nav-link.active');
+        if (activeLink) {
+            // If there's an active link in HTML, just let it be, 
+            // but usually we want to force a section to show.
+        }
+    }
+});
+
+// Listen for hash changes to handle back/forward buttons
+window.addEventListener('hashchange', () => {
+    const sectionId = window.location.hash.replace('#', '');
+    if (sectionId) {
+        switchSection(null, sectionId);
+    }
 });
 
 // Derivation toggle function for specific IDs
@@ -52,14 +75,28 @@ function toggleDerivation(id) {
 
 // Section toggler for single page app feel
 function switchSection(event, targetId) {
+    // If it's a click event, prevent default and update hash
     if (event) {
         event.preventDefault();
-
-        // Update active class on nav links
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => link.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        window.location.hash = targetId;
+        return; // hashchange listener will trigger switchSection(null, targetId)
     }
+
+    // Update active class on nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        // Check if the link's onclick attribute contains the targetId
+        if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(targetId)) {
+            link.classList.add('active');
+            
+            // Also ensure the parent accordion is open
+            const accordionItem = link.closest('.accordion-item');
+            if (accordionItem) {
+                accordionItem.classList.add('active');
+            }
+        }
+    });
 
     // Hide all sections
     const sections = document.querySelectorAll('.page-section');
@@ -78,7 +115,8 @@ function switchSection(event, targetId) {
     }
 
     // Close sidebar on mobile
-    if (window.innerWidth <= 900) {
-        document.querySelector('.sidebar').classList.remove('mobile-open');
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar && window.innerWidth <= 900) {
+        sidebar.classList.remove('mobile-open');
     }
 }
