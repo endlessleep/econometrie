@@ -5544,6 +5544,37 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
             </div>
         </div>
 
+        <!-- Testing Linear Combinations -->
+        <div class="formula-card" style="border: 3px solid #fd7e14; padding: 45px; border-radius: 20px; margin-bottom: 50px; background: white;">
+            <h4 style="color: #fd7e14; font-size: 1.8rem; margin-bottom: 25px;"><i class="fas fa-link"></i> 💡 Testing Linear Combinations (H₀: β₁ = β₂)</h4>
+            <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px;">Sometimes we want to test if two coefficients are equal: <strong>H₀: β₁ = β₂</strong>. You cannot just compare their individual t-stats! Instead, use the <strong>reparametrization trick</strong>.</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px;">
+                <div style="background: rgba(253,126,20,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(253,126,20,0.3);">
+                    <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 12px;">Step 1 — Define θ</h5>
+                    <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 10px;">Define \(\theta = \beta_1 - \beta_2\). Rewrite \(H_0\) as:</p>
+                    <div class="math-formula" style="padding:6px; font-size: 1.05rem;">$$H_0: \theta = 0 \qquad H_1: \theta \neq 0$$</div>
+                    <p style="font-size: 1.05rem; margin-top: 10px; margin-bottom: 0;">Solve for \(\beta_1 = \theta + \beta_2\) and substitute into the original model.</p>
+                </div>
+                <div style="background: rgba(253,126,20,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(253,126,20,0.3);">
+                    <h5 style="color: #fd7e14; font-size: 1.2rem; margin-bottom: 12px;">Step 2 — Reparametrize</h5>
+                    <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 8px;">Original model: \(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u\)</p>
+                    <p style="font-size: 1.05rem; margin-bottom: 8px;">After substitution (\(\beta_1 = \theta + \beta_2\)):</p>
+                    <div class="math-formula" style="padding:6px; font-size: 1rem;">$$y = \beta_0 + \theta x_1 + \beta_2\underbrace{(x_1 + x_2)}_{x^*} + u$$</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(253,126,20,0.08); padding: 25px; border-radius: 12px; border-left: 6px solid #fd7e14;">
+                <h5 style="color: #e67e22; font-size: 1.2rem; margin-bottom: 12px;">Step 3 — Run OLS on the transformed model</h5>
+                <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 0;">Regress \(y\) on \(x_1\) and \(x^* = x_1 + x_2\). The <strong>t-statistic on \(x_1\)</strong> directly tests \(H_0: \theta = 0\), which is exactly our hypothesis \(\beta_1 = \beta_2\). OLS automatically provides the correct \(se(\hat\theta)\).</p>
+            </div>
+
+            <div style="margin-top: 25px; background: #fff5e6; padding: 20px; border-radius: 10px; border-left: 5px solid #ff4757;">
+                <p style="font-size: 1.1rem; font-weight: 800; color: #ff4757; margin-bottom: 6px;">⚠️ Why not just compare t-stats individually?</p>
+                <p style="font-size: 1.05rem; margin: 0;">Because \(se(\hat\beta_1 - \hat\beta_2) = \sqrt{Var(\hat\beta_1) + Var(\hat\beta_2) - 2Cov(\hat\beta_1,\hat\beta_2)}\). The covariance term is <strong>non-zero</strong> and would be ignored if you subtracted t-stats directly.</p>
+            </div>
+        </div>
+
         <!-- Algebraic Properties WITH PROOFS integrated -->
                 <div class="formula-card" style="margin-bottom: 40px; border: 2px solid rgba(253,126,20,0.3); padding: 35px;">
             <h4 style="color: #fd7e14; font-size: 1.5rem; margin-bottom: 25px;"><i class="fas fa-list-ol"></i> Core Algebraic Properties of OLS (Always True)</h4>
