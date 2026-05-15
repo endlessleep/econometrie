@@ -6019,18 +6019,40 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                 
                 <!-- Error in X -->
                 <div style="background: rgba(255,71,87,0.05); padding: 25px; border-radius: 12px; border-top: 4px solid #ff4757; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h5 style="color: #ff4757; font-size: 1.35rem; margin-bottom: 10px;">2. Error in \(X\) (CEV)</h5>
-                    <p style="font-size: 1.05rem; margin-bottom: 10px;">\(x_1 = x_1^* + e_1\). The regressor itself is contaminated. The new error term becomes \(v = u - \beta_1 e_1\). We must check \(Cov(x_1, v)\).</p>
-                    
-                    <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #ff4757;">
-                        <h5 style="color: #ff4757; font-size: 1.1rem; margin-bottom: 5px;">Classical Errors-in-Variables (CEV)</h5>
-                        <p style="font-size: 1rem; margin: 0;">Assume the error \(e_1\) is random and uncorrelated with the <em>true</em> \(x_1^*\). This means \(Cov(x_1, e_1) = \sigma^2_{e_1} \neq 0\).</p>
+                    <h5 style="color: #ff4757; font-size: 1.35rem; margin-bottom: 12px;">2. Error in \(X\) — The CEV Trap 💀</h5>
+                    <p style="font-size: 1.05rem; margin-bottom: 15px;">We observe \(x_1 = x_1^* + e_1\) instead of the true \(x_1^*\). After substitution, the model OLS actually estimates becomes:</p>
+                    <div style="background: white; padding: 12px 18px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #ff4757; font-size: 1.05rem;">
+                        $$y = \beta_0 + \beta_1 x_1 + \underbrace{(u - \beta_1 e_1)}_{= v \text{ (new error)}}$$
                     </div>
-                    
-                    <h5 style="color: #ff4757; font-size: 1.15rem; margin-bottom: 8px;">Consequences (Attenuation Bias):</h5>
-                    <p style="font-size: 1.05rem; margin-bottom: 10px;">Because \(x_1\) is correlated with the error term \(v\), MLR.4 is violated! OLS is biased and inconsistent.</p>
-                    <div class="math-formula" style="font-size: 1.1rem; padding: 8px; margin: 8px 0; border-color: #ff4757;">$$\text{plim}(\hat\beta_1) = \beta_1 \cdot \left( \frac{\sigma^2_{x^*}}{\sigma^2_{x^*} + \sigma^2_{e_1}} \right)$$</div>
-                    <p style="font-size: 1rem; margin: 0; font-weight: bold; color: #ff4757;">The fraction is always between 0 and 1. The coefficient is artificially shrunk toward zero (Attenuation Bias).</p>
+
+                    <!-- CEV Definition -->
+                    <div style="background: #fff0f0; border: 2px dashed #ff4757; border-radius: 12px; padding: 18px; margin-bottom: 18px;">
+                        <h5 style="color: #ff4757; font-size: 1.15rem; margin-bottom: 10px;">📌 What is the CEV Assumption?</h5>
+                        <p style="font-size: 1.05rem; margin-bottom: 8px;">CEV = <strong>Classical Errors-in-Variables</strong>. It assumes the measurement noise \(e_1\) is uncorrelated with the <em>true</em> signal \(x_1^*\):</p>
+                        <div style="text-align:center; font-size: 1.15rem; font-weight: 800; padding: 8px 0; color: #cc2233;">
+                            $$Cov(x_1^*, e_1) = 0$$
+                        </div>
+                        <p style="font-size: 1rem; margin-top: 8px; margin-bottom: 0; color: #555;">Intuition: the measurement error is <em>pure noise</em> — it has nothing to do with the true value being measured.</p>
+                    </div>
+
+                    <!-- The Treachery -->
+                    <div style="background: white; border-left: 5px solid #ff4757; border-radius: 8px; padding: 18px; margin-bottom: 18px;">
+                        <h5 style="color: #ff4757; font-size: 1.1rem; margin-bottom: 8px;">⚠️ Why CEV is a Trap Despite Sounding Innocent</h5>
+                        <p style="font-size: 1.05rem; margin-bottom: 8px;">Since \(x_1 = x_1^* + e_1\), even if \(e_1\) is independent of \(x_1^*\), the <strong>observed regressor</strong> \(x_1\) automatically contains \(e_1\). Therefore:</p>
+                        <div style="font-size: 1.05rem; font-weight: 700; color: #ff4757; padding: 6px 0; text-align:center;">
+                            $$Cov(x_1,\, e_1) = Cov(x_1^* + e_1,\, e_1) = \underbrace{Cov(x_1^*,e_1)}_{=\,0} + Var(e_1) = \sigma^2_{e_1} \neq 0$$
+                        </div>
+                        <p style="font-size: 1rem; margin-top: 10px; margin-bottom: 0;">OLS uses \(x_1\), not \(x_1^*\). So the regressor is correlated with its own error. <strong>MLR.4 is violated → OLS is biased and inconsistent.</strong></p>
+                    </div>
+
+                    <!-- Attenuation Bias -->
+                    <h5 style="color: #ff4757; font-size: 1.15rem; margin-bottom: 8px;">📉 Consequence: Attenuation Bias</h5>
+                    <div class="math-formula" style="font-size: 1.15rem; padding: 10px; margin: 8px 0; border-color: #ff4757;">$$\text{plim}(\hat\beta_1) = \beta_1 \cdot \underbrace{\left( \frac{\sigma^2_{x^*}}{\sigma^2_{x^*} + \sigma^2_{e_1}} \right)}_{\text{always} \in (0,\,1)}$$</div>
+                    <div style="background: #fff0f0; padding: 12px 18px; border-radius: 8px; border-left: 4px solid #ff4757; margin-top: 5px;">
+                        <p style="font-size: 1.05rem; font-weight: 800; color: #cc2233; margin: 0;">
+                            The noisier the measurement (larger \(\sigma^2_{e_1}\)), the more \(\hat\beta_1\) is <strong>shrunk toward zero</strong> — regardless of the true sign of \(\beta_1\).
+                        </p>
+                    </div>
                 </div>
                 </div>
             </div>
