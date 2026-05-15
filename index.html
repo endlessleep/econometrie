@@ -5218,6 +5218,15 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li>Standard errors are also multiplied by \(c\).</li>
                             <li>\(t\)-stats and \(R^2\) remain <span class="fluo">identical</span>.</li>
                         </ul>
+                        <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                            <p style="font-size: 0.9rem; color: #157a5b; font-weight: 800; margin-bottom: 5px;">📐 Visual Proof</p>
+                            <p style="font-size: 0.9rem; color:#555; margin-bottom:3px;">Original → multiply both sides by \(c\):</p>
+                            <div class="math-formula" style="padding:5px; background:transparent; border:none; font-size:0.95rem;">$$y = \hat\beta_0 + \hat\beta_1 x \;\xrightarrow{\times\, c}\; \underbrace{cy}_{y^*} = \underbrace{c\hat\beta_0}_{\hat\beta_0^*} + \underbrace{c\hat\beta_1}_{\hat\beta_1^*}\, x$$</div>
+                            <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:8px; margin-top:8px;">
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$\hat\beta_0^* = c\hat\beta_0,\qquad \hat\beta_1^* = c\hat\beta_1$$</div>
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$se(\hat\beta_0^*) = c\,se(\hat\beta_0),\qquad se(\hat\beta_1^*) = c\,se(\hat\beta_1)$$</div>
+                            </div>
+                        </div>
                     </div>
                     <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(32,201,151,0.2);">
                         <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px;">If \(X\) is rescaled: \(x^* = c \cdot x\)</p>
@@ -5227,6 +5236,15 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                             <li>Standard Errors are divided by \(c\).</li>
                             <li>\(t\)-stats and \(R^2\) remain <span class="fluo">identical</span>.</li>
                         </ul>
+                        <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                            <p style="font-size: 0.9rem; color: #157a5b; font-weight: 800; margin-bottom: 5px;">📐 Visual Proof</p>
+                            <p style="font-size: 0.9rem; color:#555; margin-bottom:3px;">Substitute \(x = x^*/c\) into the original model:</p>
+                            <div class="math-formula" style="padding:5px; background:transparent; border:none; font-size:0.95rem;">$$y = \hat\beta_0 + \hat\beta_1\cdot\frac{x^*}{c} = \underbrace{\hat\beta_0}_{\hat\beta_0^*} + \underbrace{\frac{\hat\beta_1}{c}}_{\hat\beta_1^*}\, x^*$$</div>
+                            <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:8px; margin-top:8px;">
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$\hat\beta_0^* = \hat\beta_0,\qquad \hat\beta_1^* = \frac{\hat\beta_1}{c}$$</div>
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$se(\hat\beta_0^*) = se(\hat\beta_0),\qquad se(\hat\beta_1^*) = \frac{se(\hat\beta_1)}{c}$$</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div style="background: rgba(32,201,151,0.08); padding: 25px; border-radius: 12px; border-left: 6px solid #20c997;">
@@ -5237,7 +5255,7 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
 
             <div style="margin-top: 50px;">
                 <h5 style="color: #20c997; font-weight: 800; font-size: 1.3rem; margin-bottom: 15px;">👉 Case 2: Model with LOGS</h5>
-                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 15px;">\(\ln(y) = \beta_0 + \beta_1 \ln(x) + u\)<br>If you multiply \(x\) by 1000 : \(\ln(1000x) = \ln(x) + \ln(1000)\)</p>
+                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 15px;">\(\ln(y) = \beta_0 + \beta_1 \ln(x) + u\)<br>If you multiply \(x\) by \(c\) : \(\ln(cx) = \ln(c) + \ln(x)\)</p>
                 <div style="background: rgba(32,201,151,0.08); padding: 25px; border-radius: 12px; border-left: 6px solid #20c997;">
                     <p style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">Final Result:</p>
                     <ul style="font-size: 1.2rem;">
@@ -5246,6 +5264,13 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         <li>The \(t\)-stat does NOT change</li>
                         <li><strong>Only the intercept changes</strong> (it absorbs the constant \(\ln(c)\))</li>
                     </ul>
+                </div>
+                <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                    <p style="font-size: 0.9rem; color: #157a5b; font-weight: 800; margin-bottom: 5px;">📐 Visual Proof — substitute \(\ln(x^*) = \ln(cx) = \ln(c)+\ln(x)\):</p>
+                    <div class="math-formula" style="padding:5px; background:transparent; border:none; font-size:0.95rem;">$$\ln(y) = \beta_0 + \beta_1\ln(x) + u = \underbrace{(\beta_0 + \beta_1\ln c)}_{\beta_0^*} + \beta_1\underbrace{\ln(x^*)}_{\ln(cx)} + u$$</div>
+                    <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:8px; margin-top:8px;">
+                        <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$\hat\beta_1^* = \hat\beta_1,\qquad se(\hat\beta_1^*) = se(\hat\beta_1),\qquad \hat\beta_0^* = \hat\beta_0 + \hat\beta_1\ln(c)$$</div>
+                    </div>
                 </div>
                 <p style="font-size: 1.15rem; font-style: italic; margin-top: 20px; color: #666;"><strong>Intuition:</strong> In log models, we measure <strong>percentages</strong>. A percentage is naturally stable, regardless of the unit (grams or tons).</p>
             </div>
@@ -5259,6 +5284,13 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
                         <li>The <strong>Slope estimate (\(\hat{\beta}_1\)) is UNAFFECTED</strong>. ✅</li>
                         <li>Only the <strong>Intercept (\(\hat{\beta}_0\)) changes</strong> to absorb the repositioning.</li>
                     </ul>
+                </div>
+                <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                    <p style="font-size: 0.9rem; color: #157a5b; font-weight: 800; margin-bottom: 5px;">📐 Visual Proof — shift \(X\) by \(a\): \(x^* = x - a\), so \(x = x^* + a\)</p>
+                    <div class="math-formula" style="padding:5px; background:transparent; border:none; font-size:0.95rem;">$$y = \hat\beta_0 + \hat\beta_1 x = \hat\beta_0 + \hat\beta_1(x^*+a) = \underbrace{(\hat\beta_0 + \hat\beta_1 a)}_{\hat\beta_0^*} + \underbrace{\hat\beta_1}_{\text{unchanged}}\, x^*$$</div>
+                    <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:8px; margin-top:8px;">
+                        <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$\hat\beta_1^* = \hat\beta_1,\qquad se(\hat\beta_1^*) = se(\hat\beta_1),\qquad \hat\beta_0^* = \hat\beta_0 + \hat\beta_1 a$$</div>
+                    </div>
                 </div>
                 <div style="margin-top: 25px; text-align: center; border: 2px solid #20c997; padding: 20px; border-radius: 12px; background: white;">
                     <p style="font-size: 1.2rem; font-weight: 800; color: #20c997; margin-bottom: 0;">⚡ Exam Reflex: "Shifting data (adding a constant) does NOT change the slope. Only the intercept is affected."</p>
