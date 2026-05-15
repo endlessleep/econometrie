@@ -5254,25 +5254,85 @@ $$ -c \cdot SE(\hat{\beta}_j) < \hat{\beta}_j - \beta_j < c \cdot SE(\hat{\beta}
             </div>
 
             <div style="margin-top: 50px;">
-                <h5 style="color: #20c997; font-weight: 800; font-size: 1.3rem; margin-bottom: 15px;">👉 Case 2: Model with LOGS</h5>
-                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 15px;">\(\ln(y) = \beta_0 + \beta_1 \ln(x) + u\)<br>If you multiply \(x\) by \(c\) : \(\ln(cx) = \ln(c) + \ln(x)\)</p>
-                <div style="background: rgba(32,201,151,0.08); padding: 25px; border-radius: 12px; border-left: 6px solid #20c997;">
-                    <p style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px;">Final Result:</p>
-                    <ul style="font-size: 1.2rem;">
-                        <li>The coefficient <span class="fluo">\(\hat{\beta}\) does NOT change</span> ✅</li>
-                        <li>The standard error <span class="fluo">does NOT change</span></li>
-                        <li>The \(t\)-stat does NOT change</li>
-                        <li><strong>Only the intercept changes</strong> (it absorbs the constant \(\ln(c)\))</li>
-                    </ul>
-                </div>
-                <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 15px; margin-top: 15px;">
-                    <p style="font-size: 0.9rem; color: #157a5b; font-weight: 800; margin-bottom: 5px;">📐 Visual Proof — substitute \(\ln(x^*) = \ln(cx) = \ln(c)+\ln(x)\):</p>
-                    <div class="math-formula" style="padding:5px; background:transparent; border:none; font-size:0.95rem;">$$\ln(y) = \beta_0 + \beta_1\ln(x) + u = \underbrace{(\beta_0 + \beta_1\ln c)}_{\beta_0^*} + \beta_1\underbrace{\ln(x^*)}_{\ln(cx)} + u$$</div>
-                    <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:8px; margin-top:8px;">
-                        <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.95rem;">$$\hat\beta_1^* = \hat\beta_1,\qquad se(\hat\beta_1^*) = se(\hat\beta_1),\qquad \hat\beta_0^* = \hat\beta_0 + \hat\beta_1\ln(c)$$</div>
+                <h5 style="color: #20c997; font-weight: 800; font-size: 1.3rem; margin-bottom: 15px;">👉 Case 2: Scaling in Logarithmic Models — Complete Coverage</h5>
+                <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 20px;">The key rule in log models: <strong>multiplying a variable by \(c\) adds \(\ln(c)\) to its log</strong>. The slope coefficient \(\beta_1\) always survives — only the intercept absorbs the constant shift. But the exact effect depends on the model type (log-level vs log-log) and which variable is rescaled.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <!-- Sub-case 2A -->
+                    <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(32,201,151,0.3);">
+                        <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px; font-size: 1.1rem;">📌 2A — Log-Level: rescale \(Y\) by \(c\)</p>
+                        <p style="font-size: 1rem; color: #555; margin-bottom: 5px;">Model: \(\ln(y) = \beta_0 + \beta_1 x + u\). Let \(y^* = cy\), so \(\ln(y^*) = \ln(y) + \ln(c)\).</p>
+                        <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 12px; margin-top: 10px;">
+                            <p style="font-size: 0.85rem; color: #157a5b; font-weight: 800; margin-bottom: 4px;">📐 Visual Proof</p>
+                            <div class="math-formula" style="padding:4px; background:transparent; border:none; font-size:0.9rem;">$$\ln(y^*) = \underbrace{(\beta_0 + \ln c)}_{\beta_0^*} + \beta_1 x + u$$</div>
+                            <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:7px; margin-top:6px;">
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.9rem;">$$\hat\beta_1^* = \hat\beta_1,\quad se^* = se,\quad \hat\beta_0^* = \hat\beta_0 + \ln(c)$$</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.95rem; color: #157a5b; font-weight: 700; margin-top: 10px; margin-bottom: 0;">✅ Only the intercept shifts by \(\ln(c)\). Slope interpretation unchanged.</p>
+                    </div>
+
+                    <!-- Sub-case 2B -->
+                    <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(32,201,151,0.3);">
+                        <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px; font-size: 1.1rem;">📌 2B — Log-Level: rescale \(X\) by \(c\)</p>
+                        <p style="font-size: 1rem; color: #555; margin-bottom: 5px;">Model: \(\ln(y) = \beta_0 + \beta_1 x + u\). Let \(x^* = cx\), so \(x = x^*/c\).</p>
+                        <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 12px; margin-top: 10px;">
+                            <p style="font-size: 0.85rem; color: #157a5b; font-weight: 800; margin-bottom: 4px;">📐 Visual Proof</p>
+                            <div class="math-formula" style="padding:4px; background:transparent; border:none; font-size:0.9rem;">$$\ln(y) = \beta_0 + \beta_1\frac{x^*}{c} + u = \underbrace{\beta_0}_{\hat\beta_0^*} + \underbrace{\frac{\beta_1}{c}}_{\hat\beta_1^*} x^*$$</div>
+                            <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:7px; margin-top:6px;">
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.9rem;">$$\hat\beta_1^* = \frac{\hat\beta_1}{c},\quad se^* = \frac{se}{c},\quad \hat\beta_0^* = \hat\beta_0$$</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.95rem; color: #ff4757; font-weight: 700; margin-top: 10px; margin-bottom: 0;">⚠️ In log-level, slope is divided by \(c\). The % interpretation changes!</p>
+                    </div>
+
+                    <!-- Sub-case 2C -->
+                    <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(32,201,151,0.3);">
+                        <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px; font-size: 1.1rem;">📌 2C — Log-Log: rescale \(X\) by \(c\)</p>
+                        <p style="font-size: 1rem; color: #555; margin-bottom: 5px;">Model: \(\ln(y) = \beta_0 + \beta_1 \ln(x) + u\). Let \(x^* = cx\), so \(\ln(x^*) = \ln(x) + \ln(c)\).</p>
+                        <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 12px; margin-top: 10px;">
+                            <p style="font-size: 0.85rem; color: #157a5b; font-weight: 800; margin-bottom: 4px;">📐 Visual Proof</p>
+                            <div class="math-formula" style="padding:4px; background:transparent; border:none; font-size:0.9rem;">$$\ln(y) = \underbrace{(\beta_0 + \beta_1\ln c)}_{\beta_0^*} + \beta_1\ln(x^*) + u$$</div>
+                            <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:7px; margin-top:6px;">
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.9rem;">$$\hat\beta_1^* = \hat\beta_1,\quad se^* = se,\quad \hat\beta_0^* = \hat\beta_0 + \hat\beta_1\ln(c)$$</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.95rem; color: #157a5b; font-weight: 700; margin-top: 10px; margin-bottom: 0;">✅ Slope and its SE unchanged. Only intercept absorbs \(\beta_1\ln(c)\).</p>
+                    </div>
+
+                    <!-- Sub-case 2D -->
+                    <div style="background: rgba(32,201,151,0.05); padding: 25px; border-radius: 12px; border: 2px solid rgba(32,201,151,0.3);">
+                        <p style="font-weight: 800; color: #157a5b; margin-bottom: 10px; font-size: 1.1rem;">📌 2D — Log-Log: rescale \(Y\) by \(c\)</p>
+                        <p style="font-size: 1rem; color: #555; margin-bottom: 5px;">Model: \(\ln(y) = \beta_0 + \beta_1 \ln(x) + u\). Let \(y^* = cy\), so \(\ln(y^*) = \ln(y) + \ln(c)\).</p>
+                        <div style="background: white; border-left: 4px solid #20c997; border-radius: 8px; padding: 12px; margin-top: 10px;">
+                            <p style="font-size: 0.85rem; color: #157a5b; font-weight: 800; margin-bottom: 4px;">📐 Visual Proof</p>
+                            <div class="math-formula" style="padding:4px; background:transparent; border:none; font-size:0.9rem;">$$\underbrace{\ln(y^*)}_{\ln(y)+\ln c} = \underbrace{(\beta_0 + \ln c)}_{\beta_0^*} + \beta_1\ln(x) + u$$</div>
+                            <div style="background:rgba(32,201,151,0.08); border-radius:6px; padding:7px; margin-top:6px;">
+                                <div class="math-formula" style="padding:3px; background:transparent; border:none; font-size:0.9rem;">$$\hat\beta_1^* = \hat\beta_1,\quad se^* = se,\quad \hat\beta_0^* = \hat\beta_0 + \ln(c)$$</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.95rem; color: #157a5b; font-weight: 700; margin-top: 10px; margin-bottom: 0;">✅ Elasticity \(\beta_1\) is scale-invariant. Only intercept shifts.</p>
                     </div>
                 </div>
-                <p style="font-size: 1.15rem; font-style: italic; margin-top: 20px; color: #666;"><strong>Intuition:</strong> In log models, we measure <strong>percentages</strong>. A percentage is naturally stable, regardless of the unit (grams or tons).</p>
+
+                <!-- Summary table -->
+                <div style="background: rgba(32,201,151,0.08); padding: 20px; border-radius: 12px; border-left: 6px solid #20c997; margin-bottom: 20px;">
+                    <p style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px;">📋 Summary Table — What changes when rescaling by \(c\)?</p>
+                    <div class="table-container" style="margin: 0;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
+                            <thead><tr style="background: rgba(32,201,151,0.2);"><th style="padding: 10px; color: #157a5b;">Model</th><th style="padding: 10px; color: #157a5b;">Rescale</th><th style="padding: 10px; color: #157a5b;">\(\hat\beta_1\)</th><th style="padding: 10px; color: #157a5b;">SE</th><th style="padding: 10px; color: #157a5b;">\(\hat\beta_0\)</th></tr></thead>
+                            <tbody>
+                                <tr><td style="padding: 10px;"><strong>Log-Level</strong></td><td style="padding: 10px;">\(y^* = cy\)</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td><td style="padding: 10px; color: #ff4757;">+ln(c)</td></tr>
+                                <tr style="background: rgba(32,201,151,0.05);"><td style="padding: 10px;"><strong>Log-Level</strong></td><td style="padding: 10px;">\(x^* = cx\)</td><td style="padding: 10px; color: #ff4757;">÷ c</td><td style="padding: 10px; color: #ff4757;">÷ c</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td></tr>
+                                <tr><td style="padding: 10px;"><strong>Log-Log</strong></td><td style="padding: 10px;">\(x^* = cx\)</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td><td style="padding: 10px; color: #ff4757;">+β₁ln(c)</td></tr>
+                                <tr style="background: rgba(32,201,151,0.05);"><td style="padding: 10px;"><strong>Log-Log</strong></td><td style="padding: 10px;">\(y^* = cy\)</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td><td style="padding: 10px; color: #157a5b;">Unchanged ✅</td><td style="padding: 10px; color: #ff4757;">+ln(c)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <p style="font-size: 1.15rem; font-style: italic; margin-top: 20px; color: #666;"><strong>Intuition:</strong> In log models, percentages are scale-invariant (grams vs tons). The slope measures an elasticity or a semi-elasticity — a ratio that is immune to unit changes.</p>
             </div>
 
             <div style="margin-top: 50px;">
